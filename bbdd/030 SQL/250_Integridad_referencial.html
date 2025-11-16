@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Integridad</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié., 24 abr. 2024 15:36:46 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Integridad</h1>
+<p>Las bases de datos disponen de mecanismos para mantener la coherencia de los datos
+sin necesidad de escribir programas que controlen que las operaciones realizadas
+sobre la base de datos son correctas.</p>
+<h2>Reglas de integridad</h2>
+<p>Existen tres llamadas reglas de integridad para mantener la coherencia en la BDD: la integridad
+de usuario, la de entidad y la integridad referencial.</p>
+<p>Estas reglas deben declararse cuando se crea cada la tabla.</p>
+<h3>Integridad de usuario</h3>
+<p>La integridad de usuario garantiza las restricciones de dominio que el administrador
+impone a los datos.<br>
+Este mecanismo de integridad se aplica con las siguientes cláusulas
+SQL:</p>
+<div class="cuadro up w6">
+<p>
+<span class="tab"><span class="icon"></span><code>CHECK</code> condición | <code>NOT NULL</code> | <code>UNIQUE</code> | <code>DEFAULT</code> valor</span>
+</p>
+</div>
+<p>Definir integridad de usuario impedirá la introducción de datos no válidos en un
+campo de la base de datos.</p>
+<p>Por ejemplo:<span class="wsp">
+    - En nuestro videoclub exigimos que los socios sean mayores de edad, que nos
+proporcionen un teléfono de contacto, y que un mismo indivíduo se de dos veces de alta:</span>
+        </p>
+<pre class="sql">CREATE TABLE socioss (
+   num_Socio  INTEGER       PRIMARY KEY,
+   DNI        VARCHAR(10)   UNIQUE,               -- impedimos dos DNI's iguales
+   nombre     VARCHAR(30),
+   edad       INTEGER       CHECK (edad &gt;= 18),   -- sólo mayores de edad
+   telefono   VARCHAR(9)    NOT NULL,             -- exigimos teléfono
+   direccion  VARCHAR(40),
+   cp         INTEGER,
+   FOREIGN KEY (cp) REFERENCES provincias(cp)
+);</pre>
+<h5>Constraint</h5>
+<p>Muchas veces, a cualquier restricción de integridad se le da un nombre de restricción
+(<i>constraint</i>) para facilitar el por parte de los administradores, pues estas restricciones
+quedan almacenadas en el esquema de la base de datos:</p>
+<pre class="sql">CREATE TABLE socios (
+   num_Socio  INTEGER,
+   DNI        VARCHAR(10),
+   nombre     VARCHAR(30),
+   edad       INTEGER,
+   telefono   VARCHAR(9)      NOT NULL,
+   direccion  VARCHAR(40),
+   cp         INTEGER,
+   CONSTRAINT pk_num_socio    PRIMARY KEY (num_Socio),
+   CONSTRAINT fk_cpostal      FOREIGN KEY (cp) REFERENCES provincias(cp),
+   CONSTRAINT unq_dni         UNIQUE (DNI),
+   CONSTRAINT chk_mayor_edad  CHECK (edad &gt;= 18)
+);</pre>
+<p>Estas operaciones se realizan una sóla vez: en el momento que se crean las tablas
+de la base de datos. A partir de ese momento, será el SGBD el que controle la integridad de los datos.</p>
+<h3>Integridad de entidad</h3>
+<p>La integridad de entidad se consigue definiendo claves primarias, y su cometido es
+evitar que se dupliquen registros.</p>
+<p>Sintaxis SQL:</p>
+<div class="cuadro up w4">
+<p>   campo tipoDato <code>PRIMARY KEY</code></p>
+<p>   <code>PRIMARY KEY (</code>campo, ...<code>)</code></p>
+</div>
+<p>Por ejemplo:<span class="wsp">
+    - si un individuo intenta darse dos veces de alta en un video club, la integridad de entidad lanzará un error y
+      se lo impedirá (sólo si la clave es el DNI).</span></p>
+<h3>Integridad referencial</h3>
+<p>Cuando las tablas están vinculadas mediante relaciones, los datos de cada tabla
+deben ser coherentes con los datos de las tablas vinculadas.</p>
+<p>La integridad referencial se consigue defiendo claves ajenas, que son claves
+que referencian a alguna clave primaria.</p>
+<p>Sintaxis SQL:</p>
+<div class="cuadro up w7">
+<p>   <code>FOREIGN KEY (</code>campo, ...<code>) REFERENCES</code> tabla(<code>campoKey, ...</code>)</p>
+</div>
+<p>Exigir integridad referencial a una clave ajena impedirá la existencia de registros
+cuya clave ajena no se relacionen con una clave principal (<i>claves ajenas huérfanas</i>)</p>
+<p>La integridad referencial nos garantiza que las claves ajenas sólo puedan tomar
+los valores de la clave primaria a la que hacen referencia, o bien el valor <code>NULL</code>.</p>
+<p>Por ejemplo:<span class="wsp">
+    - Si en nuestro videoclub se intenta crear un pedido para un cliente que no existe, la integridad referencial
+      provocará un error y el pedido no se creará.</span></p>
+<p><b>rechazar la operación</b> es la acción que se realiza por defecto cuando se intenta
+manipular una clave principal que es ajena en otra tabla y existen registros con
+su valor en esa tabla.</p>
+<p>Si queremos realizar operaciones (modificación y/o eliminación) sobre una clave principal
+que está referencia por otro campo, al crear la tabla deberemos especificar que 
+operación se debe reaizar.</p>
+<p>Sintaxis SQL:</p>
+<div class="cuadro up w9 t00">
+<p><span class="wsp"> <code>FOREIGN KEY (</code>campo, ...<code>) REFERENCES</code> tabla(<code>campoKey, ...</code>)
+                                              <code>ON</code> {<code>UPDATE</code> | <code>DELETE</code>}  {<code>NO ACTION</code>|<code>CASCADE</code>|<code>SET NULL</code>|<code>SET DEFAULT</code>}</span></p>
+</div>
+<p><code>NO ACTION</code>:
+<br><span class="tab"><span class="icon"></span>- El servidor MySQL rechaza la operación de eliminación de registro o actualización de
+clave en la tabla principal, si hubiera alguna clave ajena que haga referencia al registro que se
+intenta manipular.</span>
+</p>
+<p><code>CASCADE</code>:
+<br><span class="tab"><span class="icon"></span>- <b>actualizaciones en cascada</b>: cuando se modifica un valor de la clave principal
+de una tabla, los datos relacionados en las claves externas relacionadas con dicha
+tabla se modifican para reflejar el cambio de la clave principal.</span><br>
+<span class="tab"><span class="icon"></span>- <b>Eliminaciones en cascada</b>: cuando se elimina un registro de una tabla, todos
+los registros relacionados con él también se eliminan automáticamente.</span>
+</p>
+<p><code>SET NULL</code>:
+    - Inserta NULL en las claves ajenas de los registros que quedan desreferenciados. </p>
+<p><code>SET DEFAULT</code>:
+    - Los moteres "InnoDB" y "NDB" rechazan la creación de tablas con esta cláusula. </p>
+<p>Por ejemplo:<span class="wsp">
+    - Si un cliente se borra de nuestro videoclub y hemos exigido eliminación en cascada, si ese cliente tenía alguna
+      película alquilada, perderemos esa película.</p>
+<div class="notaB w5">
+<p><a href="https://dev.mysql.com/doc/refman/5.7/en/create-table-foreign-keys.html#idm139657013902816#idm139657013902816">FOREIGN KEY Constraints (MySql)</a></p>
+</div>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

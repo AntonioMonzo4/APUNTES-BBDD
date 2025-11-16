@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Copias de seguridad</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 08 nov 2023 09:57:53 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Copias de seguridad</h1>
+<h2>1. Backup de una base de datos</h2>
+<p>Desde consola podemos ver las BBDD que tenemos con el comando <code>mysqlshow</code>:</p>
+<pre class="ms2 w6"><span class="k">$</span> <span class="g">mysqlshow -u juckar -p</span>
+<span class="k">Enter password:</span>
++--------------------+
+|     Databases      |
++--------------------+
+| hispania           |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| provincias         |
+| prueba             |
+| equipos            |
+| sys                |
++--------------------+
+<span class="k">$</span></pre>
+<p>Podemos hacer un volcado de las instrucciones SQL que generan nuestra BDD:</p>
+<pre class="ms2 w6"><span class="k">$</span> <span class="g">mysqldump -u juckar -p HISPANIA &gt; hispania.sql</span>
+<span class="k">Enter password: </span>
+$</pre>
+<h4>Ejecutar el script SQL</h4>
+<p>Para restaurar la BDD debemos ejecutar el script. Podemos hacerlo desde shell
+o desde el entorno de mySql:</p>
+<pre class="ms2 w6"><span class="k">$</span> <span class="g">mysql -u juckar -p &lt; hispania.sql</span>
+<span class="k">Enter password: </span>
+$</pre>
+<pre class="ms2 w6"><span class="k">mysql&gt;</span> <span class="g">source  path/to/hispania.sql</span>
+<span class="k">mysql&gt;</span></pre>
+<h2>2. Backup de una tabla</h2>
+<p>Podemos duplicar una tabla enlazando con <code>CREATE TABLE</code> basándonos en el
+resultado de una <code>SELECT</code>.</p>
+<p><u><b>Sintaxis</b></u></p>
+<pre class="up">   CREATE TABLE [ IF NOT EXISTS ] tabla_nueva [ AS ] 
+       SELECT campos
+       FROM tabla_existente
+       [WHERE condiciones];</pre>
+<div class="notaB w4 t0">
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/create-table-select.html">CREATE TABLE AS SELECT (mysql)</a><br>
+<a href="https://mariadb.com/kb/en/create-table/#create-table-select#create-table-select">CREATE TABLE AS SELECT (mariadb)</a></p>
+</div>
+<p><br><u>Ejemplos</u>:</p>
+<pre class="sql t0 b1 def w7">CREATE TABLE clientesDup AS SELECT * FROM clientes;
+
+CREATE TABLE provinciasDup AS
+     SELECT nombre, comunidad, superficie FROM provincias;
+
+ -- en este ejemplo guardo la tabla en la bbdd 'historico'
+CREATE TABLE historico.ventas2022 AS
+     SELECT * FROM ventas WHERE anio = 2022;</pre>
+<p>&nbsp;</p>
+<div class="cuadro w7">
+<p><b>Pregunta</b>...<br>
+¿Cómo crearías una tabla que tenga exactamente la misma estructura que otra,
+pero complétamente vacía?</p>
+<div class="vihi dino">
+<pre class="sql"> CREATE TABLE Provincias2 AS SELECT * FROM Provincias WHERE cp=1978;
+ CREATE TABLE Tabloide2 AS SELECT * FROM Tabloide WHERE 1 = 2;
+ CREATE TABLE prods AS SELECT * FROM productos WHERE false;
+ CREATE TABLE historico.ventas2022 AS
+     SELECT * FROM ventas WHERE anio = 9999;</pre>
+</div>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

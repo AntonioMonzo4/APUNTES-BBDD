@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Usuarios MySql</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="dom, 05 may 2024 09:18:06 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Usuarios MySql</h1>
+<h2>Bases de datos de administración</h2>
+<p>En MySql existen tres bases de datos utilizadas para la configuración
+y administración del servidor y bases de datos:</p>
+<ul>
+  <li><b>performance_schema</b>: contiene estadísticas de uso del servidor y bases de
+datos (conexiones abiertas, usuarios, hosts, hilos, eventos, ...) puede ser usada por el
+administrador para labores de diagnóstico y realizar optimizaciones de rendimiento.</li>
+</ul>
+<pre class="notaB up w3"><a href="https://mariadb.com/kb/en/performance-schema/">Performance Schema (MariaDB)</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/performance-schema-quick-start.html">Performance Schema Quick Start</a></pre>
+<ul>
+  <li><b>information_schema</b>: Nos proporciona acceso al diccionario de datos de MySql, a los
+metadatos de la BD (nombres de bases de datos, tablas, tipos de datos, variables del sistema,
+privilegios de acceso, constraints, procedimientos, funciones, ...)</li>
+</ul>
+<pre class="notaB up w3"><a href="https://mariadb.com/kb/en/information-schema/">Information Schema (MariaDB)</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/information-schema.html">INFORMATION_SCHEMA Tables (MySQL)</a></pre>
+<ul>
+  <li><b>mysql</b>: Contiene tablas para administrar el SGBD. Mediante inserciones en estas
+tablas se crean los usuarios, se les dan privilegios, hosts desde los que se pueden conectar,
+permisos de host, ...</li>
+</ul>
+<pre class="notaB up w3"><a href="https://mariadb.com/kb/en/the-mysql-database-tables/">The mysql Database Tables (MariaDB)</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/mysql.html">MySQL (MySQL)</a></pre>
+<h2>Permitir conexiones remotas</h2>
+<p>Debemos tener configurado el servidor para que admita conexiones remotas, buscamos
+en el fichero de configuración una línea donde diga "<i>bind-address</i>":</p>
+<pre class="ms2">$ <span class="g">grep "bind" /etc/mysql/ -r</span>
+<span class="bb">/etc/mysql/mariadb.conf.d/50-server.cnf</span>:<span class="k">bind-address            = 127.0.0.1</span></pre>
+<p>Si sólo nos permite <i>localhost</i>, modificamos a "cualquier red" (0.0.0.0):</p>
+<pre class="ms2"># <span class="g">nano  /etc/mysql/mariadb.conf.d/50-server.cnf</span>
+...
+bind-address            = 0.0.0.0
+...</pre>
+<p>Reiniciamos el servidor:</p>
+<pre class="ms2"># <span class="g">systemctl restart  mariadb</span></pre>
+<h4>Conectar remotamente</h4>
+<p>Para conectarnos remotamente al SGBD usaremos las opciones:
+<br><span class="tab"><span class="icon"></span><code>-u  usuario        </code>  nombre del usuario</span><br>
+<span class="tab"><span class="icon"></span><code>-h  ip_host        </code>  dirección IP del servidor al que nos deseamos conectar</span><br>
+<span class="tab"><span class="icon"></span><code>-p                 </code>  para que nos solicite la password</span>
+</p>
+<p>Si el usuario "juckar" tiene el privilegio de conectarse remotamente:</p>
+<pre class="ms2">$ <span class="g">mysql -u juckar -h 192.168.1.45 -p</span>
+Enter password: <b class="k">secreto</b> </pre>
+<h2>Tabla mysql.user</h2>
+<p>La tabla <b>mysql.<span class="k">users</span></b> almacena los usuarios del SGBD, privilegios y máquinas desde
+las que pueden conectar:</p>
+<pre class="sql">DESC mysql.user;</pre>
+<pre class="up fs01">+------------------------+-----------------------------------+------+-----+----------+-------+
+| Field                  | Type                              | Null | Key | Default  | Extra |
++------------------------+-----------------------------------+------+-----+----------+-------+
+| <b>Host</b>                   | char(60)                          | NO   | PRI |          |       |
+| <b>User</b>                   | char(80)                          | NO   | PRI |          |       |
+| <b>Password</b>               | char(41)                          | NO   |     |          |       |
+| <span class="k">Select_priv</span>            | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Insert_priv</span>            | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Update_priv</span>            | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Delete_priv</span>            | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Create_priv</span>            | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Drop_priv</span>              | enum('N','Y')                     | NO   |     | N        |       |
+| Alter_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Create_tmp_table_priv  | enum('N','Y')                     | NO   |     | N        |       |
+| Lock_tables_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Create_view_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Show_view_priv         | enum('N','Y')                     | NO   |     | N        |       |
+| <span class="k">Create_user_priv</span>       | enum('N','Y')                     | NO   |     | N        |       |
+| <b>plugin</b>                 | char(64)                          | NO   |     |          |       |
+| password_expired       | enum('N','Y')                     | NO   |     | N        |       |
+| max_statement_time     | decimal(12,6)                     | NO   |     | 0.000000 |       |
+|     ···                |   ···                             | ···  |     | ···      |       |
+|     ···                |   ···                             | ···  |     | ···      |       |</pre>
+<pre class="notaB up w3"><a href="https://mariadb.com/kb/en/mysql-user-table/">mysql.user Table</a></pre>
+<div class="nota w6">
+<p>A partir de <a href="https://mariadb.com/kb/en/changes-and-improvements-in-mariadb-10-4/">MariaDB 10.4</a>,
+la tabla <a href="https://mariadb.com/kb/en/mysqlglobal_priv-table/">mysql.global_priv</a> reemplaza
+a <span class="k">mysql.user</span>, que debería ser considerada obsoleta.</p>
+</div>
+<p>Para ver los usuarios y desde dónde pueden conectarse:</p>
+<pre class="sql">SELECT Host, User, Password, plugin FROM mysql.user;
++-----------+--------+-------------------------------------------+-----------------------+
+| Host      | User   | Password                                  | plugin                |
++-----------+--------+-------------------------------------------+-----------------------+
+| localhost | root   | *249650D7EC6A6A3EADA8EC94D6578712EFC48C48 | unix_socket           |
+| %         | juckar | *CB23ACCA98F19F341FE45C702521D32BA4E8A357 | mysql_native_password |
++-----------+--------+-------------------------------------------+-----------------------+</pre>
+<p>La autenticación con el plugin <b>unix_socket</b> es solo útil para conexiones locales
+a MariaDB, mediante un socket de fichero. Con <b>mysql_native_password</b> podemos establecer
+conexiones remotas.</p>
+<p>Podemos consultar los plugins disponibles con:</p>
+<pre class="up">  <code>SHOW PLUGINS</code></pre>
+<p>Para el caso, solo nos interesan los de autenticación.</p>
+<pre class="notaB w4"><a href="https://mariadb.com/kb/en/authentication-plugin-unix-socket/">Authentication Plugin - Unix Socket (MariaDB) </a></pre>
+<h2>Crear usuarios</h2>
+<p>Sintaxis:</p>
+<pre class="cuadro up w10 sql t00">CREATE USER 'usuario'@'máquina' IDENTIFIED BY 'contraseña';
+CREATE USER 'usuario'@'máquina' IDENTIFIED WITH plugin USING password('contraseña');</pre>
+<p>Ejemplos:</p>
+<pre class="sql up">-- usuario que se conecta sólo desde la máquina donde se encuentra el servidor
+  CREATE USER 'juan'@'localhost' IDENTIFIED BY 'juan123';
+
+-- usuario que puede conectar desde cualquier máquina
+  CREATE USER "marta"@"%" IDENTIFIED BY "marta123";  
+  CREATE USER 'eva'@'%' IDENTIFIED WITH mysql_native_password USING password('eva123');
+
+-- usuario que puede conectar desde esa IP concreta
+  CREATE USER 'luis'@'192.168.1.77' IDENTIFIED BY 'luis123';</pre>
+<p>Si no especificamos lugar de conexión, dependerá del plugin que tenga configurado
+por defecto nuestro servidor:</p>
+<pre class="sql up">  CREATE USER ana IDENTIFIED BY 'ana123';</pre>
+<div class="nota">
+<p>También podríamo crear un usuario insertándolo directamente en la tabla mysql.user:</p>
+<pre class="sql up">   INSERT INTO user(Host, User, Password, plugin)
+      VALUES("localhost", "toby", password("toby123"), "unix_socket");
+   FLUSH PRIVILEGES;</pre>
+</div>
+<h4>Cambiar opciones de conexión</h4>
+<p>Si deseo que el usuario "juan" pueda conectar desde remoto debo actualizar
+la tabla <b>mysql.user</b>, y después decirle al servidor que lea y aplique los cambios
+realizados en los privilegios de usuarios:</p>
+<pre class="sql up">  UPDATE mysql.user SET host="%", plugin="mysql_native_password" WHERE user="juan";
+   FLUSH PRIVILEGES;</pre>
+<p>Igual para cambiar la password:</p>
+<pre class="sql up">  UPDATE mysql.user SET password=password("juanito") WHERE user="juan";
+   FLUSH PRIVILEGES;</pre>
+<h2>Borrar usuarios</h2>
+<p>Sintaxis:</p>
+<pre class="cuadro up w5 sql t00">DROP USER 'juan'@'máquina';</pre>
+<p>Ejemplos:</p>
+<pre class="sql up">  DROP USER juan;
+  DROP USER 'juan'@'192.168.5.5';
+  DROP USER 'juan'@'%';</pre>
+<pre class="notaB w4"><a href="https://dev.mysql.com/doc/refman/8.0/en/create-user.html">CREATE USER Statement</a>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/drop-user.html">DROP USER Statement (mysql)</a></pre>
+<p><script src="../../opt/jck/js/juckarSQL.js"></script></p>
+</article>
+</body>
+</html>

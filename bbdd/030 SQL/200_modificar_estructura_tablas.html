@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Modificar la estructura de las tablas</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 29 feb 2024 11:00:44 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Modificar la estructura de las tablas</h1>
+<p>La instrucción <code>ALTER TABLE</code> nos permite alterar la estructura de una tabla.</p>
+<p>▸ Operaciones sobre <b>columnas</b>:</p>
+<pre class="sql up cuadro w10 t00">ALTER TABLE &lt;tableName&gt;
+   ADD [COLUMN] &lt;colName&gt; &lt;colDefinition&gt; [FIRST|AFTER &lt;colName&gt;];     -- añade columnas
+   DROP [COLUMN] &lt;colName&gt;;                                            -- borra columnas
+   MODIFY [COLUMN] &lt;colName&gt; &lt;colDefinition&gt; [FIRST|AFTER &lt;colName&gt;];  -- modifica col.
+   RENAME COLUMN &lt;oldName&gt; TO &lt;newName&gt;;                              -- renombra columna</pre>
+<p>▸ Operaciones sobre la <b>tabla</b>:</p>
+<pre class="sql up cuadro w8 t00">ALTER TABLE &lt;tableName&gt;
+   RENAME &lt;newTableName&gt;;               -- renombra la la tabla</pre>
+<p>▸ Operaciones sobre <b>claves</b>:</p>
+<pre class="sql up cuadro w10 t00">ALTER TABLE &lt;tableName&gt;
+  ADD PRIMARY KEY(&lt;colName&gt;, ...);     -- convierte columna/s en clave primaria
+  ADD FOREIGN KEY(&lt;col&gt;, ...) REFERENCES &lt;otherTable&gt;(&lt;col&gt;, ...);  -- crea clave foránea
+  DROP PRIMARY KEY;                    -- borra la clave primaria (no la columna)
+  DROP FOREIGN KEY &lt;fk_symbol&gt;;        -- borra clave foránea (no la columna)</pre>
+<pre class="notaB w3">Sintaxis completa:
+    <a href="https://mariadb.com/kb/en/alter-table/">ALTER TABLE (mariadb)</a>
+    <a href="https://dev.mysql.com/doc/refman/8.3/en/alter-table.html">ALTER TABLE (mysql)</a></pre>
+<h2><u>1. Operaciones sobre columnas</u></h2>
+<h4>ALTER TABLE • ADD COLUMN</h4>
+<p>▸ Añado una columna (al final)</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   ADD COLUMN descripcion VARCHAR(32);</pre>
+<p>▸ Añado una columna intermedia:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   ADD COLUMN precio_final DECIMAL(5,2) AFTER descuento;</pre>
+<p>▸ Añado una columna al principio:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   ADD COLUMN id INT PRIMARY KEY AUTO_INCREMENT FIRST;</pre>
+<h4>ALTER TABLE • MODIFY COLUMN</h4>
+<p>▸ Modifica las características de los campos:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   MODIFY COLUMN dni INT PRIMARY KEY;</pre>
+<p>▸ Limito el dominio de un campo:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   MODIFY code INT CHECK (code BETWEEN 0 AND 1000);</pre>
+<p>Si la tabla tuviera algún dato ya almacenado que no cumpliera la restricción, mySQL
+no modifica su valor.</p>
+<p>▸ Evito que un campo admita nulos</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   MODIFY cpforanea INT NOT NULL;</pre>
+<h4>ALTER TABLE • DROP COLUMN</h4>
+<p>▸ Elimino una columna:</p>
+<pre class="sql">ALTER TABLE myTabla
+  DROP COLUMN precio_final;</pre>
+<h4>ALTER TABLE • RENAME COLUMN  <small>TO</small></h4>
+<p>▸ Cambiamos el nombre a un campo:</p>
+<pre class="sql">ALTER TABLE myTabla
+   RENAME COLUMN dni TO nif;</pre>
+<p>&nbsp;</p>
+<h2><u>2. Renombrado de tabla</u></h2>
+<h4>ALTER TABLE • RENAME</h4>
+<pre class="sql">ALTER TABLE myTabla
+   RENAME Tabloide;</pre>
+<p>&nbsp;</p>
+<h2><u>3. Claves</u></h2>
+<h4>ALTER TABLE • ADD <small>PRIMARY KEY</small></h4>
+<p>Añado una clave primaria compuesta:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   ADD PRIMARY KEY(id, code);</pre>
+<h4>ALTER TABLE • DROP <small>PRIMARY KEY</small></h4>
+<p>▸ Elimino la clave principal:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+  DROP PRIMARY KEY;</pre>
+<p>▸ Si es una clave autoincrementable, debemos quitar primero el <code>AUTO_INCREMENT</code>:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+  MODIFY COLUMN id INT;     -- quito el Auto_Increment (no el Primary Key)
+ALTER TABLE myTabla
+  DROP PRIMARY KEY;         -- quito la clave principal</pre>
+<h4>ALTER TABLE • ADD <small>FOREIGN KEY - REFERENCES</small></h4>
+<p>▸ Convierto en clave foránea una columna existente:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+  ADD FOREIGN KEY(personID) REFERENCES Clientes(IDCliente); </pre>
+<p>El campo referenciado debe ser clave primaria, si no, nos lanzará un error:
+<i>errno: 150 "Foreign key constraint is incorrectly formed"</i></p>
+<h4>ALTER TABLE • DROP <small>FOREIGN KEY</small></h4>
+<p>Para <span class="k">quitar una clave</span> foránea necesito conocer el nombre de "<code>CONSTRAINT</code>" asignado
+en el esquema de la BDD:</p>
+<pre class="sql t0"> SHOW CREATE TABLE myTabla;
+      ···
+      CONSTRAINT <span style="color:red">`Ventas_ibfk_1`</span> FOREIGN KEY (`dniEmp`) REFERENCES `Empleados` (`dni`)
+      ···</pre>
+<p>▸ Quito la clave foránea:</p>
+<pre class="sql t0">ALTER TABLE myTabla
+   DROP FOREIGN KEY Ventas_ibfk_1;</pre>
+<p>También podemos hacerlo borrando directamente la restricción:</p>
+<pre class="sql t0">ALTER TABLE Ventas
+   DROP CONSTRAINT Ventas_ibfk_1;</pre>
+<div class="nota">
+<p>Un <i>constrain</i> es algún tipo de restricción/condición impuesta a una columna, como
+por ejemplo, ser clave primaria, clave ajena, único, not null, tener un rango (CHECK), ...</p>
+<p>Podemos asignar un nombre al <code>CONSTRAINT</code> cuando creamos la tabla; esto suele hacerse
+con las claves.</p>
+<p>Puedo volver a crear la clave foránea con un nombre de restricción dado por mí:</p>
+<pre class="sql t00 fs0">ALTER TABLE Ventas
+  ADD CONSTRAINT Ventas_empleados_fk
+  FOREIGN KEY(idFor) REFERENCES empleados(id) ON DELETE NO ACTION ON UPDATE CASCADE;</pre>
+</div>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

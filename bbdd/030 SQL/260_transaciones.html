@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Transacciones</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="lun, 20 may 2024 16:31:03 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Transacciones</h1>
+<p>Una transacción es un bloque de instrucciones DML de actualización de tablas (INSERT, UPDATE, DELETE)
+que se consideran atómicas, es decir que, o bien se ejecuta todo el bloque correctamente, o bien no
+produce ningún efecto sobre la base de datos.</p>
+<p>Es decir: o se ejecutan todas, o no se ejecuta ninguna.</p>
+<p><u><b>ejemplo</b></u></p>
+<div class="t0 up">
+<p>Un ejemplo sencillo es imaginar una transferencia monetaria entre dos cuentas corrientes, donde
+hay que hacer dos actualizaciones: extraer dinero de una cuenta corriente, y añadir dinero en otra.<br>
+Si cualquiera de esas actualizaciones fallara, no se podría dar por válida la actualización
+en la base de datos.</p>
+</div>
+<p>Los comandos SQL utilizados para realizar transacciones son:
+<br><span class="tab"><span class="icon"></span><code>START TRANSACTION</code>: inicia la transacción (en MySQL también funciona <code>BEGIN</code>)</span><br>
+<span class="tab"><span class="icon"></span><code>COMMIT</code>: Confirma la transacción: todas las operaciones han sido buenas y se graban en la BBDD.</span><br>
+<span class="tab"><span class="icon"></span><code>ROLLBACK</code>: deshecha la transacción</span>
+</p>
+<pre class="sql cuadro w4">  { START TRANSACTION | BEGIN }
+      -- instrucciones SQL
+         ··· 
+  { COMMIT | ROLLBACK }</pre>
+<p>Por ejemplo, la transferencia bancaria anterior podría ser:</p>
+<pre class="sql t00">START TRANSACTION;
+  SET @cantidad = 1500;
+  UPDATE Cuentas  SET saldo = saldo - @cantidad  WHERE cc = 6415845520;
+  UPDATE Cuentas  SET saldo = saldo + @cantidad  WHERE cc = 3300012450;
+-- Si no ha habido problemas:
+COMMIT;
+-- En caso contrario:
+ROLLBACK;</pre>
+<div class="notaB w4">
+<p><a href="https://mariadb.com/kb/en/transactions/">Transactions (mariadb)</a><br>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/sql-transactional-statements.html">Transactional and Locking Statements (MySQL)</a></p>
+</div>
+<p><script src="../../opt/jck/js/juckarSQL.js"></script></p>
+</article>
+</body>
+</html>

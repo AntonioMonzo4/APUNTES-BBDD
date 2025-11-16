@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>SQL: <b>Structured Query Language</b></title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 02 nov 2023 11:30:04 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>SQL: <b>Structured Query Language</b></h1>
+<p>El lenguaje SQL es uno de los más utilizados en la industria informática en todos los tiempos.</p>
+<div class="notaB w3">
+<p><a href="https://mariadb.com/kb/en/sql-statements-structure/">SQL (mariadb)</a><br>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/sql-statements.html">SQL (mySql)</a><br>
+<a href="https://www.w3schools.com/sql/default.asp">SQL (w3schools)</a></p>
+</div>
+<div class="def w9">
+<p>SQL es un <b>lenguaje declarativo</b>: lo más importante es definir "<i>qué se desea
+hacer</i>", y no cómo hacerlo.<br>
+De esto último ya se encarga el motor de la base de datos.</p>
+</div>
+<pre class="nota w5 t1">El motor por defecto del SGBD de mariaDB es <span class="k">innoDB</span>. Para ver qué
+otros motores tenemos disponibles y sus características:
+<code>   SHOW ENGINES;</code></pre>
+<p>SQL es un lenguaje <b>estándar</b>, aunque cada base de datos tiene sus peculiaridades. Es
+conveniente revisar siempre la documentación del SGBD con el que trabajamos,
+ya que puede tener alguna característica que no cumpla el estándar.</p>
+<h3>Comandos</h3>
+<p>Se establecen tres tipos de comandos, según su uso:</p>
+<p><b>1. Comandos DDL: Lenguaje de Definición de Datos.</b></p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>CREATE</code></td><td>Crea nuevas bases de datos, tablas, vistas índices, usuarios, procedimientos, triggers.</td>
+  </tr>
+  <tr>
+    <td><code>DROP</code></td><td>Elimina bases de datos, tablas, vistas, e índices usuarios, procedimientos, triggers.</td>
+  </tr>
+  <tr>
+    <td><code>ALTER</code></td><td>Modifica la estructura de tablas, vistas, usuarios, procedimientos, triggers.</td>
+  </tr>
+</table>
+<p><b>2. Comandos DML. Lenguaje de Manipulación de Datos.</b></p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>SELECT</code></td><td>Consulta filas que satisfagan un criterio determinado</td>
+  </tr>
+  <tr>
+    <td><code>INSERT</code></td><td>Introduce nuevas filas en una tabla</td>
+  </tr>
+  <tr>
+    <td><code>UPDATE</code></td><td>Modifica valores de los campos</td>
+  </tr>
+  <tr>
+    <td><code>DELETE</code></td><td>Elimina filas</td>
+  </tr>
+</table>
+<p><b>3. Comandos DCL. Lenguaje de Control de Datos.</b></p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>GRANT</code></td><td>Concede permisos a usuarios sobre tablas o bases de datos</td>
+  </tr>
+  <tr>
+    <td><code>REVOKE</code></td><td>Elimina permisos previamente concedidos con GRANT</td>
+  </tr>
+</table>
+<h3>Cláusulas</h3>
+<p>Condiciones o criterios, son palabras especiales que permiten modificar el
+funcionamiento de un comando.</p>
+<p>Por ejemplo, las cláusulas utilizadas con el comando <code>SELECT</code>:</p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>FROM</code></td><td>Especifica la tabla de la que se usará en la instrucción SQL</td>
+  </tr>
+  <tr>
+    <td><code>WHERE</code></td><td>Especifica las condiciones que deben reunir las filas a tratar</td>
+  </tr>
+  <tr>
+    <td><code>GROUP BY</code></td><td>Separa las filas seleccionadas en grupos específicos</td>
+  </tr>
+  <tr>
+    <td><code>HAVING</code></td><td>Expresa la condición que debe satisfacer cada grupo</td>
+  </tr>
+  <tr>
+    <td><code>ORDER BY</code></td><td>Ordena las filas seleccionadas de acuerdo a un criterio específico</td>
+  </tr>
+  <tr>
+    <td><code>LIMIT</code></td><td>(MySQL) Limita el número de filas a mostrar en la consulta</td>
+  </tr>
+</table>
+<p>Otras cláusulas de <code>SELECT</code> estechamente vinculadas con el álgebra relacional son:</p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>UNION</code></td><td>Muestra los resultados de varias consultas, sin repeticiones</td>
+  </tr>
+  <tr>
+    <td><code>INTERSECTION</code></td><td>Muestra las filas que tienen en común varias consultas</td>
+  </tr>
+  <tr>
+    <td><code>JOIN</code></td><td>Realiza consultas relacionando varias tablas</td>
+  </tr>
+</table>
+<h3>Operadores</h3>
+<p>Permiten crear expresiones complejas. Pueden ser:
+<br><span class="tab"><span class="icon"></span>- aritméticos (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>) o </span><br>
+<span class="tab"><span class="icon"></span>- lógicos (<code>&lt;</code>, <code>&lt;=</code>, <code>=</code>, <code>&gt;=</code>, <code>&gt;</code>, <code>&lt;&gt;</code>, <code>AND</code>, <code>OR</code>, <code>NOT</code>, <code>LIKE</code>, <code>BETWEEN</code>, <code>IN</code>, <code>EXIST</code>, <code>ANY</code>, <code>ALL</code>).</span>
+</p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>AND</code></td><td>Evalúa dos condiciones y devuelve un valor de verdad sólo si ambas son ciertas.</td>
+  </tr>
+  <tr>
+    <td><code>OR</code></td><td>Evalúa dos condiciones y devuelve un valor de verdad si alguna de las dos es cierta.</td>
+  </tr>
+  <tr>
+    <td><code>NOT</code></td><td>Devuelve el valor contrario de la expresión.</td>
+  </tr>
+</table>
+<p>Operadores de comparación</p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>BETWEEN</code></td><td>Especifica un intervalo de valores.</td>
+  </tr>
+  <tr>
+    <td><code>LIKE</code></td><td>Realiza comparaciones con metacaracteres</td>
+  </tr>
+  <tr>
+    <td><code>IN</code></td><td>Selecciona filas con cierto campo dentro de un conjunto de datos</td>
+  </tr>
+</table>
+<h3>Funciones</h3>
+<p>Las funciones nos permiten realizar operaciones sobre valores, que pueden ser
+los campos de una tabla. Esos valores deben pasarse como argumento a la función:
+<br><span class="tab"><span class="icon"></span><span class="g">nombreFuncion</span>(<i>arg1</i>, <i>arg2</i>, ...)</span>
+</p>
+<p><u><a href="https://mariadb.com/kb/en/built-in-functions/">Funcines mariadb</a></u></p>
+<div class="up">
+<ul>
+  <li><a href="https://mariadb.com/kb/en/string-functions/">de texto</a></li>
+  <li><a href="https://mariadb.com/kb/en/date-time-functions/">de fecha/hora</a></li>
+  <li><a href="https://mariadb.com/kb/en/aggregate-functions/">de agregación</a></li>
+  <li><a href="https://mariadb.com/kb/en/numeric-functions/">numéricas</a></li>
+  <li><a href="https://mariadb.com/kb/en/control-flow-functions/">de control de flujo</a></li>
+</ul>
+</div>
+<p>Las <span class="k">funciones de agregado</span> hacen un "resumen" de valores de campos, y
+se suelen utilizarse en combinación con <code>HAVING</code> y/o <code>GROUP BY</code>.</p>
+<table border="1" class="t0">
+  <tr>
+    <th>Función</th><th>Descripción</th>
+  </tr>
+  <tr>
+    <td><code>AVG</code></td><td>Calcula el promedio de los valores de un campo determinado.</td>
+  </tr>
+  <tr>
+    <td><code>COUNT</code></td><td>Devuelve el número de filas de la selección.</td>
+  </tr>
+  <tr>
+    <td><code>SUM</code></td><td>Devuelve la suma de todos los valores de un campo determinado.</td>
+  </tr>
+  <tr>
+    <td><code>MAX</code></td><td>Devuelve el valor más alto de un campo determinado.</td>
+  </tr>
+  <tr>
+    <td><code>MIN</code></td><td>Devuelve el valor mínimo de un campo determinado.</td>
+  </tr>
+</table>
+<h3>Literales</h3>
+<p>Los podemos llamar también constantes y representan a valores concretos.</p>
+<table border="1" class="t0">
+  <tr>
+    <td><code>23/03/1997</code></td><td>Literal fecha</td>
+  </tr>
+  <tr>
+    <td><code>"Orbea"</code></td><td>Literal caracteres</td>
+  </tr>
+  <tr>
+    <td><code>3.1415</code></td><td>Literal número</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</article>
+</body>
+</html>

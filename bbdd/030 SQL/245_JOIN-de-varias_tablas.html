@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Union de múltiples tablas con JOINs</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 24 abr 2024 11:38:37 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Union de múltiples tablas con JOINs</h1>
+<p>Cuando se relacionan más de dos tablas, el resultado de la operación:</p>
+<pre class="sql">  SELECT * FROM <span class="b">Tb1</span>, <span class="b">Tb2</span>, <span class="b">Tb3</span>, <span class="b">Tb4</span>;</pre>
+<p>son todos las combinaciones posibles de los registros de todas las tablas, es decir,
+el producto cartesiano:<span class="wsp">
+       </span><span class="b">Tb1</span> x <span class="b">Tb2</span> x <span class="b">Tb3</span> x <span class="b">Tb4</span>.</p>
+<pre class="cuadro"><b>Pregunta...</b> ¿Cuántos registros obtendríamos en la consulta anterior si
+            las tablas tuvieran <span class="b">50</span>, <span class="b">25</span>, <span class="b">8</span> y <span class="b">100</span> registros?</pre>
+<p>Para eliminar todos los registros espúrios, debemos seleccionar sólo aquellos registros del producto
+cartesiano cuya clave foránea coincide con la clave principal de la tabla con que se relaciona.</p>
+<p>Es decir: <span class="k">deberían aparecer, al menos, tantos JOIN como productos cartesianos.</span></p>
+<p>Por ejemplo, con 4 tablas, <code><span class="b">Tb1</span> x <span class="b">Tb2</span> x <span class="b">Tb3</span> x <span class="b">Tb4</span></code>, debemos hacer 3 JOIN:</p>
+<pre class="up">       1<sup>er</sup> JOIN:    <span class="b">Tb1</span> x <span class="b">Tb2</span> <span class="rr">➜</span> <span class="bb">Tj12</span>
+            2º JOIN:     <span class="bb">Tj12</span> x <span class="b">Tb3</span> <span class="rr">➜</span> <span class="bb">Tj123</span>
+                3<sup>er</sup> JOIN:     <span class="bb">Tj123</span> x <span class="b">Tb4</span> <span class="rr">➜</span> <span class="bb">Tj1234</span></pre>
+<p>En cada JOIN deben relacionarse claves de cualquiera de las tablas que ya se han combinado:
+<br><span class="tab"><span class="icon"></span>- En el 1<sup>er</sup> JOIN sólo podemos relacionar claves de <span class="b">Tb1</span> con <span class="b">Tb2</span></span><br>
+<span class="tab"><span class="icon"></span>- En el 2º JOIN podemos relacionar cualquier clave de <span class="b">Tb1</span>, <span class="b">Tb2</span> y <span class="b">Tb3</span>.</span><br>
+<span class="tab"><span class="icon"></span>- En el 3<sup>er</sup> JOIN podemos relacionar cualquier clave de cualquier tabla.</span>
+</p>
+<p>La consultas dependerán de las claves con que se relacionan las distintas tablas:</p>
+<div class="flex up">
+<pre class="sql">   SELECT * FROM Tb1
+      JOIN Tb2 ON Tb2.idfor = Tb1.id
+      JOIN Tb3 ON Tb3.idfor = Tb1.id
+      JOIN Tb4 ON Tb4.idfor = Tb3.id;</pre>
+<pre class="sql">          SELECT * FROM Tb1
+             JOIN Tb2 ON Tb2.idfor = Tb1.id
+             JOIN Tb3 ON Tb3.idfor = Tb2.id
+             JOIN Tb4 ON Tb4.idfor = Tb1.id;</pre>
+</div>
+<h4>Ejemplo</h4>
+<p>Dos empresas <b>A</b> y <b>B</b> se fusionan y ahora tienen dos tablas de clientes</p>
+<div class="flex up">
+<pre class="sql lh2">  SELECT * FROM clientesA;
+   +------+--------+----+
+   | dni  | nombre | cp |
+   +------+--------+----+
+   | 1111 | Luis   | 24 |
+   | 2222 | Marta  | 28 |
+   | 3333 | Marcos | 28 |
+   | 4444 | Tania  | 44 |
+   +------+--------+----+</pre>
+<pre>    </pre>
+<pre class="sql lh2">SELECT * FROM provincias;
+  +----+-----------+
+  | cp |  nombre   |
+  +----+-----------+
+  | 24 | León      |
+  | 28 | Madrid    |
+  | 44 | Teruel    |
+  | 42 | Soria     |
+  |  8 | Barcelona |
+  +----+-----------+</pre>
+<pre>    </pre>
+<pre class="sql lh2"> SELECT * FROM clientesB;
+  +------+--------+------+
+  | dni  | nombre | cp   |
+  +------+--------+------+
+  | 1111 | <span class="k">Luis</span>   |   24 |
+  | 2222 | <span class="k">Marta</span>  |   28 |
+  | 8888 | Bart   |    8 |
+  | 9999 | Tom    |   44 |
+  +------+--------+------+
+* <small>Luis y Marta son clientes de <b>A</b> y de <b>B</b>.</small></pre>
+</div>
+<p>¿Qué clientes tenemos en común? .</p>
+<pre class="sql"> SELECT * FROM clientesA A, clientesB B 
+   WHERE A.dni = B.dni;
+
+ SELECT * FROM clientesA A
+          JOIN clientesB B ON A.dni = B.dni;
+ +------+--------+------+------+--------+------+
+ | dni  | nombre | cp   | dni  | nombre | cp   |
+ +------+--------+------+------+--------+------+
+ | 1111 | Luis   |   24 | 1111 | Luis   |   24 |
+ | 2222 | Marta  |   28 | 2222 | Marta  |   28 |
+ +------+--------+------+------+--------+------+</pre>
+<p>Observar que aunque los DNI no estan relacionados entre sí como claves, podermos
+utilizarlos en el JOIN.<br>&nbsp;</p>
+<p>Si queremos mostrar la provincia debemos relacionar las 3 tablas:</p>
+<pre class="sql">SELECT * FROM clientesA A
+         JOIN provincias ON A.cp = provincias.cp
+         JOIN clientesB B ON provincias.cp = B.cp
+  WHERE A.dni = B.dni;
+  
+ +------+--------+------+----+--------+------+--------+------+
+ | dni  | nombre | cp   | cp | nombre | dni  | nombre | cp   |
+ +------+--------+------+----+--------+------+--------+------+
+ | 1111 | Luis   |   24 | 24 | León   | 1111 | Luis   |   24 |
+ | 2222 | Marta  |   28 | 28 | Madrid | 2222 | Marta  |   28 |
+ +------+--------+------+----+--------+------+--------+------+</pre>
+<script src="js/juckarSQL.js"></script>
+
+<div class="vihi dino">
+<p>Cualquiera de las consultas también serían válidas:</p>
+<pre class="sql">SELECT * FROM clientesA A
+         JOIN provincias ON provincias.cp = A.cp
+         JOIN clientesB B ON provincias.cp = B.cp;
+
+ SELECT * FROM clientesA A
+         JOIN provincias ON A.cp = provincias.cp
+         JOIN clientesB B ON A.cp = B.cp
+  WHERE A.dni = B.dni; </pre>
+<p>alter session set NLS_DATE_FORMAT = 'DD/MM/YYYY';</p>
+<p>DROP DATABASE IF EXISTS alfa;
+CREATE DATABASE alfa;
+USE alfa
+create table provincias(cp int primary key, nombre varchar(30));
+create table clientes(dni int primary key, nombre varchar(30), cp int, foreign key (cp) references provincias(cp) );
+insert into provincias values(44, "Teruel"), (28, "Madrid"), (24, "León"), (42, "Soria");
+insert into clientes values(1111, "Luis", 24), (2222, "Marta", 28), (3333, "Marcos", 28), (4444, "Tania", 44);</p>
+<p>DROP DATABASE IF EXISTS beta;
+CREATE DATABASE beta;
+USE beta
+create table provincias(cp int primary key, nombre varchar(30));
+insert into provincias values(44, "Teruel"), (28, "Madrid"), (8, "Barcelona"), (24, "León");
+create table clientes(dni int primary key, nombre varchar(30), cp int, foreign key (cp) references provincias(cp));
+insert into clientes values(1111, "Luis", 24), (2222, "Marta", 28), (8888, "Bart", 8), (9999,"Tom", 44);</p>
+<p>Fusión de empresas:
+use alfa
+create table clientesNew (select * from clientes UNION select * from beta.clientes);
+create table provinciasNew (select * from provincias UNION select * from beta.provincias);
+drop table clientes;
+drop table provincias;
+alter table provinciasNew RENAME provincias;
+alter table clientesNew RENAME clientes;
+select * from clientes INNER JOIN provincias ON clientes.cp = provincias.cp;</p>
+<p>Pero parece que la crea sin Claves (ni primarias ni ajenas)</p>
+<p>INSERT INTO clientes SELECT * FROM alfa.clientes WHERE alfa.clientes.dni NOT IN (SELECT dni FROM clientes);
+INSERT INTO provincias SELECT * FROM alfa.provincias WHERE alfa.provincias.cp NOT IN (SELECT cp FROM provincias);</p>
+</div>
+<p>&nbsp;</p>
+<script src="js/juckarSQL.js"></script>
+<!--script>MathJax = { loader: {load: ["input/asciimath", "output/chtml"]} }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script-->
+
+</article>
+</body>
+</html>

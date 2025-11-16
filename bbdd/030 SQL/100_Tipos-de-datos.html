@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Tipos de datos MySQL</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 30 sept. 2023 21:31:42 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Tipos de datos MySQL</h1>
+<div class="notaB w4 t1">
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/data-types.html">Tipos de Datos (mySQL)</a></p>
+</div>
+<p>Todos los valores de un mismo atributo siempre deben seguir un mismo formato,
+es decir, deben ser de un mismo tipo. Ahora debemos pensar en cómo vamos a
+representar cada uno de esos valores.</p>
+<p>Por ejemplo, un DNI siempre se representa como un conjunto de dígitos y
+una letra al final.</p>
+<p>Si tuviéramos que clasificarlo diríamos que es un conjunto de caracteres
+alfanuméricos.</p>
+<p>¿Y el Sueldo? para nosotros sería un número entero con dos decimales.</p>
+<p>Al crear la relación (tabla) decidimos qué conjunto de datos deberá almacenar
+en las filas de los distintos atributos, es decir: a cada atributo debemos
+asignarle un <b>tipo de dato</b>.</p>
+<p>Entonces, para cada atributo de una tabla debemos tomar dos decisiones:
+<br><span class="tab"><span class="icon"></span>- Qué <b>nombre</b> va a tener.</span><br>
+<span class="tab"><span class="icon"></span>- Qué <b>tipo de datos</b> va a almacenar.</span>
+</p>
+<p>Existen distintas formas de nombrar los tipos de datos dependiendo del lenguaje
+utilizado (C, Pascal, java, ...) y del SGBD (MySQL, SQL Server, Oracle DB, Access, ...).</p>
+<p>Los tipos utilizados en MySQL 8.0 son:</p>
+<h4><span class="wsp">    </span>Texto</h4>
+<table border="1" class="dw">
+  <tr>
+    <td><code><b>CHAR</b>(size)</code></td><td>A FIXED length string (can contain letters, numbers, and special characters). The size parameter specifies the column length in characters - can be from 0 to 255. Default is 1</td>
+  </tr>
+  <tr>
+    <td><code><b>VARCHAR</b>(size)</code></td><td>A VARIABLE length string (can contain letters, numbers, and special characters). The size parameter specifies the maximum string length in characters - can be from 0 to 65535</td>
+  </tr>
+  <tr>
+    <td><code>BINARY(size)</code></td><td>Equal to <code>CHAR()</code>, but stores binary byte strings. The size parameter specifies the column length in bytes. Default is 1</td>
+  </tr>
+  <tr>
+    <td><code>VARBINARY(size)</code></td><td>Equal to <code>VARCHAR()</code>, but stores binary byte strings. The size parameter specifies the maximum column length in bytes.</td>
+  </tr>
+  <tr>
+    <td><code>TINYBLOB</code></td><td>For BLOBs (Binary Large Objects). Max length: 255 bytes</td>
+  </tr>
+  <tr>
+    <td><code>TINYTEXT</code></td><td>Holds a string with a maximum length of 255 characters</td>
+  </tr>
+  <tr>
+    <td><code><b>TEXT</b>(size)</code></td><td>Holds a string with a maximum length of 65,535 bytes</td>
+  </tr>
+  <tr>
+    <td><code>BLOB(size)</code></td><td>For BLOBs (Binary Large Objects). Holds up to 65,535 bytes of data</td>
+  </tr>
+  <tr>
+    <td><code>MEDIUMTEXT</code></td><td>Holds a string with a maximum length of 16,777,215 characters</td>
+  </tr>
+  <tr>
+    <td><code>MEDIUMBLOB</code></td><td>For BLOBs (Binary Large Objects). Holds up to 16,777,215 bytes of data</td>
+  </tr>
+  <tr>
+    <td><code>LONGTEXT</code></td><td>Holds a string with a maximum length of 4,294,967,295 characters</td>
+  </tr>
+  <tr>
+    <td><code>LONGBLOB</code></td><td>For BLOBs (Binary Large Objects). Holds up to 4,294,967,295 bytes of data</td>
+  </tr>
+  <tr>
+    <td><code><b>ENUM</b>(val1, val2, val3, ...)</code></td><td>A string that can have only one value, chosen from a list of possible values. If a value is inserted that is not in the list, a blank value will be inserted. The values are sorted in the order you enter them.<br><span class="wsp">   </span>- You can list up to 65535 values in an <code>ENUM</code> list.</td>
+  </tr>
+  <tr>
+    <td><code>SET(val1, val2, val3, ...)</code></td><td>A string that can have 0 or more values, chosen from a list of possible values.<br><span class="wsp">   </span>-You can list up to 64 values in a <code>SET</code> list. </td>
+  </tr>
+</table>
+<h4><span class="wsp">    </span>Numérico</h4>
+<table border="1" class="dw">
+  <tr>
+    <td><code>BIT(size)</code></td><td>The number of bits per value is specified in size. The size parameter can hold a value from 1 to 64. The default value for size is 1.</td>
+  </tr>
+  <tr>
+    <td><code><b>TINYINT</b>(size)</code></td><td>Signed range is from <span class="b">-128 to 127</span>. Unsigned range is <span class="b">from 0 to 255</span>. The size parameter specifies the maximum display width (which is 255)</td>
+  </tr>
+  <tr>
+    <td><code>BOOL </code><br><code> <b>BOOLEAN</b></code></td><td>Zero is considered as false, nonzero values are considered as true.</td>
+  </tr>
+  <tr>
+    <td><code>SMALLINT(size)</code></td><td>Signed range is <span class="b">from -32768 to 32767</span>. Unsigned range is <span class="b">from 0 to 65535</span>.<br>The size parameter specifies the maximum display width (which is 255)</td>
+  </tr>
+  <tr>
+    <td><code>MEDIUMINT(size)</code></td><td>Signed range is from <span class="b">-8388608 to 8388607</span>. Unsigned range is <span class="b">from 0 to 16777215</span>.<br>The size parameter specifies the maximum display width (which is 255)</td>
+  </tr>
+  <tr>
+    <td><code><b>INT</b>(size) </code><br><code> INTEGER(size)</code></td><td>Signed range is from <span class="b">-2147483648 to 2147483647</span>.<br>Unsigned range is <span class="b">from 0 to 4294967295</span>.<br>The size parameter specifies the maximum display width (which is 255)</td>
+  </tr>
+  <tr>
+    <td><code><b>BIGINT</b>(size)</code></td><td>Signed range is from <span class="b">-9223372036854775808 to 9223372036854775807</span>.<br>Unsigned range is from <span class="b">0 to 18446744073709551615</span>.<br>The size parameter specifies the maximum display width (which is 255)</td>
+  </tr>
+  <tr>
+    <td><code><b>FLOAT</b>(p)</code></td><td>MySQL uses the p value to determine whether to use <code>FLOAT</code> or <code>DOUBLE</code> for the resulting data type. If p is from 0 to 24, the data type becomes FLOAT(). If p is from 25 to 53, the data type becomes DOUBLE()</td>
+  </tr>
+  <tr>
+    <td><code><b>DOUBLE</b>(size, d)</code></td><td>The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter</td>
+  </tr>
+  <tr>
+    <td><code>DEC(size, d)</code><br><code> <b>DECIMAL</b>(size, d)</code></td><td>An exact fixed-point number. The total number of digits is specified in size. The number of digits after the decimal point is specified in the d parameter.<br><span class="wsp">    </span>- The maximum number for size is 65. The maximum number for d is 30.<br><span class="wsp">    </span>- The default value for size is 10. The default value for d is 0.</td>
+  </tr>
+</table>
+<p>Note: <b>Todos</b> los tipos numéricos admiten las opciones <code>UNSIGNED</code> or <code>ZEROFILL</code>. If you add the <code>UNSIGNED</code> option, MySQL disallows negative values for the column. If you add the <code>ZEROFILL</code> option, MySQL automatically also adds the <code>UNSIGNED</code> attribute to the column.</p>
+<h4><span class="wsp">    </span>Fecha y hora</h4>
+<table border="1" class="dw">
+  <tr>
+    <td><code><b>DATE</b></code></td><td><span class="b">YYYY-MM-DD</span>. The supported range is from '1000-01-01' to '9999-12-31'</td>
+  </tr>
+  <tr>
+    <td><code><b>DATETIME</b>(fsp)</code></td><td><span class="b">YYYY-MM-DD hh:mm:ss</span>. The supported range is from '1000-01-01 00:00:00' to '9999-12-31 23:59:59'. Adding <code>DEFAULT</code> and <code>ON UPDATE</code> in the column definition to get automatic initialization and updating to the current date and time.</td>
+  </tr>
+  <tr>
+    <td><code>TIMESTAMP(fsp)</code></td><td><span class="b">YYYY-MM-DD hh:mm:ss</span>. The supported range is from '1970-01-01 00:00:01' UTC to '2038-01-09 03:14:07' UTC. Automatic initialization and updating to the current date and time can be specified using <code>DEFAULT CURRENT_TIMESTAMP</code> and <code>ON UPDATE CURRENT_TIMESTAMP</code> in the column definition.<br>TIMESTAMP values are stored as the number of seconds since the Unix epoch ('1970-01-01 00:00:00' UTC).</td>
+  </tr>
+  <tr>
+    <td><code><b>TIME</b>(fsp)</code></td><td><span class="b">hh:mm:ss</span>. The supported range is from '-838:59:59' to '838:59:59'</td>
+  </tr>
+  <tr>
+    <td><code><b>YEAR</b></code></td><td>A year in four-digit format. Values allowed in four-digit, from <span class="b">1901 to 2155</span>, and <span class="b">0000</span>.</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<pre class="web w6"><a href="https://es.wikipedia.org/wiki/Tipo_de_dato">https://es.wikipedia.org/wiki/Tipo_de_dato</a>
+<a href="https://www.w3schools.com/sql/sql_datatypes.asp">https://www.w3schools.com/sql/sql_datatypes.asp</a></pre>
+</article>
+</body>
+</html>

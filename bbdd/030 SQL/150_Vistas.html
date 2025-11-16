@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Vistas</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 02 nov 2023 11:32:22 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Vistas</h1>
+<div class="def w7">
+<p>Una <span class="k"><b>vista</b></span> es el resultado de una consulta <code>SELECT</code> sobre una o varias
+tablas; también se denominan <span class="k">tabla virtual</span>.</p>
+</div>
+<p>Una vista tiene la misma estructura que una tabla (filas y columnas), la
+única diferencia es que de ella <b>sólo se almacena la definición, no los datos</b>.</p>
+<p>Podemos trabajar con las vistas exactamente igual que con las tablas:
+se pueden insertar, modificar, borrar y hacer consultas SELECT, aunque
+las operaciones de modificación podrían estar limitadas por algunas
+restricciones de los campos de la tabla que no aparecen en la vista.</p>
+<p>De hecho, cuando hacemos una consulta del tipo</p>
+<pre class="sql t0 up0">SHOW TABLES;</pre>
+<div class="up">
+<p>nos aprecen también las vistas.</p>
+</div>
+<p><b><span class="k">¿Cuándo crear vistas?</span></b></p>
+<div class="up">
+<ul>
+  <li>Cuando deseamos ocultar ocultar algunos datos a algunos usuarios de
+la BD, como mecanismo de seguridad.</li>
+  <li>Para permitir a usuarios/aplicaciones acceder a datos en forma
+personalizada, según sus necesidades.</li>
+  <li>Cuando realizamos múltiples veces a lo largo del tiempo una misma
+consulta, que podría resultar excesivamente complicada, dejamos la vista
+almacenada para consultarla cuantas veces necesitemos.</li>
+</ul>
+</div>
+<p>Una vista, en resumen, es un filtro de seguridad a ciertos usuarios para
+la BD. Si queremos ocultar cierta información a ciertos usuarios, podemos
+crear una vista que elimine la información no deseada y muestre solo aquella
+a la que tienen acceso.</p>
+<h2>Crear una vista</h2>
+<p><u>Sintaxis</u>:</p>
+<pre class="t0"><span class="g"><b>CREATE</b>
+    [OR REPLACE]
+    [ALGORITHM = {UNDEFINED | MERGE | TEMPTABLE}]
+    [DEFINER = { user | CURRENT_USER | role | CURRENT_ROLE }]
+    [SQL SECURITY { DEFINER | INVOKER }]
+    <b>VIEW</b> [IF NOT EXISTS] <i>view_name</i> [(column_list)]
+    <b>AS</b> <i>select_statement</i>
+    [WITH [CASCADED | LOCAL] CHECK OPTION]</span></pre>
+<div class="notaB w4">
+<p><a href="https://mariadb.com/kb/en/create-view/"><code>CREATE VIEW AS</code> (mariadb)</a><br>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/create-view.html"><code>CREATE VIEW AS</code> (mysql)</a><br>
+<a href="https://www.w3schools.com/mysql/mysql_view.asp"><code>CREATE VIEW AS</code> (w3schools)</a></p>
+</div>
+<p>En forma muy simplificada la sintaxis:</p>
+<p><code>    <b>CREATE</b> [OR REPLACE] <b>VIEW</b> [IF NOT EXISTS] &lt;nombreVista&gt; <b>AS SELECT ···</b></code></p>
+<h5>Ejemplos</h5>
+<pre class="sql t0 b1 def">CREATE VIEW Andalucia AS
+   SELECT * FROM Provincias WHERE comunidad = "Andalucía";
+
+CREATE OR REPLACE VIEW menores AS
+   SELECT nombre, apellidos, edad FROM alumnos WHERE edad &lt; 18;
+   
+CREATE OR REPLACE VIEW IF NOT EXISTS ingenieros AS
+   SELECT nombre, apellidos, sueldo
+   FROM empleados
+   WHERE cargo = "ingeniero";</pre>
+<p>Y para borrar una vista:</p>
+<pre class="sql t0">DROP VIEW Andalucia;
+DROP VIEW IF EXISTS Cataluna;</pre>
+<div class="nota w5">
+<p>Para saber si algo es una tabla o una vista, podemos ejecutar:<br>
+<code>  <b>SHOW</b> CREATE TABLE nombre;</code></p>
+</div>
+<p><br>&nbsp;</p>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

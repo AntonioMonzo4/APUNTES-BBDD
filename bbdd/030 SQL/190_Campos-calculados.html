@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Columnas generadas: virtuales y persistentes</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 15 feb 2024 12:42:01 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Columnas generadas: virtuales y persistentes</h1>
+<p>Las columnas generadas se utilizan para almacenar campos calculados, es decir, 
+valores obtenidos a partir de realizar ciertas operaciones con otros campos de
+la tabla.</p>
+<p>En las columnas generadas es <span class="k">el SGBD</span> el que <span class="k">se encarga de todas las operaciones</span>.
+Esto evita las inconsistencias que podrían producirse si realizamos mal los cálculos, o
+si no los actualizaramos cuando uno de los atributos determinantes sufre una modificación.</p>
+<h4>Columnas generadas</h4>
+<pre class="notaB w6">Columnas generadas:  <a href="https://mariadb.com/kb/en/generated-columns/">mariadb</a>    <a href="https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html">MySQL</a></pre>
+<p>Si deseamos almacenar un campo calculado a partir de otro/s, utilizaremos una 
+columna generada, que puede ser:
+<br><span class="tab"><span class="icon"></span>- <span class="k">virtual</span>: no se guarda el resultado del cálculo en la BDD.</span><br>
+<span class="tab"><span class="icon"></span>- <span class="k">persistente</span>: se almacena el resultado del cálculo en la BDD.</span>
+</p>
+<p>Una columna virtual no guarda ningún dato en el almacén de la BDD, simplemente
+hace el cálculo sobre otras columnas en el momento de realizarse alguna consulta.</p>
+<pre class="sql t0">CREATE TABLE tabla1 (
+     a INT NOT NULL,
+     b VARCHAR(32),
+     vir1 INT AS (a mod 10) VIRTUAL,
+     vir2 VARCHAR(5) AS (left(b,5)) VIRTUAL
+);</pre>
+<p>Si por algún motivo, quizás de velocidad en consulta, deseamos mantener almacenado el
+resultado de un campo calculado, definiremos la columna como PERSISTENT:</p>
+<pre class="sql t0">CREATE TABLE tabla2 (
+     a INT NOT NULL,
+     b VARCHAR(32),
+     vir INT AS (a mod 10) VIRTUAL,
+     per VARCHAR(5) AS (left(b,5)) PERSISTENT
+);</pre>
+<div class="def">
+<h4>Práctica</h4>
+<p>Para gestionar los artículos de nuestro almacen, crearemos una tabla con 4 columnas:</p>
+<table border="1" class="up t0 fs02">
+  <tr>
+    <th><u>ID</u></th><th>NOMBRE</th><th>COD-ART</th><th>PRECIO</th><th>DESCUENTO</th><th>PRECIO-FINAL</th>
+  </tr>
+  <tr>
+    <td>1</td><td>boligrafo BIC rojo</td><td>1-boli</td><td>2 €</td><td>0</td><td>2 €</td>
+  </tr>
+  <tr>
+    <td>2</td><td>bolígrafo BIC azul</td><td>2-boli</td><td>2 €</td><td>10%</td><td>1.80 €</td>
+  </tr>
+  <tr>
+    <td>3</td><td>cuaderno anillas</td><td>3-cuad</td><td>2.30 €</td><td>7%</td><td>2.14 €</td>
+  </tr>
+  <tr>
+    <td>4</td><td>rotulador</td><td>4-rotu</td><td>4.75 €</td><td>0</td><td>4.75 €</td>
+  </tr>
+</table>
+<ul>
+  <li>La clave será un campo autoincrementable (<code>AUTOINCREMENT</code>)</li>
+  <li>A veces, uno de nuestros artículos estará de oferta y se le aplicará un descuento.
+El precio final del artículo podrá ser obtenido consultando la columna PRECIO-FINAL, que
+será <span class="b">VIRTUAL</span>.</li>
+  <li>Nuestros artículos tendrán asignado un código para una hacer más fácil su identificación
+y gestión.<br>
+Dicho código se generará con el <b>ID</b>, un guión, y las cuatro primeras letras del nombre. Lo tendremos
+almacenado en la BDD, en una columna generada <span class="b">PERSISTENTE</span>.</li>
+</ul>
+<ul>
+  <li>Para que el descuento se encuentre en el rango de 0 a 100, aplica la cláusula <code>CHECK</code> al
+crear la columna.<br>
+Y el descuento por defecto será 0 %, aplica también la cláusula <code>DEFAULT</code>.</li>
+</ul>
+<div class="notaB w3">
+<p>
+<span class="tab"><span class="icon"></span>- <a href="https://dev.mysql.com/doc/refman/8.0/en/example-auto-increment.html">AUTO_INCREMENT</a></span><br>
+<span class="tab"><span class="icon"></span>- <a href="https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html">CHECK</a></span><br>
+<span class="tab"><span class="icon"></span>- <a href="https://dev.mysql.com/doc/refman/8.0/en/data-type-defaults.html">DEFAULT</a></span>
+</p>
+</div>
+<p><u>PREGUNTA</u>: ¿Qué forma normal fracasa cuando usamos una columna generada?</p>
+</div>
+<p>&nbsp;</p>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

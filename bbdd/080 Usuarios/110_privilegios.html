@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Privilegios</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="dom, 05 may 2024 14:01:22 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Privilegios</h1>
+<p>Los privilegios se guardan en la misma tabla que los usuarios que los poseen, <b>mysql.user</b>,
+por lo que podríamos concederlos/revocarlos modificando los campos apropiados con la instrucción SQL</p>
+<pre class="sql up fs01">   UPDATE mysql.user SET Select_priv="Y" WHERE user="ana";</pre>
+<div class="up">
+<p>o al tiempo de crear el registro del usuario:</p>
+<pre class="sql up fs01">   INSERT INTO mysql.user(Host, User, ..., Select_priv, ...) VALUES ('%', "ana", ..., 'Y', ...);</pre>
+</div>
+<p>Que debemos hacer efectivos con<br>
+<code>   FLUSH PRIVILEGES;</code></p>
+<h2>Comandos GRANT / REVOKE</h2>
+<p>Para conceder y revocar privilegios, tenemos los comandos:</p>
+<pre class="cuadro up w9 sql t00">-- Conceder privilegios:
+GRANT  privilegio[,...]  ON 'base_datos'.'tabla'  TO 'usuario'@'host'; 
+
+-- Revocar privilegios:
+REVOKE  privilegio[,...]  ON 'base_datos'.'tabla'  FROM 'usuario'@'host';
+
+-- Hacer efectivo el cambio de privilegios
+FLUSH PRIVILEGES;</pre>
+<p>Para visualizar los privilegios que tienen asignados los usuarios:</p>
+<pre class="sql t00">SHOW GRANTS;             -- ejecuto como juckar</pre>
+<pre class="fs01 up">+-------------------------------------------------------------------------------------------------+
+| Grants for juckar@localhost                                                                     |
++-------------------------------------------------------------------------------------------------+
+| GRANT ALL PRIVILEGES ON *.* TO `juckar`@`localhost` IDENTIFIED BY PASSWORD '*CB23ACCA98F19E...' |
++-------------------------------------------------------------------------------------------------+</pre>
+<pre class="sql t00">SHOW GRANTS FOR ana;      -- privilegios por defecto:</pre>
+<pre class="fs01 up">+-------------------------------------------------------------------------------------------------+
+| Grants for ana@%                                                                                |
++-------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `ana`@`%` IDENTIFIED BY PASSWORD '*408101FFC242EB6142CC7C75D01C5336131D0' |
++-------------------------------------------------------------------------------------------------+</pre>
+<p>Para ver que privilegios hay disponibles podemos consultar:</p>
+<pre class="sql up t00">SHOW PRIVILEGES;</pre>
+<pre class="fs01 up">+--------------------+--------------------------+-------------------------------------------------------+
+| Privilege          | Context                  | Comment                                               |
++--------------------+--------------------------+-------------------------------------------------------+
+| Alter              | Tables                   | To alter the table                                    |
+| Alter routine      | Functions,Procedures     | To alter or drop stored functions/procedures          |
+| Create             | Databases,Tables,Indexes | To create new databases and tables                    |
+| Create routine          | Databases           | To use CREATE FUNCTION/PROCEDURE                      |
+| Create temporary tables | Databases           | To use CREATE TEMPORARY TABLE                         |
+| Create view             | Tables              | To create new views                                   |
+| Create user        | Server Admin             | To create new users                                   |
+| Delete             | Tables                   | To delete existing rows                               |
+| Delete history     | Tables                   | To delete versioning table historical rows            |
+| Drop               | Databases,Tables         | To drop databases, tables, and views                  |
+| Event              | Server Admin             | To create, alter, drop and execute events             |
+| Execute            | Functions,Procedures     | To execute stored routines                            |
+| File               | File access on server    | To read and write files on the server                 |
+| Grant option       | Databases,Tables,        | To give to other users those privileges you possess   |
+                          Functions,Procedures                                                          |
+| Index              | Tables                   | To create or drop indexes                             |
+| Insert             | Tables                   | To insert data into tables                            |
+| Lock tables        | Databases                | To use LOCK TABLES (together with SELECT privilege)   |
+| Process            | Server Admin             | To view the plain text of currently executing queries |
+| Proxy              | Server Admin             | To make proxy user possible                           |
+| References         | Databases,Tables         | To have references on tables                          |
+| Reload             | Server Admin             | To reload or refresh tables, logs and privileges      |
+| Replication client | Server Admin             | To ask where the slave or master servers are          |
+| Replication slave  | Server Admin             | To read binary log events from the master             |
+| Select             | Tables                   | To retrieve rows from table                           |
+| Show databases     | Server Admin             | To see all databases with SHOW DATABASES              |
+| Show view          | Tables                   | To see views with SHOW CREATE VIEW                    |
+| Shutdown           | Server Admin             | To shut down the server                               |
+| Super              | Server Admin             | To use KILL thread, SET GLOBAL, CHANGE MASTER, etc.   |
+| Trigger            | Tables                   | To use triggers                                       |
+| Create tablespace  | Server Admin             | To create/alter/drop tablespaces                      |
+| Update             | Tables                   | To update existing rows                               |
+| <span class="k">Usage</span>              | <span class="k">Server Admin</span>             | <span class="k">No privileges - allow connect only</span>                    |
++--------------------+--------------------------+-------------------------------------------------------+</pre>
+<h4>Conceder algunos privilegios</h4>
+<p>Si deseamos que Ana use nuestra base de datos "liga" para hacer SELECT sobre las tablas, e
+inserte, modifique y borre jugadores:</p>
+<pre class="sql t00"> GRANT select ON liga.* TO 'ana'@'%';
+ GRANT insert,update,delete ON liga.jugadores TO 'ana'@'%';
+ FLUSH PRIVILEGES;</pre>
+<pre class="sql t00"> SHOW GRANTS FOR ana;</pre>
+<pre class="up fs01">+----------------------------------------------------------------------------------------------------+
+| Grants for ana@%                                                                                   |
++----------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `ana`@`%` IDENTIFIED BY PASSWORD '*408101FFC242EB6142CC7C75D01C533613152BD' |
+| GRANT SELECT ON `liga`.* TO `ana`@`%`                                                             |
+| GRANT INSERT, UPDATE, DELETE ON `liga`.`jugadores` TO `ana`@`%`                                   |
++-----------------------------------------------------------------------------------------------------+</pre>
+<p>Si deseamos que localmente cree y borre tablas:</p>
+<pre class="sql t00 up"> GRANT create,drop ON liga.* TO 'ana'@'localhost';
+ FLUSH PRIVILEGES;</pre>
+<h4>Conceder todos los privilegios</h4>
+<p>Convertimos a ana en "administradora":</p>
+<pre class="sql">  GRANT ALL PRIVILEGES ON *.* TO  ana;
+  FLUSH PRIVILEGES;</pre>
+<p>Nos arrepentimos, le dejamos con los privilegios que ya le habíamos dado sobre liga:</p>
+<pre class="sql">  REVOKE ALL PRIVILEGES ON *.* FROM ana;
+  FLUSH PRIVILEGES;</pre>
+<div class="notaB w3">
+<p><a href="https://mariadb.com/kb/en/grant/">GRANT (mariadb)</a><br>
+<a href="https://mariadb.com/kb/en/revoke/">REVOKE (mariadb)</a></p>
+</div>
+<p><script src="../../opt/jck/js/juckarSQL.js"></script></p>
+</article>
+</body>
+</html>

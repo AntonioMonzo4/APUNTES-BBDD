@@ -1,0 +1,162 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>Consultas</title>
+<style> 
+	html {background:#fdfdfd;}
+body {background:white; font:1.2rem monospace; margin-left:1.5rem; width:65rem; border-right:1px solid #eee;}
+h1 {font-size:1.6rem;margin-bottom:0.5rem;}
+pre.prettyprint {
+border:1px solid #aaa; font-size:95%; margin:0.5rem 1rem; padding:6px 12px; background:#eeeef6; width:50rem;}
+/* .sql:before {content: "mysql>"; color:#777; font-family: Arial; margin-right:0.5rem;} */
+code { color:#060; }
+code.prettyprint { padding:1px 20px;}
+.yellow {background:#FFA !important;}
+kbd{color:#809}
+.nota{font-size:85%; background-color:#FFB; width:70%; border-left:5px solid #FEA;margin-left:3rem;}
+
+.w15{width:15rem !important;}.w20{width:20rem !important;}.w25{width:25rem !important;}.w30{width:30rem !important;}
+.w35{width:35rem !important;}.w40{width:40rem !important;}.w45{width:45rem !important;}.w50{width:50rem !important;}
+.w55{width:55rem !important;}.w60{width:62rem !important;}
+
+@media print {
+  html, body, pre {
+  	margin:0;
+  	padding:0;
+  }
+}
+	pre.dosCol{column-count:2;} .nota{font-size:85%; background-color:#FFB; width:85%; border-left:5px solid #FEA;} pre i {color:#08A;}
+	pre.sql { margin-left: 2rem; }
+	 /* pre{display:none; visibility:hidden;} /**/ pre{font-size:90%;line-height:1.35rem;color:#333} h1{font-size:1.5rem;}h2{font-size:1.3rem;white-space:pre;padding-top:1.4rem;padding-bottom:1.3rem;margin-left:-2rem;padding-left:2rem; border:2px solid orange;color:#806; background:#FFE;margin-top:3rem;} h3{font-size:1.1rem;} h4{font-size:1rem;margin:1.5rem 0 -0.3rem 2rem;}
+   code {color:blue;} tt{color:#066} kbd{color:#A0A}li{margin-top:2.3rem;}li{line-height:2rem;}var{color:#900;}p.mas{border:1px solid red; background:#FF9;color:#A0A;padding:6px 15px; width:20rem;}.masmas{color:#704;}
+
+div.lista { counter-reset: cont 0; margin-left:2.5rem; }
+div.lista p { counter-increment: cont 1; }
+div.lista p:before { content: counter(cont, decimal) ". "; color:#628; font-size:106%; margin-left:-2.2rem; }
+</style>
+</head><body><h3 style="color:#805">BASE de DATOS 'liga':</h3>
+<pre style="margin-top:-1.5rem;font-size:85%;line-height:1.08rem;">                                      <tt><b style="font-size:120%">clubs</b></tt>
+                                     <tt>+————————————+—————+</tt>
+                                     <tt>| Field      | Key |</tt>       <b>jugadores</b>
+                                     <tt>+————————————+—————+</tt>      +——————————————+—————+—————————+
+    <b>sedes</b>                            <tt>| <b>id</b>         |     |</tt>      | Field        | Key | Foreign |
+   +———————————+—————+—————————+     <tt>| nombre     |     |</tt>      +——————————————+—————+—————————+
+   | Field     | Key | Foreign |     <tt>| país       |     |</tt>      | idEq         | PRI | <tt>clubs</tt>   |
+   +———————————+—————+—————————+     <tt>| fundación  |     |</tt>      | dorsal       | PRI |         |
+   | idEq      | PRI | <tt>clubs</tt>   |     <tt>| presidente |     |</tt>      | nombre       |     |         |
+   | estadio   |     |         |     <tt>| entrenador |     |</tt>      | fnac         |     |         |
+   | aforo     |     |         |     <tt>| web        |     |</tt>      | lnac         |     |         |
+   | direccion |     |         |     <tt>+————————————+—————+</tt>      | nacionalidad |     |         |
+   | provincia |     |         |                               | estatura     |     |         |
+   +———————————+—————+—————————+                               | peso         |     |         |
+                                                               +——————————————+—————+—————————+</pre>
+<div class="lista"><h3 style="color:#850">1. Consultas en tablas "clubs" - "sedes"</h3>
+<!-- pregunta --><p>Muestra 10 estadios al azar.
+<pre class="sql" style="margin-top:-0.7rem">SELECT estadio
+  FROM sedes
+  ORDER BY RAND()
+  LIMIT 10;</pre>
+<!-- pregunta --><p>Muestra 20 registros al azar del producto cartesiano de las tablas clubs x sedes,
+muestra solo las columnas "idEq", "estadio", "aforo", "id" y "nombre del club".
+<!-- pregunta --><p>La misma consulta de arriba, pero muestra sólo registros que cumplan la condición "idEq = id" ¿los estadios pertenecen al club correspondiente?<br>
+<!-- pregunta --><p>Quizás en la consulta anterior usaste "WHERE idEq = id". Sustitúyelo por "JOIN ★ ON idEq = id".
+<!-- pregunta --><p>Nombre de todos los estadios, aforo, y nombre del club al que pertenecen.
+<!-- pregunta --><p>Estadio de mayor aforo, y club al que pertenece.
+<!-- pregunta --><p>Estadios de mayor y menor aforo, y nombre del club al que pertenecen.
+<!-- pregunta --><p>¿Cuántos espectadores caben en todos los estadios?.
+<!-- pregunta --><p>¿Cuál es el aforo medio de un estadio?.
+<!-- pregunta --><p>Estadios que superan esa media, aforo y nombre del club.
+<!-- pregunta --><p>Nombre de los 3 estadios de menor aforo, y nombre del club al que pertenecen.
+<!-- pregunta --><p>Nombre de los 3 estadios de mayor, y 3 de menor aforo, y club al que pertenecen.
+<!-- pregunta --><p>¿Cuántos espectadores caben en los estadios de Madrid?.
+
+<div style="border:1px solid black; padding:0 1rem 1rem 1rem; background:#EEE">
+<h3><u>Tablas temporales</u></h3>
+Podemos generar tablas temporales para ser utilizadas luego en consultas.<br>
+Ejemplo:<br>&emsp; &emsp; - ¿Cuál es el aforo medio de los estadios de Madrid?
+<pre class="sql">-- Solución obvia, sin tabla temporal:
+   SELECT AVG(aforo)  FROM sedes  WHERE provincia = "Madrid";
+
+-- Solución creando una <b>tabla temporal con los estadios de Madrid</b>
+
+  CREATE TEMPORARY TABLE tempAforos
+  	SELECT aforo  FROM sedes  WHERE provincia = "Madrid";
+
+  SELECT AVG(aforo) FROM tempAforos;
+
+-- Esa <b>tabla temporal</b> puede crearse (y deshecharse) <b>en el FR0M de la consulta</b>:
+
+  SELECT AVG(aforo)
+     FROM ( SELECT aforo FROM sedes WHERE provincia = "Madrid" ) tempAforos;
+</pre>
+</div>
+<!-- pregunta --><p>¿Cuántos espectadores caben en los 3 estadios menores?.<br><br>
+
+<h3 style="color:#850">2. Consultas en tablas "clubs" - "jugadores"</h3>
+
+<div style="border:1px solid black; padding:0 1rem 1rem 1rem; background:#EEE">
+<h3><u>Prefijo de tabla</u></h3>
+A veces cuando consultamos de varias tablas, hay campos que se llaman igual.<br> Por ejemplo:<br>
+	<span style="color:#008">&emsp; &emsp; &emsp; clubs = { <u>id</u>, <b>nombre</b>, país, fundación, ... }</span><br>
+	<span style="color:#008">&emsp; &emsp; &emsp; jugadores = { <u>idEq</u> (<i>clubs</i>), dorsal, <b>nombre</b>, fnac, lnac, ... }</span><br><br>
+Para indicar en la consulta a qué campo nos refererimos, debemos poner un prefijo.<br>
+Ejemplo:<br>
+&emsp;- 10 "<i>Pablos</i>" cualquiera, del producto clubs x jugadores:
+<pre class="sql dosCol">
+-- Prefijo el nombre de la tabla:
+SELECT <span style="color:#900">clubs</span>.nombre, <span style="color:#900">jugadores</span>.nombre
+  FROM clubs, jugadores
+  WHERE <span style="color:#900">jugadores</span>.nombre LIKE "Pablo%"
+  ORDER BY RAND()
+  LIMIT 10;
+-- Prefijo con alias para tabla:
+SELECT <span style="color:#B00">c</span>.nombre, <span style="color:#B00">j</span>.nombre
+  FROM clubs <span style="color:#B00">c</span>, jugadores <span style="color:#B00">j</span>
+  WHERE <span style="color:#B00">j</span>.nombre LIKE "Pablo%"
+  ORDER BY RAND()
+  LIMIT 10;</pre>
+</div>
+<!-- pregunta --><p>Nombres de 10 jugadores al azar, y nombre del club en el que juegan.<br>
+<!-- pregunta --><p>Jugadores con dorsal número 36 (y nombre del club).<br>
+<!-- pregunta --><p>Jugadores brasileños (y club).
+<!-- pregunta --><p>¿Cuántos jugadores brasileños hay en cada club? (debe verse el nombre del club).
+<!-- pregunta --><p>Muestra la tabla anterior ordenada de más a menos jugadores brasileños.
+<!-- pregunta --><p>Muestra todos los equipos que tienen más de 3 jugadores brasileños. Debe verse el número de jugadores brasileños que tiene.
+<!-- pregunta --><p>¿Qué clubs no tienen jugadores brasileños?.<br>
+<!-- pregunta --><p>Muestra el club que tiene menos jugadores españoles.
+<!-- pregunta --><p>En la misma consulta, muestra el club que tiene menos jugadores españoles, y
+el club que tiene más jugadores españoles.
+<!-- pregunta --><p>Jugadores argentinos y brasileños del Gerona. Debe verse la nacionalidad.
+<!-- pregunta --><p>Jugadores argentinos y brasileños del Gerona, Celta y Sevilla. Debe verse la nacionalidad y el club.
+<!-- pregunta --><p>Jugadores extranjeros de cada equipo. Debe verse equipo, nombre, y nacionalidad.<br>
+La tabla se mostrará ordenada por nacionalidades, y a igual nacionalidad, por equipos.
+<!-- pregunta --><p>Muestra una tabla con el número de extranjeros que tiene cada equipo.<br>
+El equipo que más extranjeros tenga aparecerá primero.
+<!-- pregunta --><p>Jugadores que miden más de 1,90 y pesan más de 90 Kg y club.
+<!-- pregunta --><p>Peso medio de los jugadores para cada club. Los equipos con
+máyor media se mostrarán primero.
+<!-- pregunta --><p>¿Cuáles es el equipo de mayor estatura media?.
+<!-- pregunta --><p>Muestra los tres equipos de mayor estatura media.
+<!-- pregunta --><p>Edad de los 10 jugadores más viejos y club en el que juegan.
+<!-- pregunta --><p>Edad de los 5 jugadores argentinos más viejos y club en el que juegan.
+<!-- pregunta --><p>Muestra a todos los jugadores nacidos a partir del año 2000 y el
+club en el que juegan. Se mostrarán los más jóvenes primero.
+<!-- pregunta --><p>¿Qué club tiene más jugadores nacidos a partir del año 2000?.
+<!-- pregunta --><p>¿Cuál es el club más joven?.
+<!-- pregunta --><p>Jugadores cuyo apelativo tiene sólo 4 letras (y club en el que juegan).
+<!-- pregunta --><p>Edad del jugador más joven (y equipo).
+<!-- pregunta --><p>Edad del jugador más viejo (y equipo).
+<!-- pregunta --><p>Diferencia de edad entre el jugador más joven y más viejo.
+<!-- pregunta --><p>¿Qué día que se celebran más cumpleaños?
+<!-- pregunta --><p>Quienes cumplen años ese día tan celebrado? (no muestres equipos).
+<!-- pregunta --><p>Ahora sí, muestra los equipos en los que juegan.
+
+<br><br>
+
+<h3 style="color:#850">2. Consultas en tablas "clubs" - "jugadores" - "sedes"</h3>
+<!-- pregunta --><p>Jugadores de equipos con sede en Madrid.
+<!-- pregunta --><p>Jugadores de equipos con sede en Madrid con el dorsal número 1.
+<!-- pregunta --><p>¿Cuántos jugadores mayores de 30 años juegan en equipos de Madrid?.
+<!-- pregunta --><p>Jugadores argentinos en equipos de Madrid.
+<!-- pregunta --><p>Listado ordenado, de más a menos, del jugadores argentinos que juegan en equipos con sede en Madrid.
+
+
+<script src="js/juckarSQL.js"></script>

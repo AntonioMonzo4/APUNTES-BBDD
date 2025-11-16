@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>El valor <code>NULL</code></title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 22 nov 2023 11:53:09 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>El valor <code>NULL</code></h1>
+<p>¿Qué sucede si al guardar un registro hay algún campo del que en ese momento no
+tengo su valor, o no necesito guardarlo porque no se aplica?</p>
+<p>Independientemente del dominio al que pertenezca un campo, un campo puede
+tomar un valor especial denominado <code>NULL</code> que designa <span class="k">ausencia de dato</span>.</p>
+<p>No es lo mismo guardar un 0 o un espacio en blanco que un <code>NULL</code>, el no
+incluir nada en un campo es incluir un <code>NULL</code>, que significa "ausencia
+de valor", bien porque <i>no se aplica</i> o porque <i>no lo tengo</i>.</p>
+<p><b>La lógica del NULO</b></p>
+<p>¿Cómo se resuelven las operaciones lógicas sobre este valor?</p>
+<p>En la lógica booleana tenemos los valores <code>true</code> y <code>false</code>, pero un
+valor <code>NULL</code> no es ni verdadero ni falso:</p>
+<p>▸ Con el operador OR, basta que un operando sea true para que el resultado sea true,
+pero con NULL no sabemos si es true o false:</p>
+<p>
+<span class="tab"><span class="icon"></span><code>true  OR NULL   </code> es <code> true</code></span><br>
+<span class="tab"><span class="icon"></span><code>false OR NULL  </code> es  <code> NULL</code></span>
+</p>
+<p>▸ Con el operador AND, basta que un operando sea false para que el resultado sea false,
+pero con NULL no sabemos si es false o true:</p>
+<p>
+<span class="tab"><span class="icon"></span><code>false AND NULL </code> es <code> false</code></span><br>
+<span class="tab"><span class="icon"></span><code>true  AND NULL  </code> es <code> NULL</code></span>
+</p>
+<p>▸ Con NOT es imposible saber si el resultado será true o false:</p>
+<p>
+<span class="tab"><span class="icon"></span><code>NOT NULL       </code> es <code> NULL</code></span>
+</p>
+<p><b>operador <code>IS NULL</code></b></p>
+<p>Si necesitamos otro resultado, debemos definir la lógica con este valor,
+para ello tenemos el operador <code>
+    <i>campo</i> IS NULL
+</code> que devuelve <code>true</code> cuando el campo es NULO.</p>
+<p>Por ejemplo, para mostrar todos los registros de una tabla que en uno de sus campos
+tienen un nulo:</p>
+<pre class="sql t0"> SELECT * FROM clientes WHERE telefono IS NULL;
+
+ SELECT * FROM alumnos WHERE edad &lt; 18 OR edad IS NULL;</pre>
+<p>&nbsp;</p>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

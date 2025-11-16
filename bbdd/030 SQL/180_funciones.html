@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Funciones MySQL (Mariadb)</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 31 ene 2024 11:53:06 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Funciones MySQL (Mariadb)</h1>
+<div class="notaB w5">
+<p>Funciones:
+<br><span class="tab"><span class="icon"></span><a href="https://mariadb.com/kb/en/built-in-functions/">MariaDB)</a></span><br>
+<span class="tab"><span class="icon"></span><a href="https://dev.mysql.com/doc/refman/8.0/en/functions.html">MySqL</a></span><br>
+<span class="tab"><span class="icon"></span><a href="https://mariadb.com/kb/en/function-and-operator-reference/">Referencia rápida de operadores y funciones (mariadb)</a></span><br>
+<span class="tab"><span class="icon"></span><a href="https://dev.mysql.com/doc/refman/8.0/en/built-in-function-reference.html">Referencia rápida de operadores y funciones (mysql)</a></span>
+</p>
+</div>
+<p>Ejemplo de ejecución de funciones: ROUND() y PI():</p>
+<pre class="sql t1">
+MariaDB&gt; <b>SELECT round(PI(), 3);</b>
++----------------+
+| round(PI(), 3) |
++----------------+
+|          3.142 |
++----------------+
+1 row in set (0,001 sec)
+
+MariaDB&gt; <b>SELECT round(PI(), 3) FROM DUAL;</b>
++----------------+
+| round(PI(), 3) |
++----------------+
+|          3.142 |
++----------------+
+1 row in set (0,000 sec)</pre>
+<h4>Funciones por categorías</h4>
+<div class="t1">
+<ol>
+  <li><a href="https://mariadb.com/kb/en/numeric-functions/">Funciones numéricas</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/numeric-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/string-functions/">Funciones de texto</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/string-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/regular-expressions-functions/">Expresiones Regulares</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.3/en/regexp.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/date-time-functions/">Fecha y hora</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/aggregate-functions/">Funciones de agregación</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions-and-modifiers.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/built-in-functions/">Funciones de control de flujo</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/bit-functions-and-operators/">Funciones y operadores de bit</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/encryption-hashing-and-compression-functions/">Cifrado hashing y compresión</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/information-functions/">Funciones informativas</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/information-functions.html">MySQL</a></span></li>
+  <li><a href="https://mariadb.com/kb/en/miscellaneous-functions/">Miscelánea</a><span class="wsp">    <a href="https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html">MySQL</a></span></li>
+</ol>
+</div>
+<script src="js/juckarSQL.js"></script>
+
+</article>
+</body>
+</html>

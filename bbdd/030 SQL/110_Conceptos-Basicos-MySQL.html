@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Primeros pasos en MySQL</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="dom., 08 oct. 2023 20:18:33 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Primeros pasos en MySQL</h1>
+<div class="notaB w5">
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/">Documentación oficial de MySQL 8.0</a></p>
+</div>
+<h3>Conectarse a MySQL y desconectarse</h3>
+<p>Conectarse al SGBD MySQL con el usuario "juckar", y finalizar:</p>
+<pre class="ms2 w8">$ <span class="g">mysql -u juckar -p</span>
+<span class="kk">Enter password</span>: <b class="k">secreto123</b>
+Welcome to the MariaDB monitor.  Commands end with <span class="r">;</span> or <span class="r">\g</span>.
+Your MariaDB connection id is 37
+Server version: 10.3.39-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or <span class="r">'\h'</span> for help. Type <span class="r">'\c'</span> to clear the current input statement.
+
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">EXIT</span>       <span class="bb">-- QUIT</span>
+Bye
+
+$</pre>
+<div class="notaB w5">
+<p><a href="https://dev.mysql.com/doc/refman/8.0/en/connecting-disconnecting.html">Connecting to and Disconnecting from the Server</a></p>
+</div>
+<h4>El PROMPT</h4>
+<table summary="MySQL prompts and the meaning of each prompt." style="margin-top:1rem;margin-left:2rem;"><colgroup><col style="width: 10%"><col style="width: 80%"></colgroup><thead><tr>
+          <th>Prompt</th>
+          <th>Meaning</th>
+        </tr></thead><tbody><tr>
+          <td><code class="literal">mysql&gt;</code></td>
+          <td>Ready for new query</td>
+        </tr><tr>
+          <td><code style="margin-left:2rem;">-&gt;</code></td>
+          <td>Waiting for next line of multiple-line query</td>
+        </tr><tr>
+          <td><code style="margin-left:2rem;">'&gt;</code></td>
+          <td>Waiting for next line, waiting for completion of a string that began
+            with a single quote (<code class="literal">'</code>)</td>
+        </tr><tr>
+          <td><code style="margin-left:2rem;">"&gt;</code></td>
+          <td>Waiting for next line, waiting for completion of a string that began
+            with a double quote (<code class="literal">"</code>)</td>
+        </tr><tr>
+          <td><code style="margin-left:2rem;">`&gt;</code></td>
+          <td>Waiting for next line, waiting for completion of an identifier that
+            began with a backtick (<code class="literal">`</code>)</td>
+        </tr><tr>
+          <td><code style="margin-left:2rem;">/*&gt;</code></td>
+          <td>Waiting for next line, waiting for completion of a comment that began
+            with <code class="literal">/*</code></td>
+</tr></tbody></table>
+
+<h4>Comentarios</h4>
+<p>En SQL tenemos comentarios monolínea y multilínea:</p>
+<pre>   <span class="b">-- Esto es un comentario de una línea</span>
+
+   <span class="bb">/* En un lugar de la Mancha, de cuyo nombre no
+      quiero acordarme, no ha mucho tiempo que vivía
+      un hidalgo de los de lanza en astillero, adarga
+      antigua, rocín flaco y galgo corredor. */</span></pre>
+<p>que nos servirán para documentar los scripts.</p>
+<h3>Ayudas</h3>
+<p>Podemos ir abriendo ayudas, que se inician indistintivamente con <code>help</code>, <span class="r">\h</span> o <span class="r">\?</span></p>
+<div class="flex">
+<pre class="ms2 w9"><span class="kk">MariaDB [(none)]&gt; </span> <span class="g">help</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\? contents</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\h functions</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">help data types</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\h SELECT</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\? GROUP BY</span></pre>
+<pre class="ms2 w9"><span class="kk">MariaDB [(none)]&gt; </span> <span class="g">help TIMESTAMP</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\h CREATE DATABASE</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\? DUAL</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">help ASCII</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\h PASSWORD</span>
+<span class="kk">MariaDB [(none)]&gt; </span> <span class="g">\? GRANT</span></pre>
+</div>
+<h3>Ver las BBDD, tablas y conectarse:  <code>SHOW</code>, <code>USE</code></h3>
+<p>En el lenguaje SQL todas las instrucciones terminan en punto y coma (;) salvo <code>USE</code>, <code>EXIT</code>, <code>QUIT</code>.</p>
+<pre class="nota w6">Podemos cambiar el delimitador con <span class="r">\d</span>, por ejemplo <span class="r">\d<span class="rr"></span>#</span> usa <span class="rr">#</span> como delimmitador.</pre>
+<p>Visualizar las BBDD:</p>
+<pre class="ms2 w9"><span class="kk">MariaDB [(none)]&gt; </span> <span class="g">SHOW DATABASES;</span>
++--------------------+
+| Database           |
++--------------------+
+| banca              |
+| <span class="k">information_schema</span> |      <span class="bb">-- Información general del SGBD, metadatos de las BBDD</span>
+| <span class="k">mysql</span>              |      <span class="bb">-- Administración del SGBD (usuarios, equipos remotos, permisos, ...</span>
+| <span class="k">performance_schema</span> |      <span class="bb">-- Informaciones de ejecución, rendimiento, ... para diagnósticos</span>
+| vinos              |
++--------------------+
+8 rows in set (0,004 sec)</pre>
+<p>Vamos a conectarnos (usar) la BBDD "mysql":</p>
+<pre class="ms2 w8"><span class="kk">MariaDB [(none)]&gt; </span> <span class="g">USE mysql</span>
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+<span class="kk">MariaDB [mysql]&gt; </span>      <span class="bb">-- observar como ha cambiado el PROMPT</span></pre>
+<p>La BBDD <code>mysql</code> contiene toda la información de administración del sistema, <span class="rr">mucho ojo</span>
+con lo que hacemos aquí.</p>
+<p>Visualizar sus tablas:</p>
+<pre class="ms2 w8"><span class="kk">MariaDB [mysql]&gt; </span> <span class="g">SHOW TABLES;</span>
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| column_stats              |
+| columns_priv              |
+| db                        |
+| event                     |
+| func                      |
+| general_log               |
+| gtid_slave_pos            |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| host                      |
+| index_stats               |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| plugin                    |
+| proc                      |
+| procs_priv                |
+| proxies_priv              |
+| roles_mapping             |
+| servers                   |
+| slow_log                  |
+| table_stats               |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| transaction_registry      |
+| user                      |
++---------------------------+
+31 rows in set (0,001 sec)</pre>
+<h3>Mostrar la estructura de una tabla: <code>DESC</code></h3>
+<p>Vamos a mostrar (describir) la estructura de la tabla de usuarios:</p>
+<pre class="ms2 w10"><span class="kk">MariaDB [mysql]&gt; </span> <span class="g">DESC user;</span>       <span class="bb">-- DESCRIBE user;</span>
++------------------------+-----------------------------------+------+-----+----------+-------+
+| Field                  | Type                              | Null | Key | Default  | Extra |
++------------------------+-----------------------------------+------+-----+----------+-------+
+| Host                   | char(60)                          | NO   | PRI |          |       |
+| User                   | char(80)                          | NO   | PRI |          |       |
+| Password               | char(41)                          | NO   |     |          |       |
+| Select_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Insert_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Update_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Delete_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Create_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Drop_priv              | enum('N','Y')                     | NO   |     | N        |       |
+| Reload_priv            | enum('N','Y')                     | NO   |     | N        |       |
+| Shutdown_priv          | enum('N','Y')                     | NO   |     | N        |       |
+| Process_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| File_priv              | enum('N','Y')                     | NO   |     | N        |       |
+| Grant_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| References_priv        | enum('N','Y')                     | NO   |     | N        |       |
+| Index_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Alter_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Show_db_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Super_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Create_tmp_table_priv  | enum('N','Y')                     | NO   |     | N        |       |
+| Lock_tables_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Execute_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Repl_slave_priv        | enum('N','Y')                     | NO   |     | N        |       |
+| Repl_client_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Create_view_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Show_view_priv         | enum('N','Y')                     | NO   |     | N        |       |
+| Create_routine_priv    | enum('N','Y')                     | NO   |     | N        |       |
+| Alter_routine_priv     | enum('N','Y')                     | NO   |     | N        |       |
+| Create_user_priv       | enum('N','Y')                     | NO   |     | N        |       |
+| Event_priv             | enum('N','Y')                     | NO   |     | N        |       |
+| Trigger_priv           | enum('N','Y')                     | NO   |     | N        |       |
+| Create_tablespace_priv | enum('N','Y')                     | NO   |     | N        |       |
+| Delete_history_priv    | enum('N','Y')                     | NO   |     | N        |       |
+| ssl_type               | enum('','ANY','X509','SPECIFIED') | NO   |     |          |       |
+| ssl_cipher             | blob                              | NO   |     | NULL     |       |
+| x509_issuer            | blob                              | NO   |     | NULL     |       |
+| x509_subject           | blob                              | NO   |     | NULL     |       |
+| max_questions          | int(11) unsigned                  | NO   |     | 0        |       |
+| max_updates            | int(11) unsigned                  | NO   |     | 0        |       |
+| max_connections        | int(11) unsigned                  | NO   |     | 0        |       |
+| max_user_connections   | int(11)                           | NO   |     | 0        |       |
+| plugin                 | char(64)                          | NO   |     |          |       |
+| authentication_string  | text                              | NO   |     | NULL     |       |
+| password_expired       | enum('N','Y')                     | NO   |     | N        |       |
+| is_role                | enum('N','Y')                     | NO   |     | N        |       |
+| default_role           | char(80)                          | NO   |     |          |       |
+| max_statement_time     | decimal(12,6)                     | NO   |     | 0.000000 |       |
++------------------------+-----------------------------------+------+-----+----------+-------+
+47 rows in set (0,002 sec)</pre>
+<h3>Crear una Base de Datos con una tabla: <code>CREATE</code></h3>
+<pre class="ms3 w8"><span class="kk">MariaDB [mysql]&gt; </span> <span class="g">CREATE DATABASE prueba;</span>       <span class="bb">-- creamos la BBDD</span>
+Query OK, 1 row affected (0,000 sec)
+<span class="kk">MariaDB [mysql]&gt; </span><span class="g">use prueba</span>                       <span class="bb">-- nos conectamos</span>
+Database changed
+
+<span class="kk">MariaDB [prueba]&gt; </span> <span class="g">CREATE TABLE provincias( cp INT , nombre VARCHAR(25) );</span>
+Query OK, 0 rows affected (0,007 sec)
+
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g">DESC provincias;</span>
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cp     | int(11)     | YES  |     | NULL    |       |
+| nombre | VARCHAR(25) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0,002 sec)</pre>
+<h3>Borrar la tabla y la Base de datos: <code>DROP</code></h3>
+<pre class="ms2 w8"><span class="kk">MariaDB [prueba]&gt; </span><span class="g"> DROP TABLE provincias;</span>
+Query OK, 0 rows affected (0,004 sec)
+
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g"> DROP DATABASE  prueba;</span>
+Query OK, 0 rows affected (0,001 sec)
+
+<span class="kk">MariaDB [(none)]&gt;  </span></pre>
+<h3>Añadir una clave primaria: <code>PRIMARY KEY</code></h3>
+<pre class="ms2 w9"><span class="kk">MariaDB [none]&gt; </span><span class="g">CREATE DATABASE prueba;</span>
+<span class="kk">MariaDB [none]&gt; </span><span class="g"> USE prueba</span>
+
+<span class="kk">MariaDB [prueba]&gt;</span> <span class="g">CREATE TABLE provincias(cp INT  PRIMARY KEY, nombre VARCHAR(25));</span>
+Query OK, 0 rows affected (0,009 sec)
+
+<span class="kk">MariaDB [prueba]&gt; </span> <span class="g">DESC provincias;</span>
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cp     | int(11)     | NO   | PRI | NULL    |       |
+| nombre | VARCHAR(25) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0,002 sec)</pre>
+<h3>Insertar nuevos registros: <code>INSERT</code></h3>
+<pre class="ms3 w9">$ <span class="g">mysql -u juckar -p</span>
+<span class="kk">Enter password</span>: <b class="k">secreto123</b>
+
+<span class="kk">MariaDB [none]&gt; </span><span class="g"> USE prueba</span>
+
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g">INSERT INTO provincias(cp, nombre) VALUES(28, "Madrid");</span>
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g">INSERT INTO provincias(cp, nombre) VALUES(2, "Albacete");</span>
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g">INSERT INTO provincias VALUES(1, "Almería");</span>
+<span class="kk">MariaDB [prueba]&gt; </span><span class="g">INSERT INTO provincias VALUES(38, "Santa Cruz de Tenerife");</span></pre>
+<p>Observar la sintaxis de las dos últimas <code>INSERT</code>, cuando insertamos valores en todos
+los campos de la tabla no hace falta especificar sus nombres.</p>
+<div class="nota">
+<p>En MySQL, podemos insertar muchos registros con una única <code>INSERT</code> (<span class="rr">no es SQL estándar</span>)</p>
+<pre class="ms2 w7"><span class="kk">MariaDB [prueba]&gt;</span> <span class="g">INSERT INTO provincias VALUES (8,"Barcelona"), (9,"Burgos"),</span>
+        <span class="kk">-&gt;</span>  <span class="g"> (10,"Cáceres"), (11,"Cádiz"), (21, "Huelva"), (22,"Huesca"),</span>
+        <span class="kk">-&gt;</span>  <span class="g"> (23,"Jaén"), (24,"León"), (25,"Lérida"), (26,"La Rioja"),</span>
+        <span class="kk">-&gt;</span>  <span class="g"> (27,"Lugo"), (29,"Málaga"), (30,"Murcia"), (31,"Navarra"),</span>
+        <span class="kk">-&gt;</span>  <span class="g"> (44, "Teruel"), (45,"Toledo");</span>
+Query OK, 16 rows affected (0,002 sec)
+Records: 16  Duplicates: 0  Warnings: 0</pre>
+</div>
+<h3>consultar todos los registros de una tabla: <code>SELECT</code></h3>
+<pre class="ms3 w9"><span class="kk">MariaDB [prueba]&gt; </span> <span class="g">SELECT * FROM provincias;</span>
++----+------------------------+
+| cp | nombre                 |
++----+------------------------+
+|  1 | Almería                |
+|  2 | Albacete               |
+| 28 | Madrid                 |
+| 38 | Santa Cruz de Tenerife |
++----+------------------------+</pre>
+<h3>Borrar registros: <code>DELETE</code></h3>
+<p>Podemos borrar todos los registros que tengan cierto valor en un campo:</p>
+<pre class="ms2 w9"><span class="kk">MariaDB [prueba]&gt; </span><span class="g">DELETE FROM provincias WHERE cp = 28;</span>
+Query OK, 1 row affected (0,002 sec)
+<span class="kk">MariaDB [prueba]&gt;  </span><span class="g">DELETE FROM provincias WHERE nombre = "SANTA CRUZ de tenerife";</span>
+Query OK, 1 row affected (0,002 sec)
+
+<span class="kk">MariaDB [prueba]&gt; </span> <span class="g">SELECT * FROM provincias;</span>
++----+------------------------+
+| cp | nombre                 |
++----+------------------------+
+|  1 | Almería                |
+|  2 | Albacete               |
++----+------------------------+</pre>
+<p><b><span class="rr">OjO</span></b>: Si ejecutamos un  <code>DELETE</code> sin condición <code>WHERE</code> nos <b>borra todos los registros<span class="rr">!!!</span></b>:</p>
+<pre class="ms2 w7"><span class="kk">MariaDB [prueba]&gt; </span><span class="g">DELETE FROM provincias;</span>
+Query OK, 2 rows affected (0,002 sec)
+<span class="kk">MariaDB [prueba]&gt; </span> <span class="g">SELECT * FROM provincias;</span>
+Empty set (0,000 sec)</pre>
+<p>&nbsp;</p>
+<div class="def ej0">
+<ol>
+  <li>Crea una BD denominada "España".</li>
+  <li>Dentro de España, crea una tabla denominada "Provincias", con los campos:<span class="wsp">
+            Provincias = { <b><u>cp</u></b>, nombre }
+Decide tú el tipo de datos que quieres elegir.</span></li>
+  <li>Introduce las 52 provincias (o ciudades autónomas) en la tabla anterior.</li>
+</ol>
+</div>
+</article>
+</body>
+</html>

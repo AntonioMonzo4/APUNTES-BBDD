@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Union de dos tablas con JOIN</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié., 20 mar. 2024 13:39:39 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Union de dos tablas con JOINs</h1>
+<p><span class="k">Algo de matemáticas...</span></p>
+<p>El resultado de una consulta me proporciona un conjunto de registros con los que
+puedo realizar algunas <b>operaciones matemáticas de conjunto</b>, como la</p>
+<div class="up">
+<ul>
+  <li><code>UNION</code> : todos los registros obtenidos en cada consulta, sin repeticiones</li>
+  <li><code>UNION ALL</code> : todos los registros de ambas conjuntos</li>
+  <li><code>INTERSECT</code> : Registros comunes a ambas conjuntos</li>
+</ul>
+</div>
+<p>En estos casos, los conjuntos obtenidos por cada consulta deben tener el
+mismo número de columnas.</p>
+<h2>Producto cartesiano</h2>
+<p>El producto cartesiano de dos conjuntos A y B, se define como un nuevo conjunto
+AxB que contiene la combinación de todos los elementos de A, con todos los elementos
+de B:</p>
+<p><span class="b">`\qquad A = {a, b, c, d} \qquad B = {1, 2, 3} \qquad =&gt; \qquad A\timesB = { a1, \quada2, \quada3,\quad b1, \quadb2, \quadb3, \quadc1, \quadc2, c3, \quadd1, \quadd2,\quad d3 }`</span></p>
+<p>En SQL podemos realizar el producto cartesiano de dos conjuntos de registros
+simplemente indicando dos (o más) tablas en la cláusula <code>FROM</code>:</p>
+<div class="flex up2">
+<pre class="sql fs01"><br>
+SELECT * FROM gente;
+ +------+--------+----+
+ | dni  | nombre | cp |
+ +------+--------+----+
+ | 1111 | Luis   | 24 |
+ | 2222 | Marta  | 28 |
+ | 3333 | Marcos | 28 |
+ | 4444 | Tania  | 44 |
+ +------+--------+----+</pre>
+<pre>    </pre>
+<pre class="sql fs01"><br>
+SELECT * FROM provincias;
+ +----+--------+
+ | cp | nombre |
+ +----+--------+
+ | 24 | León   |
+ | 28 | Madrid |
+ | 44 | Teruel |
+ | 42 | Soria  |
+ +----+--------+
+*<small> Observar que Soria está despoblada</small></pre>
+<pre>      </pre>
+<pre class="sql">SELECT * FROM gente, provincias;
+ +------+--------+----+----+--------+
+ | dni  | nombre | cp | cp | nombre |
+ +------+--------+----+----+--------+
+ <b>| 1111 | Luis   | 24 | 24 | León   |</b>
+ | 2222 | Marta  | 28 | 24 | León   |
+ | 3333 | Marcos | 28 | 24 | León   |
+ | 4444 | Tania  | 44 | 24 | León   |
+ | 1111 | Luis   | 24 | 28 | Madrid |
+ <b>| 2222 | Marta  | 28 | 28 | Madrid |
+ | 3333 | Marcos | 28 | 28 | Madrid |</b>
+ | 4444 | Tania  | 44 | 28 | Madrid |
+ | 1111 | Luis   | 24 | 42 | Soria  |
+ | 2222 | Marta  | 28 | 42 | Soria  |
+ | 3333 | Marcos | 28 | 42 | Soria  |
+ | 4444 | Tania  | 44 | 42 | Soria  |
+ | 1111 | Luis   | 24 | 44 | Teruel |
+ | 2222 | Marta  | 28 | 44 | Teruel |
+ | 3333 | Marcos | 28 | 44 | Teruel |
+ <b>| 4444 | Tania  | 44 | 44 | Teruel |</b>
+ +------+--------+----+----+--------+
+ 16 rows in set (0,000 sec)</pre>
+</div>
+<p>El producto cartesiano nos proporciona todas las combinaciones posibles de registros
+de la 1ª consulta con los registros de la 2ª consulta.</p>
+<p>Salvo los marcados en negrita, todos los demás se consideran registros espúrios,
+y deben ser eliminados de la consulta.</p>
+<h4>Usar WHERE...</h4>
+<p>Una forma de obtener solo los registros que nos interesan consiste en añadir una
+condición a la clásula <code>WHERE</code>:</p>
+<pre class="sql">SELECT * FROM gente, provincias WHERE gente.cp = provincias.cp;
+ +------+--------+----+----+--------+
+ | dni  | nombre | cp | cp | nombre |
+ +------+--------+----+----+--------+
+ | 1111 | Luis   | 24 | 24 | León   |
+ | 2222 | Marta  | 28 | 28 | Madrid |
+ | 3333 | Marcos | 28 | 28 | Madrid |
+ | 4444 | Tania  | 44 | 44 | Teruel |
+ +------+--------+----+----+--------+</pre>
+<p>Esta fórmula hace una combinación de todos los registros de la tabla A con todos los
+registros de la tabla B y luego aplica la condicion WHERE para eliminar los registros
+que no cumplen la condición.</p>
+<p>Existe una forma más moderna y rápida cuando los registros son claves, pues se aprovecha
+la condición de indexación de las claves.</p>
+<h2>INNER JOIN</h2>
+<p>Hacer una "reunión" (JOIN) de consultas consiste en seleccionar los registros
+que tienen en común ciertos campos, habitualmente <span class="g">clave</span> ⟺ <span class="g">clave foránea</span>.</p>
+<p>Usan <code>JOIN</code> es más rápido que <code>WHERE</code>, pues consulta los índices de las claves
+para hacer la consulta más veloz.</p>
+<pre class="nota w6">No obstante, <code>JOIN</code> también funciona relacionando campos que no son clave.</pre>
+<pre class="sql">SELECT * FROM gente JOIN provincias ON gente.cp = provincias.cp;
+ +------+---------+----+----+--------+
+ | dni  | nombre  | cp | cp | nombre |
+ +------+---------+----+----+--------+
+ | 1111 | Luis    | 24 | 24 | León   |
+ | 2222 | Marta   | 28 | 28 | Madrid |
+ | 3333 | Marcos  | 28 | 28 | Madrid |
+ | 4444 | Tania   | 44 | 44 | Teruel |
+ +------+---------+----+----+--------+</pre>
+<h2>LEFT JOIN y RIGHT JOIN</h2>
+<p>Observar que en la tabla de la derecha (provincias) hay registros que no se relacionan
+con ningún registro de la otra tabla, es decir, hay una provincia vacía (Soria).</p>
+<p>Si deseamos que al cruzar las dos tablas aparezcan todos los registros de la tabla
+de la derecha, independientemente de si se relacionan o no con algún registro de
+la tabla de la izquierda, podemos usar un <code>RIGHT ON</code>:</p>
+<pre class="sql">SELECT * FROM gente RIGHT JOIN provincias ON gente.cp = provincias.cp;
+ +------+---------+------+----+--------+
+ | dni  | nombre  | cp   | cp | nombre |
+ +------+---------+------+----+--------+
+ | 1111 | Luis    |   24 | 24 | León   |
+ | 2222 | Marta   |   28 | 28 | Madrid |
+ | 3333 | Marcos  |   28 | 28 | Madrid |
+ | 4444 | Tania   |   44 | 44 | Teruel |
+<span class="k"> | NULL | NULL    | NULL | 42 | Soria  |</span>
+ +------+---------+------+----+--------+</pre>
+<p><code>LEFT JOIN</code> nos mostraría todos los registros de la primera tabla (gente), independientemente
+de que vivan o no en alguna de las provincias.</p>
+<script src="js/juckarSQL.js"></script>
+<script>MathJax = { loader: {load: ["input/asciimath", "output/chtml"]} }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+
+<div class="vihi dino">
+<p>create table provincias(cp int primary key, nombre varchar(30));
+create table gente(dni int primary key, nombre varchar(30), cp int, foreign key (cp) references provincias(cp) );
+insert into provincias values(44, "Teruel"), (28, "Madrid"), (24, "León"), (42, "Soria");
+insert into gente values(1111, "Luis", 24), (2222, "Marta", 28), (3333, "Marcos", 28), (4444, "Tania", 44);</p>
+<p>Fusión de empresas:
+create table clientes(dni int primary key, nombre varchar(30), cp int, foreign key (cp) references provincias(cp));
+insert into clientes values(1111, "Luis", 24), (2222, "Marta", 28), (8888, "Sandra", 42), (9999,"Sergio", 42);</p>
+</div>
+</article>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Procedimientos almacenados</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 20 abr. 2024 17:28:41 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Procedimientos almacenados</h1>
+<div class="notaB w5">
+<p><a href="https://mariadb.com/kb/en/stored-procedures/">Procedimientos almacenados (mariadb.com)</a><br>
+<a href="https://www.mysqltutorial.org/mysql-stored-procedure/">Tutorial procedimientos almacenados (mysqltutorial.org)</a><br>
+<a href="https://www.javatpoint.com/mysql-procedure">MySQL Stored Procedure (javatpoint.com)</a></p>
+</div>
+<p>Para seguir el tutorial de <a href="https://www.mysqltutorial.org/mysql-stored-procedure/">www.mysqltutorial.org</a> descargaremos la siguiente:</p>
+<pre class="cuadro up b0">	                <a href="res/mysqlsampledatabase.sql">Base de datos de muestra</a>
+<img src="img/mysql-sample-database.png" class=""></pre>
+<div class="def w8">
+<p><b>Ejercicio</b>: Convierte el diagrama E-R de tablas anterior en un diagrama E-R de entidades.</p>
+</div>
+<h3>Tutorial</h3>
+<style>
+.div-group { border: 2px solid #ddd; border-radius:12px; margin-bottom:1rem; box-shadow: rgba(0, 0, 0, 0.35) 1.95px 1.95px 2.9px; width:97%;} li { padding-right:1.2rem;}
+code { background: #F0F1F2; color: #464; font-size:79%}
+h2 { margin-bottom:-1rem; font-weight: normal; color:black;}
+h2 span { color: #008; }
+</style>
+<div style="margin-left:1.9rem;">
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 1.</span> Basic MySQL Stored procedures</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/introduction-to-sql-stored-procedures/">Introduction to MySQL stored Procedures</a> – introduce you to MySQL stored procedures, their advantages, and disadvantages.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-delimiter/">Changing the default delimiter</a> – learn how to change the default delimiter in MySQL.</li>
+      <li><a href="http://dww.es/mysql-stored-procedure/getting-started-with-mysql-stored-procedures/">Creating new stored procedures</a> – show you how to create and use the <code>CREATE PROCEDURE</code> statement to create a new stored procedure in the database.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-drop-procedure/">Removing stored procedures</a> – show you how to use the <code>DROP PROCEDURE</code> statement to drop an existing stored procedure.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/variables-in-stored-procedures/">Variables</a> – guide on you how to use variables to hold immediate results inside stored procedures.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/stored-procedures-parameters-in-mysql/">Parameters</a> – introduce you to various types of parameters used in stored procedures including <code>IN</code>, <code>OUT</code>, and <code>INOUT</code> parameter.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/alter-stored-procedure/">Altering stored procedure</a> – show you step by step how to alter a stored procedure using a sequence of <code>DROP PROCEDURE</code> and <code>CREATE PROCEDURE</code> statements in MySQL Workbench.</li>
+      <li><a href="http://dww.es/mysql-stored-procedure/listing-stored-procedures-in-a-mysql-database/">Listing stored procedures</a> – provide you with some useful commands to list stored procedures from databases.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 2.</span> Conditional Statements</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-if-statement/">IF statement</a> – show you how to use the <code>IF THEN</code> statement in stored procedures.</li>
+      <li><a href="http://dww.es/mysql-stored-procedure/mysql-case-statement/">CASE statement</a> – introduce you to the <code>CASE</code> statements including simple <code>CASE</code> and searched <code>CASE</code> statements.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 3.</span> Loops</h2>
+    <ul>
+      <li><a href="http://dww.es/mysql-stored-procedure/loop-in-stored-procedures/">LOOP</a> – learn how to execute a list of statements repeatedly based on a condition.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-while-loop/">WHILE Loop</a> – show you how to execute a loop as long as a condition is true.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-repeat-loop/">REPEAT Loop</a> – show you how to execute a loop until a search condition is true.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-leave/">LEAVE statement</a> – guide you on how to exit a loop immediately.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 4.</span> Error Handling</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-show-warnings/">Show Warnings</a> – Learn how to display errors and warnings of the latest query execution.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-show-errors/">Show Errors</a> – Learn how to display errors of the latest query execution.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-declare-handler/">DECLARE … HANDLER</a> – Show you how to declare exit or continue handler to handle errors within stored procedures.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-declare-condition/">DECLARE … CONDITION</a> – Guide you on how to associate a name with a condition specified by a MySQL error code or an SQL state value.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-signal/">SIGNAL</a> – Learn how to raise an exception (error or warning) using the <code>SIGNAL</code> statement.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-resignal/">RESIGNAL</a> – show you how to re-raise an exception using the <code>RESIGNAL</code> statement.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 5.</span> Cursors</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/sql-cursor-in-stored-procedures/">Cursors</a> – learn how to use cursors to process row by row in a result set.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-prepared-statement/">Prepared Statements</a> – guide you on how to use prepared statements to make your queries more secure and faster to execute.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 6.</span> Stored Functions</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-stored-function/">Creating a stored function</a> – show you how to create stored functions in the database.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-drop-function/">Removing a stored function</a> – use the <code>DROP FUNCTION</code> statement to remove a stored function.</li>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-show-functions/">Listing stored functions</a> – learn how to list all stored functions in the database by using the <code>SHOW FUNCTION STATUS</code> statement or querying from the data dictionary.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 7.</span> Stored Program Security</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-stored-object-access-control/">Stored object access control</a> – learn how to control the security of the stored objects.</li>
+    </ul>
+  </div>
+</div>
+<div class="div-group">
+  <div class="div-group_inner">
+    <h2 class="wp-heading"><span>Section 8.</span> Transactions</h2>
+    <ul>
+      <li><a href="https://www.mysqltutorial.org/mysql-stored-procedure/mysql-transactions/">Transactions</a> – guide you on how to use transactions in stored procedures to ensure data integrity.</li>
+    </ul>
+  </div>
+</div>
+</div>
+
+</article>
+</body>
+</html>
