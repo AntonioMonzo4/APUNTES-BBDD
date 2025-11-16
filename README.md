@@ -1,2 +1,2 @@
-# APUNTES-DAW
-Apuntes y ejercicios de daw 
+# APUNTES-BBDD
+Apuntes y ejercicios de BBDD
