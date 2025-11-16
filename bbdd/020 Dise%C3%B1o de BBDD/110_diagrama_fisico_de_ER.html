@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Diagrama ER para el modelo físico</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 13 ene. 2024 16:48:00 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Diagrama ER para el modelo físico</h1>
+<p>El modelo físico de datos corresponde a las tablas de la BD a las que ha dado lugar el
+diagrama ER. Este modelo también tiene una representación mediante un diagrama ER, donde:</p>
+<ul>
+  <li>Cada tabla se representa con un rectángulo, independientemente de que provenga de una
+entidad o de una relación.</li>
+  <li>Se utilizan unos conectores entre tablas con unos símbolos en sus extremos para
+representar las cardinalidades de cada relación:
+<img src="img/Cardinalidad-0-1-N.png" class=""></li>
+</ul>
+<h4>Ejemplos</h4>
+<p><u>EJEMPLO 1:1</u></p>
+<ul>
+  <li>En toda provincia hay un Presidente de Diputación:
+<img src="img/E-R_Provincias-Personas-Presidir-0Provincias-cardinadlidad-minima.png" class=""></li>
+</ul>
+<p>Esto traducida a un diagrama ER físico sería:
+<img src="img/Diagrama-ER-fisico-Presidir-Comunidad.png" class=""></p>
+<p><u>EJEMPLO 1:N</u></p>
+<ul>
+  <li>En una provincia hay mucha gente empadronada:
+<img src="img/E-R_Provincias-Personas-Empadronar-carinalidad-minima.png" class=""></li>
+</ul>
+<p>El diagrama ER con tablas sería:
+<img src="img/DiagramaER-fisico-empadronar.png" class=""></p>
+<p><u>EJEMPLO N:M</u></p>
+<ul>
+  <li>Una persona puede haber hecho turismo de camping en muchas provincias. Suponemos
+que en todas las provincias hay algún camping:
+<img src="img/E-R_Provincias-Personas-Acampar-cardinalidad-minima.png" class=""></li>
+</ul>
+<p>Que da lugar a tres tablas:
+<img src="img/E-R_Provincias-Personas-Acampar-Diagrama-Fisico.png" class=""></p>
+</article>
+</body>
+</html>

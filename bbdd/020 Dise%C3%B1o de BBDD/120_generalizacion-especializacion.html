@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Diagrama ER extendido</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 13 ene. 2024 20:54:57 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Diagrama ER extendido</h1>
+<p>En situaciones en que una entidad se está relacionando con muchas otras entidades,
+y bajo ciertas condiciones, se han definido un par de simplificaciones para el
+diagrama E-R.</p>
+<p>Esos casos especiales de relación deben ser de uno de los siguientes tipos:
+<br><span class="tab"><span class="icon"></span>- <b>Especialización</b>: Una entidad más general puede descomponerse en subentidaes más específicas.<span class="wsp">
+   <u>ejemplo</u>: un "Empleado" puede ser un "Profesor", un "Bedel", un "Administrativo", "Técnico", "Directivo", ...:
+todos comparten los atributos de la entidad "Empleado" y además tendrán sus atributos y relaciones propias.</span></span><br>
+<span class="tab"><span class="icon"></span>- <b>Agregación</b>: Una entidad puede estar compuesta por muchas otras entidades de algún otro tipo.<span class="wsp">
+   <u>ejemplo</u>: un "Vehículo" puede poseer otra entidad que es el "Motor", las "Ruedas", el "Chasis", ...</span></span>
+</p>
+<h2>Especialización: relación '<code>IS-A</code>'</h2>
+<p>Decimos que entre dos entidades existe una relación de generalización/especialización
+cuando una de ellas es un caso particular de la otra.</p>
+<p>A la entidad general se la denomina <b>superclase</b>, y a la particular o especializada <b>subclase</b>.</p>
+<p>Por ejemplo, dentro de los bienes inmuebles podemos encontrar pisos, chalets, locales comerciales, 
+oficinas, bodegas, estadios de fútbol, terrenos, ..., todos estos son casos particulares de una entidad
+genérica "inmueble":</p>
+<p><img src="img/Relacion-ES-UN-no-simplificada.png" class=""></p>
+<p>Para simplificar estos casos, se  define un nuevo tipo de relación entre entidades conocida como relación <code>IS-A</code> (es un):</p>
+<p><img src="img/Relacion-IS-A.png" class=""></p>
+<h2>Relación de agregación</h2>
+<p>Una relación de agregación es una asociación entre entidades, donde varias entidades simples
+se configuran juntas para crear una entidad más compleja.</p>
+<p>Es decir, entre dos entidades existe una relación de agregación, cuando una de ellas forma parte de la otra.</p>
+<p><img src="img/Relacion-Agregacion-no-simplificada.png" class=""></p>
+<p>Cuando varias entidades están agregadas en otra, para simplificar el diagrama E-R se
+utiliza un rombo vacio que representa una relación de agregación:</p>
+<p><img src="img/Relacion-Agregacion.png" class=""></p>
+<h2>Exclusividad</h2>
+<p>Se produce exclusividad entre relaciones cuando la existencia de una relación
+implica la no existencia de las otras.</p>
+<p>La exclusividad se representa con un arco que abarca las relaciones excluyentes.</p>
+<p><b><u>Ejemplos</u></b></p>
+<p>► Un inmueble sólo puede ser de un tipo de entidad:
+<img src="img/exclusividad_ISA.png" class=""></p>
+<p>► En cierta competición, sólo pueden inscribirse equipos o personas individuales:
+<img src="img/Exclusividad-Equipo-Persona.webp" class="">
+Por ejemplo, en la vuelta a España se inscriben equipos, en el criterium de San Sebastian
+o el campeonato de España la participación es a título individual.</p>
+</article>
+</body>
+</html>

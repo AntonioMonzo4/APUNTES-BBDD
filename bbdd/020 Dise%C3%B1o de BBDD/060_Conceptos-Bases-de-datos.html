@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Conceptos utilizados en el diseño de las BBDD relacionales</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue., 12 oct. 2023 19:56:39 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Conceptos utilizados en el diseño de las BBDD relacionales</h1>
+<ul>
+  <li><b><span class="k">Entidad</span></b>: Es es <span class="k">objeto del que se almacena información</span> en la BBDD.<br>
+- Por ejemplo, en un taller mecánico serían entidades el automóvil, los mecánicos, clientes, las facturas,...</li>
+</ul>
+<div class="cuadro t1 w7">
+<p><span class="wsp"> Cuando implementamos la base de datos, cada entidad dará lugar a una <b>tabla</b>.</span></p>
+</div>
+<ul>
+  <li><b><span class="k">Ocurrencia de Entidad</span></b>: Un <span class="k">individuo concreto</span> perteneciente a una entidad, individuo del que estamos almacenando información.<br>
+- Por ejemplo, de la entidad automóvil, cada uno de los coches del taller será una ocurrencia de entidad.</li>
+</ul>
+<div class="cuadro t0 w9">
+<p><span class="wsp">    Cuando implementamos la base de datos, cada ocurrencia de entidad dará lugar a un <b>registro</b>.</span></p>
+</div>
+<ul>
+  <li><b><span class="k">Atributos</span></b>: Cualquier <span class="k">característica de la entidad</span> de la que vamos a almacenar información.<br>
+- Por ejemplo, del automóvil podrían ser atributos: la matrícula, el modelo, el año de fabricación, color, la descripción de la avería, el propietario, etc.</li>
+</ul>
+<p>Por otro lado, tenemos los <span class="k">registros</span> y <span class="k">campos</span>:</p>
+<ul>
+  <li><b><span class="k">Registros</span></b>: es el lugar donde se almacenan los valores concretos de cada
+ocurrencia de entidad. Cada registro es un <span class="k">conjunto de valores de atributo</span> para
+alguna ocurrencia de entidad.<br>
+- Un registro podría ser: <span class="b">QQZ 1234, Fiat 500, 2017, rojo, fallo en sistema eléctico, Julio Pérez</span>.</li>
+</ul>
+<ul>
+  <li><b><span class="k">Campos</span></b>: Un registro se divide en campos. Un campo es <span class="k">cada uno de los valores de atributo</span>.<br>
+Por ejemplo, un campo podría ser <span class="b">Fiat 500</span>.</li>
+</ul>
+<h4>El modelo relacional en las matemáticas</h4>
+<p>Las bases de datos relacionales se basan en un modelo matemático (<i><a href="https://es.wikipedia.org/wiki/%C3%81lgebra_relacional">álgebra relacional</a></i>)
+desarrollado por <a href="https://es.wikipedia.org/wiki/Edgar_Frank_Codd">Frank Codd</a> en 1970.</p>
+<p><img src="img/edgar-frank-codd.png" class=""></p>
+<p>En este modelo la <b>base de datos</b> es percibida por el usuario como un <b>conjunto de tablas</b>
+bidimensionales para almacenamiento de datos, y unas <b>relaciones</b> entre tablas que se
+establecen a través de alguno de sus atributos.</p>
+<pre class="nota w8"><b><u>Relación Matemática</u></b>
+En el modelo matemático las tablas se denominan <span class="k">relaciones</span> y las filas <span class="b">tuplas</span>.
+
+El nombre de modelo relacional viene del concepto matemático de relación:
+	<i>una relación entre estos dos conjuntos A y B es cualquier subconjunto del producto cartesiano AxB</i>.
+<span class="wsp">
+<span class="k">Gente</span> = <span class="rr">{</span>  <span class="b">{</span>Ana,28<span class="b">}</span>,  <span class="b">{</span>Luis,24<span class="b">}</span>,  <span class="b">{</span>Felipe,28<span class="b">}</span>,  <span class="b">{</span>Marta,44<span class="b">}</span>  <span class="rr">}</span> 
+<span class="k">Provincias</span> = <span class="rr">{</span>  <span class="b">{</span>28,Madrid<span class="b">}</span>,  <span class="b">{</span>44,Teruel<span class="b">}</span>,  <span class="b">{</span>24,León<span class="b">}</span>  <span class="rr">}</span> 
+
+	- El producto cartesiano son todas las combinaciones posibles con los elementos de los conjuntos:
+<span class="k">Gente</span> X <span class="k">Provincias</span> = <span class="rr">{</span>
+   <span class="b">{</span>Ana,28, 28,Madrid<span class="b">}</span>, <span class="b">{</span>Luis,24, 28,Madrid<span class="b">}</span>, <span class="b">{</span>Felipe,28, 28,Madrid<span class="b">}</span>, <span class="b">{</span>Marta,44, 28,Madrid<span class="b">}</span>
+   <span class="b">{</span>Ana,28, 44,Teruel<span class="b">}</span>,  <span class="b">{</span>Luis,24, 44,Teruel<span class="b">}</span>,  <span class="b">{</span>Felipe,28, 44,Teruel<span class="b">}</span>,  <span class="b">{</span>Marta,44, 44,Teruel<span class="b">}</span>
+   <span class="b">{</span>Ana,28, 24,León<span class="b">}</span>,    <span class="b">{</span>Luis,24, 24,León<span class="b">}</span>,    <span class="b">{</span>Felipe,28, 24,León<span class="b">}</span>,    <span class="b">{</span>Marta,44, 24,León<span class="b">}</span>
+<span class="rr">}</span>
+	- Una relación es un subconjunto del producto cartesiano:
+<span class="k">Relación-Guay</span> = <span class="rr">{</span> <span class="b">{</span>Ana,28, 28,Madrid<span class="b">}</span>, <span class="b">{</span>Luis,24, 24,León<span class="b">}</span>, <span class="b">{</span>Felipe,28, 28,Madrid<span class="b">}</span>, <span class="b">{</span>Marta,44, 44,Teruel<span class="b">}</span>  <span class="rr">}</span></span>
+
+<b><u>Grado y cardinalidad</u></b>
+El <span class="k">grado</span> es el número de atributos de una tabla y la <span class="k">cardinalidad</span> el número de elementos de un conjunto:
+	<span class="k">Gente</span>: grado 2, cardinalidad 4
+	<span class="k">Provincias</span>: grado 2, cardinalidad 3
+	<span class="k">Gente x Provincias</span>: grado 2+2 = 4, cardinalidad 4x3 = 12
+	<span class="k">Relación-Guay</span>: grado 4, cardinalidad 4</pre>
+<p>Se establecen los conceptos de:</p>
+<ul>
+  <li><b><span class="k">dominio</span></b>: Es el conjunto de <span class="k">todos los valores</span> que puede tomar un determinado atributo.<br>
+- Por ejemplo, el dominio del atributo "modelo" son todos los modelos de coches del mercado.<br>
+<span class="wsp">  </span>El dominio para el atributo "sexo" podría ser { "M", "F" }.</li>
+</ul>
+<pre class="notaB w7"><span class="k">Una característica fundamental de los dominios es que sean <b>atómicos</b>, es decir, que los valores
+contenidos en los atributos no se pueden separar en valores de dominios más simples.</span>
+	- Si una persona tiene dos viviendas, podemos crear dos atributos "Dirección", "Dirección-2".
+	- Pero si estamos guardando información de la vivienda, crearemos dos registros.
+	- Y siempre nos quedará la opción de crear un atributo "Observaciones".</pre>
+<ul>
+  <li><b><span class="k">clave</span></b>: Una clave es un <span class="k">atributo o conjunto de atributos</span> que <span class="k">identifica de forma única</span> a un registro.<br>
+- Por ejemplo, el atributo "matrícula" es un campo clave, también el atributo "nº de bastidor" podría ser clave.<br>
+- Para un mecánico el [DNI] podría ser clave, también el [nº afiliación SS] podría ser clave.<br>
+<span class="wsp">  También su [nombre] y [apellidos] podría ser clave, si no contratamos a otro que se llame igual. 
+  O podríamos generar nosotros nuestro propio [código de identificadión] para cada mecánico.</span></li>
+</ul>
+<p><span class="wsp">          </span><big>👉</big> <span class="k">El atributo (o atributos) que actúa como clave no puede repetirse.</span></p>
+<ul>
+  <li><b><span class="k">clave primaria</span></b> y <b><span class="k">claves alternativas</span></b>: Cuando diseñemos una BBDD
+seleccionaremos <span class="k">una única clave</span> para cada tabla, que denominaremos <i>clave primaria</i>.
+Al resto de posibles claves las denominaremos <i>claves alternativas</i>.</li>
+</ul>
+<div class="nota w7 t1">
+<p>El SGBD convierte la clave primaria en <b>atributo índice</b>. Luego, nosotros podremos definir
+otros atributos como <i>índice</i> para agilizar las búsquedas a través de ese atributo.</p>
+</div>
+<ul>
+  <li><b><span class="k">relaciones</span></b>: Existe una relación entre tablas cuando éstas <span class="k">comparten algún atributo</span>,
+que suele ser clave en una de ellas.</li>
+</ul>
+<ul>
+  <li><b><span class="k">clave foránea</span></b> o <b><span class="k">clave ajena</span></b>: Cuando una tabla <span class="k">recibe la clave de otra tabla a través
+de una relación</span>, a ese atributo se lo denomina clave ajena o foránea.</li>
+</ul>
+<div class="cuadro lh3 fs01">
+<p><span class="bb">Diagrama Entidad-Relación:</span>
+<img src="img/E-R_Personas-Provincias_1.png" class=""></p>
+<p>El atributo <span class="r">cp</span> que es clave en la tabla de PROVINCIAS, va a aparecer en la tabla de PERSONAS, para
+conocer en qué provincia vive cada individuo:</p>
+<p><span class="bb">Tablas:</span>
+<br><span class="tab"><span class="icon"></span>PROVINCIAS = { <u><span class="r">cp</span></u>, nombreProv }<span class="wsp">                                     <big>←</big>  <span class="r">cp</span> es clave en PROVINCIAS</span></span><br>
+<span class="tab"><span class="icon"></span>PERSONAS = { <u>DNI</u>, fecNac, apellidos, nombre, <span class="r">cp (f)</span> }<span class="wsp">     <big>←</big> <span class="r">cp</span> es clave foránea en PERSONAS</span></span>
+</p>
+</div>
+<p>Cuando diseñemos nuestra BBDD impondremos unas ...</p>
+<ul>
+  <li><b><span class="k">restricciones de integridad</span></b>: <span class="k">condiciones que deben cumplir los datos</span>,
+según las necesidades de nuestro modelo basado en la realidad.</li>
+</ul>
+<p>Por ejemplo, podemos exigir que la edad de una persona no supere los 130 años, o que el
+campo de apellidos no quede en blanco. O que una matrícula tenga el formato "AAA 9999"</p>
+<p>Un ejemplo de restricción de integridad que <b>siempre</b> debe cumplirse es la llamada ...</p>
+<ul>
+  <li><b><span class="k">integridad referencial</span></b>: Todos los valores que tome una clave foránea <span class="r">X</span>, deben tener su correspondencia en la tabla donde <span class="r">X</span> es clave.</li>
+</ul>
+<p>Por ejemplo, el siguiente registro no cumpliría la integridad referencial:</p>
+<div class="up">
+<p>
+<span class="tab"><span class="icon"></span>("5199255X", "1/1/2001", "Montero Monte", "Matilde", 328)</span>
+</p>
+</div>
+<p>porque no hay ninguna provincia con código 328 (suponemos son números del 1 al 52).<br><br><br><br><br><br>&nbsp;</p>
+</article>
+</body>
+</html>

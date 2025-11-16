@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Particionamiento de tablas</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 29 nov 2023 02:15:04 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Particionamiento de tablas</h1>
+<p>A veces, para optimizar el rendimiento en los accesos a datos, se realizan
+lo que se denomina particiones en las tablas.</p>
+<h2>Particionamiento Horizontal</h2>
+<p>El particionamiento horizontal puede utilizarse cuando una tabla crece mucho y llega
+a almacenar demasiados registros, haciéndose habitualmente las consultas en bloques
+de registros definidos.</p>
+<p>Por ejemplo, "El Corte Irlandés" almacena en la tabla "Ventas" los registros de
+todas sus ventas desde hace 20 años. Podríamos hacer un particionamiento horizontal:</p>
+<p>
+<span class="tab"><span class="icon"></span>- por años, si la mayoría de consultas se hacen en el último año, o por históricos anuales.</span><br>
+<span class="tab"><span class="icon"></span>- por departamentos, si las consultas suelen hacerse por categorías de artículos</span>
+</p>
+<p><img src="img/particionamiento-horizontal.png" class=""></p>
+<h2>Particionamiento Vertical</h2>
+<p>El particionamiento vertical se utiliza cuando una tabla tiene <span class="k">muchos campos</span>
+y frecuentemente las consultas se hacen a ciertos campos de manera independiente de
+otros.</p>
+<p><img src="img/particionamiento-vertical.png" class=""></p>
+<pre class="cuadro w7 t00 fs04"><b>1.</b> Alguna de estas particiones, ¿dan lugar a relaciones 1:1? 
+  ¿con que cardinalidades, mínima y máxima?
+
+- En el diagrama E-R ¿alguna entidad podría quedar sin clave?
+
+<u>NOTA</u>: Una entidad que precisa de una clave ajena para tener clave, se denomina
+          <span class="k">entidad débil</span>.
+
+<b>2.</b> ¿Crees que en algunas de las tablas de la base de datos de fútbol:
+    "<i>clubs</i>", "<i>sedes</i>", "<i>Jugadores</i>"
+  se ha realizado algún tipo de partición? ¿cuál?</pre>
+<div class="notaB w5">
+<p><a href="https://mariadb.com/kb/en/partitioning-tables/">Partitioning Tables</a><br>
+<a href="https://dev.mysql.com/doc/refman/8.0/en/partitioning-management.html">Partition Management (mysql)</a></p>
+</div>
+</article>
+</body>
+</html>

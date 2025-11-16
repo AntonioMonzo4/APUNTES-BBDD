@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Cardinalidad</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mar, 14 nov 2023 10:10:06 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Cardinalidad</h1>
+<p>Cuando se establece una relación entre dos entidades se define la cardinalidad
+como el número de elementos con los que participa cada una de las entidades en la
+relación.</p>
+<p>La cardinalidad dependerá del tipo de relación que establezcamos entre las entidades,
+y pueden ser:
+<br><span class="tab"><span class="icon"></span>- uno a uno (1:1)</span><br>
+<span class="tab"><span class="icon"></span>- uno a muchos (1:N)</span><br>
+<span class="tab"><span class="icon"></span>- muchos a muchos (N:M)</span>
+</p>
+<p><b>¿y qué objetivo se persigue determinando la cardinalidad de una relación?</b><br>
+El objetivo es evitar a toda costa que queden campos sin valor, es decir, evitar en la
+mayor medida de lo posible la inclusión de nulos (<code>NULL</code>) en la base de datos.</p>
+<p><img src="img/uno-uno.png" class="r"></p>
+<h2>Relaciones <code>1:1</code> / <b>Uno a Uno</b></h2>
+<div class="cuadro t00">
+<p>Entre dos entidades A y B existe una relación uno a uno, cuando cada registro de la
+entidad A se relaciona, a lo sumo, con un registro de la entidad B, y viceversa.</p>
+</div>
+<p><br><span class="k"><u>Ejemplo</u></span>: si entre las entidades "Provincia" y "persona" se define la relación de
+"<span class="k">ser el Presidente de la Diputación</span>":
+<br><span class="tab"><span class="icon"></span>- Cada provincia tiene a <span class="r">una única</span> persona como presidente</span><br>
+<span class="tab"><span class="icon"></span>- Cada persona es presidente como máximo, de <span class="r">una</span> provincia.</span>
+</p>
+<p><img src="img/E-R_Provincias-Personas-Presidir.png" class=""></p>
+<p>En este caso, una de las claves primarias viaja a la otra tabla. Tenemos dos posibles soluciones:</p>
+<pre>  <span class="rr">1.</span>   <span class="b"><b>Provincia</b> (<u>cp</u>, nombre, <span class="g">dniPres(f)</span>, ... )                    <span class="r">&lt;-- óptima!</span>
+       <b>Persona</b> (<u>dni</u>, nombre, apellidos, fNac, ...)
+
+  <span class="rr">2.</span>    <b>Provincia</b> (<u>cp</u>, nombre, ... )
+        <b>Persona</b> (<u>dni</u>, nombre, apellidos, fNac, <span class="g">cpPres(f)</span>, ... )</span></pre>
+<p>La solución óptima es la primera. ¿Por qué? porque <b>evita la presencia de nulos</b> en la BDD:
+<br><span class="tab"><span class="icon"></span><span class="rr">1.</span> Como toda provincia tiene un presidente, el campo <span class="g">dniPres(f)</span> nunca estará vación (nunca será <code>NULL</code>).</span><br>
+<span class="tab"><span class="icon"></span><span class="rr">2.</span> En el segundo diseño, aquellas personas "no presidente" tendrán un nulo en el campo <span class="g">cpPres(f)</span>.
+Para el presidente, en el campo <span class="g">cpPres(f)</span> aparecerá el código postal de la provincia que preside.</span>
+</p>
+<h4>Razonamiento a seguir: buscar las cardinalidades mínimas de la relación</h4>
+<p>Para tener claro el sentido en el que viajará la clave, debemos razonar las "cardinalidades mínimas":
+<br><span class="tab"><span class="icon"></span>- Cada provincia tiene <span class="r">una</span> persona presidente (como <span class="k">mínimo</span>, y como <span class="k">máximo</span> también).</span><br>
+<span class="tab"><span class="icon"></span>- Cada persona es presidente:<span class="wsp"></span><br>
+<span class="tab"><span class="icon"></span>	- como <span class="k">mínimo</span>, de <span class="r">ninguna</span> provincia (la mayoría de las personas no serán presidentes)</span><br>
+<span class="tab"><span class="icon"></span>	- como <span class="k">máximo</span> de <span class="r">una única</span> única provincia.</span></span>
+</p>
+<p><img src="img/E-R_Provincias-Personas-Presidir-0Provincias.png" class=""></p>
+<p>👉 <span class="k">La clave viaja a la entidad que participa con</span> <span class="r">menor cardinalidad mínima</span>, en este caso, "Provincias"
+recibe la clave de "Personas".</p>
+<div class="nota w7 t0">
+<p><b>¿y qué pasa si ambas cardinalidades mínimas son 0?</b><br>
+En este caso, propagar cualquiera de las claves primarias a la otra entidad ocasionaría
+valores nulos. Se recomienda crear una nueva tabla con la relación, donde se incluirán
+como atributos las claves de las entidades relacionadas (ver abajo relaciones N:M).</p>
+</div>
+<p><img src="img/uno-muchos.png" class="r"></p>
+<h2>Relaciones <code>1:N</code> / <b>Uno a varios</b> / <b>uno a muchos</b></h2>
+<div class="cuadro t00">
+<p>Un registro de una entidad en A se puede relacionar con multitud de registros de B.<br>
+Pero los registros de B se relacionan, a lo sumo, con un registro de A.</p>
+</div>
+<p><br><span class="k"><u>Ejemplo</u></span>: si entre las entidades "Provincia" y "persona" se define la relación de
+<span class="k">empadronamiento</span> (provincia en la que uno vota):
+<br><span class="tab"><span class="icon"></span>- En una provincia se pueden empadronar <span class="r">muchas</span> personas</span><br>
+<span class="tab"><span class="icon"></span>- Una persona, sólo puede estar empadronada en <span class="r">una</span> única provincia.</span>
+</p>
+<p><img src="img/E-R_Provincias-Personas-Empadronar.png" class=""></p>
+<p>Las tablas a las que da lugar esta relación son las siguientes:</p>
+<pre>   <span class="b"><b>Provincia</b> (<u>cp</u>, nombre, dniPres(f), ... )
+   <b>Persona</b> (<u>dni</u>, nombre, apellidos, fecNacm, <span class="g">cp(f)</span>, ...)</span></pre>
+<p>Como toda persona está empadronada en alguna provincia, el campo <span class="g">cp(f)</span> nunca será <code>NULL</code>.</p>
+<p>👉 <span class="k">La clave viaja a la entidad que participa con</span> <span class="r">mayor cardinalidad</span>, en este caso, "Personas"
+recibe la clave de "Provincias".</p>
+<p><img src="img/muchos-muchos.png" class="r"></p>
+<h2>Relaciones <code>N:M</code> / <b>Varios a varios</b> / <b>muchos a muchos</b></h2>
+<div class="cuadro t00">
+<p>Una entidad en A se puede relacionar con 1 o con muchas entidades en B y viceversa</p>
+</div>
+<p><br><span class="k"><u>Ejemplo</u></span>: si entre las entidades "Provincia" y "persona" se define la relación de
+<span class="k">haber hecho alguna visita</span> a la provincia:
+<br><span class="tab"><span class="icon"></span>- Una provincia puede haber sido visitada por <span class="r">muchas</span> personas</span><br>
+<span class="tab"><span class="icon"></span>- Una persona, puede haber visitado <span class="r">muchas</span> provincias.</span>
+</p>
+<p><img src="img/E-R_Provincias-Personas-Visitar.png" class=""></p>
+<p>En este caso, en la BDD se crea una nueva tabla para la relación, que recibe como foráneas las
+claves de las entidades que relaciona:</p>
+<pre>   <span class="b"><b>Provincia</b> (<u>cp</u>, nombre, ... )
+   Visita (<u>dni</u>(f), <u>cp</u>(f), ...)
+   <b>Persona</b> (<u>dni</u>, nombre, apellidos, fecNacm, ...)</span></pre>
+<p>👉 <span class="k">Ambas claves viajan a la relación, que da lugar a una nueva tabla.<br>&nbsp;</p>
+</article>
+</body>
+</html>

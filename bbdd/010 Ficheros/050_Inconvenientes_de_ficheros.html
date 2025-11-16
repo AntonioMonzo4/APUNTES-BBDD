@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Problemas con los ficheros de registros</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="lun, 02 oct 2023 16:47:31 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Problemas con los ficheros de registros</h1>
+<p>Cuando tomamos muchos datos para crear un fichero podemos provocar ciertos errores que
+nos genere datos inconsistentes. Esas inconsistencias son las que nos justificar el
+diseño de las <span class="k">Bases de Datos</span>.</p>
+<p>Veamos un ejemplo, <b><a href="res/100_registros.csv">aquí</a></b> tienes un CSV con 100 registros.</p>
+<div class="def w7">
+<ol>
+  <li>¿Cuántos registros hay de Madrid?</li>
+  <li>¿Cuántos hay con código postal 28?</li>
+  <li><b><a href="res/gente.csv">Aquí</a></b> tienes otro fichero. ¿Podrías contestar a las mismas preguntas?</li>
+</ol>
+</div>
+<h2>Redundancias, inconsistencias e incongruencias</h2>
+<p>En un fichero como el anterior podemos encontrar los siguientes defectos en una toma de datos:</p>
+<div class="def w5">
+<p><span class="k">Redundancia</span>: Repetición innecesaria de los datos.</p>
+</div>
+<p>Podemos hablar de dos tipos de redundancia:
+<br><span class="tab"><span class="icon"></span>- <span class="k">Redundancia por repetición</span>: Santa Cruz de Tenerife, Santa Cruz de Tenerife, Santa Cruz de Tenerife, ...</span><br>
+<span class="tab"><span class="icon"></span>- <span class="k">Redundancia por dependencia</span>: 28, Madrid, 28, Madrid, 28, Madrid, ... : <i>28</i> y <i>Madrid</i> es "lo mismo": bastaría anotarlo una sola vez.</span>
+</p>
+<p>Fácilmente podemos observar que la redundancia por repetición puede provocar una ocupación exagerada de recursos (memoria, disco, ...). </p>
+<p>La redundancia ya en sí es mala, pero tenemos un problema mayor: la inconsistencia.</p>
+<div class="def w7">
+<p><b><span class="k">Inconsistencia</span></b>: Se produce en situaciones de inconsistencia de datos cuando no todas las copias redundantes
+proporcionan la misma información.</p>
+</div>
+<p>Por ejemplo, escribir:
+<br><span class="tab"><span class="icon"></span>- <span class="wsp">S.C. de Tenerife;   Tenerife;   Santa Croz de Tenerife;   Tenirife; ...</span></span><br>
+<span class="tab"><span class="icon"></span>- <span class="wsp">28, Madrid;    38, Madrid;    28, Madrid; ...</span></span>
+</p>
+<p>En la primera situación, se nos obliga a realizar búsquedas más complejas para encontrar a todos los clientes de Tenerife.</p>
+<p>La redundancia por dependencia es mucho peor, pues producen datos <b>incongruentes</b>. No tengo suficiente
+información para saber si la respuesta correcta era "<i>38, Santa Cruz de Tenerife</i>" o "<i>28, Madrid</i>".</p>
+<div class="def w6">
+<p><span class="k">Incongruencia</span>: Existe una relación absurda o no lógica entre dos datos. Son datos contradictorios.</p>
+</div>
+<h2>Problemas con los ficheros de registros</h2>
+<ul>
+  <li>Redundancia de datos (duplicidad innecesaria de información).</li>
+  <li>Mal aprovechamiento del espacio de almacenamiento.</li>
+  <li>Aumento en el tiempo de proceso.</li>
+  <li>Inconsistencia de información debida a la redundancia (si un dato cambiaba en el fichero
+de una aplicación, no cambiaba en los demás).</li>
+  <li>Aislamiento de la información (imposibilidad de transferirla a otros programas a no ser
+que se desarrollara un software de migración específico).</li>
+</ul>
+<h3>Relaciones</h3>
+<p>Una <span class="k">Bases de datos</span> es un almacen de grandes cantidades de datos, organizados de tal
+manera que no se encuentren inconsistencias (ni redundancias).</p>
+<p>¿Cómo podríamos convertir nuestro fichero en una "Base de Datos"?</p>
+<p>Una solución podría ser crear dos ficheros, uno para las <b>provincias</b> y el
+otro para las <b>personas</b>:</p>
+<p>
+<span class="tab"><span class="icon"></span>Personas = { DNI, fecNac, apellidos, nombre, <span class="r">cp</span> }</span><br>
+<span class="tab"><span class="icon"></span>Provincias = { <span class="r">cp</span>, nombreProv }</span>
+</p>
+<p>Estos dos ficheros estarían <span class="b">relacionados</span> por el <span class="r">código postal</span>:</p>
+<pre>  <b><u>DNI</u></b> ···   <b><u>nombre</u>  <u>cp</u>  </b><span class="b">&lt;--- <b>R</b> ----</span><b>  <u>cp</u> <u>nombreProv</u></b>
+ 56595X ··· Pedro   <span class="r">03               01</span> Álava
+  9985A ··· Juan    <span class="r">24               02</span> Albacete
+ 92012J ··· Mateo   <span class="r">24               03</span> Alicante
+ 56900R ··· Lucas   <span class="r">24               04</span> Almería
+ 15126T ··· Jesús   <span class="r">24</span>               ...
+ 93396A ··· Ana     <span class="r">33               09</span> Burgos
+ 70155W ··· Maria   <span class="r">47</span>               ...
+ 39544M ··· Marta   <span class="r">28               24</span> León
+ 43406F ··· Sandra  <span class="r">24</span>               ...
+ 54755L ··· Elena   <span class="r">09               52</span> Melilla
+ 97831L ··· Teresa  <span class="r">44</span>
+ 25665K ··· Alfonso <span class="r">01</span></pre>
+<p>Observar que en la tabla de PERSONAS no hemos almacenado el nombre de la provincia,
+basta con guardar el "Código Postal", y consultando en la tabla de PROVINCIAS
+podemos conocer el nombre de la misma.</p>
+<p>En una <span class="k">Bases de datos relacional</span> se establecen relaciones de esta manera entre los ficheros
+de datos (<i>tablas</i>).</p>
+<h5>Diagrama Entidad Relación</h5>
+<p>Cuando dos ficheros se relacionan por un campo, podemos representarlos
+mediante el conocido como diagrama Entidad-Relación (E-R):</p>
+<p><img src="img/E-R_Personas-Provincias.png" class=""></p>
+<p>Para representar el diseño de nuestra BBDD emplearemos un diágrama E-R para representar
+la organización de los datos,</p>
+<h4>Sistema Gestor de Bases de Datos (<b>SGBD</b>)</h4>
+<p>El SGBD es la aplicación que se encargará de configurar una estructura óptima de almacenamiento en disco
+y nos permitrá los accesos a los datos:</p>
+<p><img src="img/DBMS.png" class=""></p>
+<pre class="notaB w4 t5"><b>SGBD</b>: Sistema Gestor de la Base de Datos
+<b>DBMS</b>: Data Base Management System</pre>
+<p>Para que el SGBD funciones de manera óptima sobre los datos, la BBDD debe estar bien diseñada.</p>
+<p>Para minimizar la información redundante, y evitar inconsistencias en los ficheros, se
+definió un <a href="https://es.wikipedia.org/wiki/Normalizaci%C3%B3n_de_bases_de_datos"><b>proceso de normalización</b></a>
+a traves de ciertas reglas que deberán cumplir todas las BBDD para estar bien diseñadas.<br><br>&nbsp;</p>
+</article>
+</body>
+</html>

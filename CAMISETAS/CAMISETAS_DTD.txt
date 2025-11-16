@@ -1,0 +1,10 @@
+<!ELEMENT camisetasFutbolAnt (camiseta+)>
+<!ELEMENT camiseta (marca, imagen_url, estado_descripcion)>
+<!ATTLIST camiseta
+    equipo CDATA #REQUIRED
+    temporada CDATA #IMPLIED
+    tipo CDATA #REQUIRED
+>
+<!ELEMENT marca (#PCDATA)>
+<!ELEMENT imagen_url (#PCDATA)>
+<!ELEMENT estado_descripcion (#PCDATA)>

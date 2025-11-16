@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<camisetasFutbolAnt>
+    <camiseta equipo="Arsenal" temporada="1994" tipo="H">
+        <marca>NIKE</marca>
+        <imagen_url>Arsenal-1994-95.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Arsenal" temporada="2010" tipo="H">
+        <marca>NIKE</marca>
+        <imagen_url>Arsenal-2010-11.jpg</imagen_url>
+        <estado_descripcion>6</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Bayern" temporada="2020" tipo="H">
+        <marca>ADIDAS</marca>
+        <imagen_url>Bayern-2020-21.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Cameroon" temporada="2022" tipo="H">
+        <marca>ONE</marca>
+        <imagen_url>Cameroon-2022.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Chelsea" temporada="2009" tipo="A">
+        <marca>ADIDAS</marca>
+        <imagen_url>ChelseaA-2009-10.jpg</imagen_url>
+        <estado_descripcion>6</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Czech" temporada="2020" tipo="H">
+        <marca>PUMA</marca>
+        <imagen_url>Czech-2020.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="España" temporada="2016" tipo="A">
+        <marca>ADIDAS</marca>
+        <imagen_url>EspañaA-2016.jpg</imagen_url>
+        <estado_descripcion>6.5</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Everton" temporada="2019" tipo="H">
+        <marca>UMBRO</marca>
+        <imagen_url>Everton-2019-20.jpg</imagen_url>
+        <estado_descripcion>9</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Fiorentina" temporada="" tipo="E">
+        <marca>KAPPA</marca>
+        <imagen_url>FiorentinaEnt.jpg</imagen_url>
+        <estado_descripcion>7</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="ManCity" temporada="2019" tipo="H">
+        <marca>PUMA</marca>
+        <imagen_url>Mancity125-2019-20.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="ManCity" temporada="" tipo="E">
+        <marca>PUMA</marca>
+        <imagen_url>ManCityEnt.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="ManUnited" temporada="2004" tipo="H">
+        <marca>NIKE</marca>
+        <imagen_url>ManUnited-2004-05.jpg</imagen_url>
+        <estado_descripcion>5.5</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="ManUnited" temporada="2013" tipo="H">
+        <marca>NIKE</marca>
+        <imagen_url>ManUnited-2013-14.jpg</imagen_url>
+        <estado_descripcion>9</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="ManUnited" temporada="1997" tipo="A">
+        <marca>UMBRO</marca>
+        <imagen_url>ManUnitedA-1997-98.jpg</imagen_url>
+        <estado_descripcion>9</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Porto" temporada="2019" tipo="H">
+        <marca>NEW BALANCE</marca>
+        <imagen_url>Porto-2019-20.jpg</imagen_url>
+        <estado_descripcion>7.5</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2007" tipo="H">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadrid-2007-08.jpg</imagen_url>
+        <estado_descripcion>6</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2008" tipo="H">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadrid-2008-09.jpg</imagen_url>
+        <estado_descripcion>5</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2001" tipo="A">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadrid-2001-02.jpg</imagen_url>
+        <estado_descripcion>8</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2001" tipo="A">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadrid-2001-02-2.jpg</imagen_url>
+        <estado_descripcion>6</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2020" tipo="A">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadridA-2020-21.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Real Madrid" temporada="2019" tipo="T">
+        <marca>ADIDAS</marca>
+        <imagen_url>RMadridT-2019-20.jpg</imagen_url>
+        <estado_descripcion>6</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Serbia" temporada="2020" tipo="H">
+        <marca>PUMA</marca>
+        <imagen_url>Serbia-2020-21.jpg</imagen_url>
+        <estado_descripcion>10</estado_descripcion>
+    </camiseta>
+    <camiseta equipo="Wolves" temporada="2004" tipo="A">
+        <marca>LE COQ SPORTIF</marca>
+        <imagen_url>WolvesA-2004-5.jpg</imagen_url>
+        <estado_descripcion>8</estado_descripcion>
+    </camiseta>
+</camisetasFutbolAnt>

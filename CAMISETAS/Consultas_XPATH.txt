@@ -1,0 +1,176 @@
+Seleccionar todas las camisetas con una descripción de estado mayor a 8:
+
+xpath
+Copiar código
+//camiseta[number(estado_descripcion) > 8]
+
+
+Seleccionar todas las camisetas del equipo "Real Madrid":
+
+xpath
+Copiar código
+//camiseta[@equipo='Real Madrid']
+
+
+Contar el número de camisetas de la marca "ADIDAS":
+
+xpath
+Copiar código
+count(//camiseta[marca='ADIDAS'])
+
+
+Obtener los URLs de las imágenes de todas las camisetas del año 2020:
+
+xpath
+Copiar código
+//camiseta[@temporada='2020']/imagen_url
+
+
+Seleccionar camisetas cuya descripción de estado contenga un número decimal:
+
+xpath
+Copiar código
+//camiseta[contains(estado_descripcion, '.')]
+
+
+Contar el número de camisetas que no tienen temporada especificada:
+
+xpath
+Copiar código
+count(//camiseta[not(@temporada)])
+
+
+Seleccionar todas las camisetas de tipo "H" (Home):
+
+xpath
+Copiar código
+//camiseta[@tipo='H']
+
+
+Obtener los equipos de todas las camisetas que tengan una descripción de estado igual a "10":
+
+xpath
+Copiar código
+//camiseta[estado_descripcion='10']/@equipo
+
+
+Seleccionar las camisetas del equipo "Arsenal" que no sean de la temporada 1994:
+
+xpath
+Copiar código
+//camiseta[@equipo='Arsenal' and @temporada!='1994']
+
+
+Contar el número de camisetas de tipo "A" (Away):
+
+xpath
+Copiar código
+count(//camiseta[@tipo='A'])
+
+
+Seleccionar las camisetas que tienen una descripción de estado menor o igual a 6:
+
+xpath
+Copiar código
+//camiseta[number(estado_descripcion) <= 6]
+
+
+Obtener las marcas de todas las camisetas cuya URL de imagen contenga la cadena "Real":
+
+xpath
+Copiar código
+//camiseta[contains(imagen_url, 'Real')]/marca
+
+
+Seleccionar las camisetas cuya descripción de estado no contenga la cadena "10":
+
+xpath
+Copiar código
+//camiseta[not(contains(estado_descripcion, '10'))]
+
+
+Contar el número de camisetas del equipo "ManUnited":
+
+xpath
+Copiar código
+count(//camiseta[@equipo='ManUnited'])
+
+
+Obtener los nombres de las imágenes de las camisetas que pertenecen al equipo "ManCity":
+
+xpath
+Copiar código
+//camiseta[@equipo='ManCity']/imagen_url
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Seleccionar todas las camisetas de equipos cuyo nombre contenga la letra "a" (mayúscula o minúscula):
+
+xpath
+Copiar código
+//camiseta[contains(translate(@equipo, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), 'a')]
+
+
+Seleccionar las camisetas que tienen el mismo equipo y temporada que otra camiseta en el documento:
+
+xpath
+Copiar código
+//camiseta[.//preceding-sibling::camiseta[@equipo=current()/@equipo and @temporada=current()/@temporada]]
+
+
+Contar las camisetas de cada equipo y devolver el equipo con el número máximo de camisetas:
+
+xpath
+Copiar código
+//camiseta/@equipo[not(. != preceding::camiseta/@equipo)][count(. | //camiseta/@equipo)=count(//camiseta[@equipo=current()]/@equipo)][1]
+
+
+Obtener las temporadas únicas disponibles en el documento:
+
+xpath
+Copiar código
+distinct-values(//camiseta/@temporada)
+
+
+Seleccionar camisetas que no sean de "ADIDAS" y tengan una descripción de estado mayor a 7:
+
+xpath
+Copiar código
+//camiseta[marca != 'ADIDAS' and number(estado_descripcion) > 7]
+
+
+Seleccionar camisetas cuya URL de imagen termine con "jpg":
+
+xpath
+Copiar código
+//camiseta[substring(imagen_url, string-length(imagen_url) - 3) = '.jpg']
+
+
+Contar el número de camisetas por cada marca y devolver la marca con el mayor número de camisetas:
+
+xpath
+Copiar código
+//marca[not(. != preceding::camiseta/marca)][count(. | //camiseta/marca)=count(//camiseta[marca=current()]/marca)][1]
+
+
+Seleccionar camisetas con estado de descripción "10" o "6" y que sean de tipo "A":
+
+xpath
+Copiar código
+//camiseta[(estado_descripcion = '10' or estado_descripcion = '6') and @tipo='A']
+
+
+Obtener las camisetas del equipo "Real Madrid" que tienen el mismo año de temporada que una camiseta del equipo "ManUnited":
+
+xpath
+Copiar código
+//camiseta[@equipo='Real Madrid' and @temporada=//camiseta[@equipo='ManUnited']/@temporada]
+
+
+Seleccionar camisetas que tienen el estado de descripción duplicado en el documento:
+
+xpath
+Copiar código
+//camiseta[estado_descripcion = preceding::camiseta/estado_descripcion or estado_descripcion = following::camiseta/estado_descripcion]

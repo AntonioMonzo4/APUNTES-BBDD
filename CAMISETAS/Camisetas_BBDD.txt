@@ -1,0 +1,38 @@
+create database CAMISETAS;
+
+CREATE TABLE camisetasFutbolAnt(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    equipo VARCHAR(100) NOT NULL,
+    temporada int,
+    marca VARCHAR(30) NOT NULL,
+    tipo VARCHAR(20) NOT NULL,
+    imagen_url VARCHAR(255),
+    estado_descripcion VARCHAR(255) );
+
+
+insert into camisetasFutbolAnt( equipo, temporada, marca, tipo, imagen_url, estado_descripcion)
+
+values("Arsenal",1994,"NIKE","H","Arsenal-1994-95.jpg","10"); 
+values("Arsenal",2010,"NIKE","H","Arsenal-2010-11.jpg","6"); 
+values("Bayern",2020 ,"ADIDAS","H","Bayern-2020-21.jpg","10"); 
+values("Cameroon",2022 ,"ONE","H","Cameroon-2022.jpg","10"); 
+values("Chelsea",2009,"ADIDAS","A","ChelseaA-2009-10.jpg","6"); 
+values("Czech",2020,"PUMA","H","Czech-2020.jpg","10"); 
+values("España",2016,"ADIDAS","A","EspañaA-2016.jpg","6.5"); 
+values("Everton",2019,"UMBRO","H","Everton-2019-20.jpg","9"); 
+values("Fiorentina",null,"KAPPA","E","FiorentinaEnt.jpg","7"); 
+values("ManCity",2019,"PUMA","H","Mancity125-2019-20.jpg","10"); 
+values("ManCity",null,"PUMA","E","ManCityEnt.jpg","10"); 
+values("ManUnited",2004,"NIKE","H","ManUnited-2004-05.jpg","5.5"); 
+values("ManUnited",2013,"NIKE","H","ManUnited-2013-14.jpg","9"); 
+values("ManUnited",1997,"UMBRO","A","ManUnitedA-1997-98.jpg","9"); 
+values("Porto",2019,"NEW BALANCE","H","Porto-2019-20.jpg","7.5"); 
+values("Real Madrid",2007,"ADIDAS","H","RMadrid-2007-08.jpg","6"); 
+values("Real Madrid",2008,"ADIDAS","H","RMadrid-2008-09.jpg","5"); 
+values("Real Madrid",2001,"ADIDAS","A","RMadrid-2001-02.jpg","8"); 
+values("Real Madrid",2001,"ADIDAS","A","RMadrid-2001-02-2.jpg","6"); 
+values("Real Madrid",2020,"ADIDAS","A","RMadridA-2020-21.jpg","10"); 
+values("Real Madrid",2019,"ADIDAS","T","RMadridT-2019-20.jpg","6"); 
+values("Serbia",2020,"PUMA","H","Serbia-2020-21.jpg","10"); 
+values("Wolves",2004,"LE COQ SPORTIF","A","WolvesA-2004-5.jpg","8"); 
+

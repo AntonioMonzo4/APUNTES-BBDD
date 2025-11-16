@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Dependencias</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="dom., 14 ene. 2024 17:58:33 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Dependencias</h1>
+<p>Antes de que se desarrollara la teoría relacional para el diseño de BD (1970, Codd) era frecuente que
+las empresas almacenaran todos sus datos de interés en uno o varios ficheros con todas las informaciones
+pertenecientes a cierto elemento del que participaba la empresa.</p>
+<p>Por ejemplo, supongamos que en nuestro negocio proporcionamos prensa a kioskos por suscripción,
+y guardamos los datos para las entregas en un fichero como el siguiente:</p>
+<p><span class="wsp">	<span class="bb">Clientes { alta-suscripción, baja-suscripción,  DNI,  Nombre,  Dirección,  Ciudad,  Revista,  Precio,  Cantidad,  Total }</span></span></p>
+<table border="1" class="fs01">
+  <tr>
+    <th>Alta</th><th>Baja</th><th>DNI</th><th>nombre</th><th>dirección</th><th>ciudad</th><th>revista</th><th>precio</th><th>cantidad</th><th>Total</th>
+  </tr>
+  <tr>
+    <td>15/3/2023</td><td>15/3/2024</td><td>519925A</td><td>Marta Oña</td><td>c/Sil 66</td><td>Huesca</td><td>El País</td><td>1,25€</td><td>50</td><td>12,5€</td>
+  </tr>
+  <tr>
+    <td>15/3/2023</td><td>15/3/2024</td><td>519925A</td><td>Marta Oña</td><td>c/Sil 66</td><td>Huesca</td><td>Muy Interesante</td><td>6</td><td>10</td><td>60€</td>
+  </tr>
+  <tr>
+    <td>8/1/2020</td><td>8/1/2024</td><td>32989J</td><td>Julio Pantoja</td><td>c/Molinos 12</td><td>Teruel</td><td>El País</td><td>1,25€</td><td>100</td><td>125€</td>
+  </tr>
+  <tr>
+    <td>8/1/2020</td><td>8/1/2024</td><td>32989J</td><td>Julio Pantoja</td><td>c/Molinos 12</td><td>Teruel</td><td>Muy Interesante</td><td>6€</td><td>10</td><td>60€</td>
+  </tr>
+  <tr>
+    <td>15/2/2023</td><td>15/6/2023</td><td>32989J</td><td>Julio Pantoja</td><td>c/Molinos 12</td><td>Teruel</td><td>Gatos</td><td>5,99€</td><td>1</td><td>5,99€</td>
+  </tr>
+  <tr>
+    <td>11/2/2020</td><td>11/2/2024</td><td>223391X</td><td>Maria Horra</td><td>Avda. Real 7</td><td>Teruel</td><td>El País</td><td>1,25</td><td>40</td><td>50€</td>
+  </tr>
+  <tr>
+    <td>21/4/2023</td><td>21/4/2024</td><td>519925A</td><td>Marta Oña</td><td>c/Sil 66</td><td>Huesca</td><td>Gatos</td><td>5,99€</td><td>5</td><td>29,95€</td>
+  </tr>
+  <tr>
+    <td>1/7/2020</td><td>1/3/2020</td><td>32989J</td><td>Julio Pantoja</td><td>c/Molinos 12</td><td>Teruel</td><td>Bricolage</td><td>7,00€</td><td>2</td><td>14€</td>
+  </tr>
+  <tr>
+    <td></td><td>···</td><td></td><td></td><td>···</td><td></td><td></td><td>···</td>
+  </tr>
+</table>
+<h3>Problemas de redundancia</h3>
+<p>Los datos redundantes son aquellos que están almacenados en más de un lugar dentro del mismo fichero
+y pueden generarnos ciertos problemas:</p>
+<p>
+<span class="tab"><span class="icon"></span><b>1. desperdicio del espacio de almacenamiento</b></span>
+</p>
+<p>El nombre de cada cliente se repite múltiples veces, además de sus otros datos personales: DNI, direción y ciudad.<br>
+También los nombres de las revistas y su precio.</p>
+<p>
+<span class="tab"><span class="icon"></span><b>2. problemas de mantenimiento.</b></span>
+</p>
+<p>Si debemos cambiar valores como el precio de una revista o la dirección del cliente, debe hacerse
+exactamente igual en todos sus registros.</p>
+<p>También si captamos un nuevo cliente que desea subscribirse a muchas revistas debemos dar de alta
+en muchos datos los datos personales del cliente. O si un cliente se da de baja, debemos buscar
+multidud de registros para eliminación.</p>
+<p>
+<span class="tab"><span class="icon"></span><b>3. generación de inconsistencias.</b></span>
+</p>
+<p>Al tener que repetir tantas veces la información, si nos equivocáramos introduciendo un valor,
+por ejemplo, el precio de una revista en un nuevo cliente o en una subida de precio, ya tendríamos
+datos incoherentes.</p>
+<h4>Campos calculados</h4>
+<p>Por otro lado tenemos campos calculados a partir de los valores de otros campos.
+El campo "Total" depende de los campos precio y cantidad:</p>
+<p>
+<span class="tab"><span class="icon"></span>precio x cantidad = <span class="k">Total</span></span>
+</p>
+<p>La existencia de estos campos es innecesaria, lo único que hace es ocupar espacio,
+pues su valor podría obtenerse cada vez que se generara una factura.</p>
+<h2>Dependencias</h2>
+<p>Para minimizar la información redundante, y evitar inconsistencias, se definieron
+unas reglas que deben cumplir las bases de datos. Esas reglas se conocen como
+<b>formas normales</b>.</p>
+<p>Necesitamos algunas definiciones...</p>
+<h4>Dependencia funcional</h4>
+<p>Cuando un atributo depende de algún otro atributo, se dice que existe una <b>dependencia
+funcional</b> entre ambos.</p>
+<p>Ejemplos:</p>
+<div class="up">
+<ul>
+  <li>el atributo "Edad" depende del atributo "FechaNacimiento":
+<br><span class="tab"><span class="icon"></span>Dada una 'fecha de nacimiento' obtengo una única edad.</span>
+</li>
+  <li>el atributo "Densidad" (hab/km²) deende de los atributos "Población" y "Superficie"
+<br><span class="tab"><span class="icon"></span>Dadas una 'población' y una 'superficie', obtengo una única 'densidad de población'.</span>
+</li>
+  <li>El atributo "código Postal" determina el nombre de la provincia.
+<br><span class="tab"><span class="icon"></span>Dado un 'CP' obtengo un único valor para 'Nombre-de-Provincia'.</span>
+</li>
+  <li>Los atributos "Nombre", "Apellidos", "Dirección" dependen del atributo "DNI".
+<br><span class="tab"><span class="icon"></span>Dado un 'DNI' obtengo un único valor para 'Nombre', 'Apellidos' y 'lugar de residencia'.</span>
+</li>
+</ul>
+</div>
+<p>Para indicar que un atributo determina <b>de manera única</b> el valor de otro/s atributo/s,
+se utiliza la notación:</p>
+<p>
+<span class="tab"><span class="icon"></span>FechaNacimiento —&gt; Edad</span><br>
+<span class="tab"><span class="icon"></span>superficie, población —&gt; densidad (hab/km)</span><br>
+<span class="tab"><span class="icon"></span>CP  —&gt;  Provincia</span><br>
+<span class="tab"><span class="icon"></span>DNI  —&gt;  Nombre</span><br>
+<span class="tab"><span class="icon"></span>DNI  —&gt;  Apellidos</span><br>
+<span class="tab"><span class="icon"></span>DNI  —&gt;  Dirección (calle + número + CP - ejemplo: <i>Gran Vía 32 - 28013</i>)</span>
+</p>
+<p>En este ejemplo, los dos primeros atributos son calculados.</p>
+<div class="notaB w6">
+<p>Para tener perfectamente claro el concepto de <b>dependencia funcional</b> pensar
+en la definición de <i>función entre conjuntos</i>:</p>
+<p><span class="wsp">Una <b>función</b> entre dos conjuntos A, B, es una correspondencia tal que:
+          <big>∀</big> x∈A,  <big>∃!</big> y∈B   /   y = f(x)</span></p>
+</div>
+<h4>Dependencia funcional transitiva</h4>
+<p>La dependencia transitiva ocurre cuando un atributo depende de otro a través de un tercer atributo.</p>
+<p>Si C depende de B, y B depende de A, entonces C depende transitivamente de A:</p>
+<div class="cuadro w6">
+<p>Simbólicamente, existe <span class="k">dependencia funcional transitiva</span> cuando:
+<br><span class="tab"><span class="icon"></span>Si <span class="wsp">  A —&gt; B —&gt; C  </span> entonces <span class="wsp">  A —&gt; C  </span></span>
+</p>
+</div>
+<p>Por ejemplo, la entrada al casino depende de la edad, pues sólo podrán entrar a partir de los 18 años.
+Entonces:
+<br><span class="tab"><span class="icon"></span><span class="k">Edad —&gt; EntradaCasino</span></span>
+</p>
+<p><span class="wsp">y como   <span class="k">FechaNacimiento —&gt; Edad</span>
+tenemos la dependencia transitiva:    <span class="k">FechaDeNacimiento —&gt; Edad —&gt; EntradaCasino</span></span></p>
+<div class="dino">
+<p>Por ejemplo, el carnet de conducir depende de la edad, pues sólo se puede obtener a
+partir de los 18 años. Entonces:
+<br><span class="tab"><span class="icon"></span><span class="k">Edad —&gt; CarnetConducir</span> (<span class="rr">NO! la dependencia funcional implica que para cada x existe un único y tal que y=f(x), y dada una edad el valor de 'tener carnet de conducir' puede ser true y false -dependerá de cada registro- es decir: no existe un único valor posible para una edad, no es como el DNI</span>)</span>
+</p>
+<p><span class="wsp">y como   <span class="k">FechaNacimiento —&gt; Edad</span>
+tenemos la dependencia transitiva:    <span class="k">FechaDeNacimiento —&gt; Edad —&gt; CarnetConducir</span></span></p>
+</div>
+</article>
+</body>
+</html>

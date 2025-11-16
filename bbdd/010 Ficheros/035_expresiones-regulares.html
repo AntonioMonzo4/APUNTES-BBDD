@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Expresiones regulares</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 28 sept 2023 11:39:22 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Expresiones regulares</h1>
+<p>Cuando realizamos <span class="k">búsquedas</span> o <span class="k">búsquedas/reemplazamientos</span>, escribimos el texto
+que deseamos encontrar en el cuadro de búsqueda:</p>
+<p><img src="img/buscar-reemplazar.png" class="r">
+<span class="bb">Reemplazo la palabra "<span class="g">sol</span>" por la palabra "<span class="g">luna</span>"</span><br><br>&nbsp;</p>
+<div class="dw2">
+<p>Casi todos los editores de texto admiten <b>expresiones regulares</b> que no es otra
+cosa que utilizar ciertos caracteres especiales, a modo de comodín, para representar
+cierto conjunto de caracteres.</p>
+</div>
+<p>Dos ejemplos:</p>
+<p><span class="bb">Reemplazo las palabras "<span class="g">sol</span>" y "<span class="g">sal</span>" por la palabra "<span class="g">luna</span>":</span>
+<img src="img/expresiones-regulares-2.png" class=""></p>
+<p><span class="bb">Reemplazo <span class="wsp">"<span class="g">sol</span>",  "<span class="g">sal</span>",  "<span class="g">sil</span>"  "<span class="g">sXl</span>",  "<span class="g">sZl</span>",  "<span class="g">s l</span>",  "<span class="g">s@l</span>",  "<span class="g">s-l</span>",  "<span class="g">s8l</span>",  "<span class="g">s#l</span>",  "<span class="g">s.l</span>", ...</span> por la palabra "<span class="g">luna</span>"</span>:
+<img src="img/expresiones-regulares-3.png" class=""></p>
+<p>A todos estos caracteres que tienen un significado especial dentro de la expresión regular se los denomina <b>metacaracteres</b>.</p>
+<div class="def w9 t1">
+<p>Una <b>expresión regular</b> es un texto que utiliza <span class="k">metacaracteres</span> para representar a múltiples textos.</p>
+</div>
+<h2>Metacaracteres</h2>
+<h4>Carácter comodín <code><big>.</big></code></h4>
+<p>El punto <code>.</code> es un comodín que representa a <span class="k">un único carácter cualquiera</span>. Por ejemplo <code>c..a</code> representaría a los
+textos "<span class="g">casa</span>", "<span class="g">cosa</span>", "<span class="g">cesa</span>", "<span class="g">cX@a</span>", "<span class="g">c -a</span>", "<span class="g">c..a</span>", "<span class="g">ccaa</span>", ...</p>
+<h4>lista <code>[···]</code></h4>
+<p>El corchete <code>[]</code> representa a <span class="k">un único carácter de un conjunto</span>, por ejemplo, cualquier vocal minúscula sería:
+<code>[aeiou]</code>.</p>
+<p>Además con el acentro circunflejo <code>^</code> podemos <span class="k">negar la lista</span>, así <code>[<span class="rr">^</span>aeiou]</code> sería cualquier cosa excepto las vocales minúsculas.</p>
+<p>Y podemos usar rangos <code>[a<span class="rr">-</span>z]</code> sería una letra de la "<span class="g">a</span>" a la "<span class="g">z</span>", <code>[0<span class="rr">-</span>9]</code> un número del "<span class="g">0</span>" al "<span class="g">9</span>", y <code>[a<span class="rr">-</span>zA<span class="rr">-</span>Z@]</code> cualquier
+letra mayúscula o minúscula y la arroba.</p>
+<div class="nota">
+<p>Los rangos suelen ser acorde al código <code>ASCII</code>, aunque en algunos editores podrían ser de acuerdo a la configuración <code>LOCALE</code>.</p>
+</div>
+<h4>Carácter de escape <code>\·</code></h4>
+<p>Para anular el significado especial de algún metacarácter debemos precederlo de la secuencia de escape <span class="k"><big>\ </big></span>:</p>
+<div class="up">
+<ul>
+  <li><code>c..a\.    </code> - equivale a: "<span class="g">casa<b>.</b></span>", "<span class="g">cosa<b>.</b></span>", "<span class="g">cesa<b>.</b></span>", "<span class="g">cX@a<b>.</b></span>", ...</li>
+  <li><code>\[c.sa\]  </code> - equivale a: "<span class="g">[casa]</span>", "<span class="g">[cosa]</span>", "<span class="g">[cesa]</span>", "<span class="g">[cX@a]</span>", ...</li>
+</ul>
+</div>
+<h4>Números <code>\d</code></h4>
+<p>Otro metacarácter muy utilizado es el que representa a cualquier número: <code>\d</code>.</p>
+<div class="up">
+<ul>
+  <li><code>\d\d\d\d   </code> - Un número de cuatro cifras: <span class="g">1978</span>, <span class="g">2023</span>, es decir, cualquier número del <span class="g">0000</span> al <span class="g">9999</span></li>
+  <li><code>día \d     </code> - <span class="g">día 0</span>, <span class="g">día 1</span>, <span class="g">día 2</span>, ... <span class="g">día 9</span>,</li>
+</ul>
+</div>
+<h4>Repeticiones  <b>(<i>cuantificadores</i>)</b> <code>·+</code>, <code>·*</code>, <code>?*</code>, <code>{<span class="b">n</span>,<span class="b">m</span>}</code></h4>
+<p>Con este metacarácter estamos indicando que el carácter precedente se está repitiendo un número determinado de veces:</p>
+<div class="up">
+<ul>
+  <li><code>\d{4}      </code> - Un número de cuatro cifras: <span class="g">1978</span>, <span class="g">2023</span>, es decir, cualquier número del <span class="g">0000</span> al <span class="g">9999</span></li>
+  <li><code>\d{4,6}    </code> - Entre 4 y 6 dígitos seguidos: <span class="g">1978</span>, <span class="g">19780</span>, <span class="g">197833</span></li>
+  <li><code>\d{4,}     </code> - Números de 4 o más dígitos</li>
+  <li><code>x\d?       </code> - Una x, opcionalmente seguida de un dígito: <span class="g">x</span>, <span class="g">x3</span>, <span class="g">x9</span>, ...</li>
+  <li><code>x\d*       </code> - Una x, opcionalmente seguida de 0 ó más dígitos: <span class="g">x</span>, <span class="g">x3</span>, <span class="g">x69</span>, , <span class="g">x183</span>, <span class="g">x000000</span>, </li>
+  <li><code>x\d+       </code> - Una x seguida de, al menos, un dígito: <span class="g">x7</span>, <span class="g">x69</span>, , <span class="g">x183</span>, <span class="g">x000000</span>, ...</li>
+</ul>
+</div>
+<h4>Principio y final de línea <code>^···</code>, <code>···$</code></h4>
+<p>Podemos especificar que un patrón se cumpla sólo al principio o al final de la línea.</p>
+<p>Buscamos cierto texto al principio de cualquier línea:</p>
+<div class="up">
+<ul>
+  <li><code>^una     </code> - El texto <span class="g">una</span> al principio de línea. Si hacemos búsqueda "<i>case insensitive</i>", también <span class="g">Una</span>, <span class="g">UNA</span>, ... </li>
+  <li><code>^[aeiou] </code> - Una vocal (minúscula) al principio de línea.</li>
+  <li><code>^-       </code> - Un guión al principio de línea</li>
+</ul>
+</div>
+<p>o líneas que terminen con cierto texto:</p>
+<div class="up">
+<ul>
+  <li><code>Teruel.$   </code> - El texto <span class="g">Teruel<b>.</b></span> al final de una línea.</li>
+  <li><code>[<span class="rr">^</span>aeiou]$  </code> - Cualquier carácter al final de línea que no sea vocal (minúscula).	</li>
+  <li><code>[<span class="rr">^</span>\.]$     </code> - el último carácter de una línea cuando no es un punto. 	</li>
+</ul>
+</div>
+<h4>Alternancia <code>·|·</code></h4>
+<p>Al igual que podemos buscar un carácter de una lista (<code>gat[oa]</code>), podemos buscar
+palabras en una lista:</p>
+<ul>
+  <li><code>rojo|verde|azul     </code> - cualquiera de estos tres colores</li>
+  <li><code>gat(o|a|ito|ita)    </code> - todas esas categorías de gatos</li>
+</ul>
+<p>En este último ejemplo hemos utilizado paréntesis para crear un agrupamiento.</p>
+<h2>Agrupamientos  <code>(·) (·) (·)</code>... <b><span class="r">-&gt;</span></b> <code>\1 \2 \3</code>...</h2>
+<p>Podemos seleccionar ciertas partes de una expresión regular agrupándolas entre paréntesis.</p>
+<p>El texto contenido en esos agrupamientos, luego podrán ser usado en reemplazamientos,
+donde cada agrupamiento se reconocerá como <code>\1</code>, <code>\2</code>, <code>\3</code>, ...</p>
+<p>Ejemplos:</p>
+<div class="up">
+<ul>
+  <li>buscar <code>([aeiou])</code> <span class="r">-&gt;</span> reemplazar por: <code>[\1]</code><br>
+<span class="wsp">     encierra vocales entre corchetes  <span class="r">-&gt;</span>  [e]nc[i][e]rr[a] v[o]c[a]l[e]s [e]ntr[e] c[o]rch[e]t[e]s</span></li>
+  <li>buscar <code>gat(o|a|ito|ita)  </code> <span class="r">-&gt;</span> reemplazar por: <code>lob\1\1\1</code><br>
+<span class="wsp">     Un <span class="k">gato</span> de <span class="k">gat</span>wick en<span class="k">gat</span>usa a una <span class="k">gatita</span>  <span class="r">-&gt;</span>  Un lobooo de gatwick engatusa a una lobitaitaita</span></li>
+  <li>buscar <code>(\d)(\d)  </code> <span class="r">-&gt;</span> reemplazar por: <code>\2\1</code><br>
+<span class="wsp">     El número 34 es 2 x 17  <span class="r">-&gt;</span>  El número 43 es 2 x 71</span><br>
+<span class="wsp">     10 números: 0123456789  <span class="r">-&gt;</span>  01 números: 1032547698</span></li>
+  <li>buscar <code>(\d{2})(\d{3})(\d\d)(\d\d),  </code> <span class="r">-&gt;</span> reemplazar por: <code>[Tfno: \1-\2.\3.\4]</code><br>
+<span class="wsp">    625995366, 912585413, 962839500,  <span class="r">-&gt;</span>  [Tfno: 62-599.53.66] [Tfno: 91-258.54.13] [Tfno: 96-283.95-00]</span></li>
+</ul>
+</div>
+<div class="notaB w5">
+<p><a href="https://docs.oracle.com/javase/10/docs/api/java/util/regex/Pattern.html">clase Pattern</a> para expresiones regulares de Java<br>
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">expresiones regulares en javascript</a></p>
+</div>
+<p>&nbsp;</p>
+</article>
+</body>
+</html>

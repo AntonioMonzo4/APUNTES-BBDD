@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Introducción a las bases de datos relacionales</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 14 oct. 2023 19:59:31 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Introducción a las bases de datos relacionales</h1>
+<div class="flex">
+<div>
+<h2>Base de Datos</h2>
+<p>Una <b>Base de Datos Relacional</b>:</p>
+<div class="up">
+<p>
+<span class="tab"><span class="icon"></span>- Es una colección de datos estructurados en <b>tablas</b></span><br>
+<span class="tab"><span class="icon"></span>- Las tablas están <b>relacionadas</b> entre de sí de tal manera que se <span class="k">minimiza
+la redundancia</span> e inconsistencia de los datos.</span>
+</p>
+</div>
+<p><br>La base de datos es el "almacén de datos" y reside en algún dispositivo de
+almacenamiento masivo.</p>
+</div>
+<div>
+<p><a href="img/Base_de_datos_de_ejemplo.png"><img src="img/Base_de_datos_de_ejemplo.png" width="400" style="float:right; margin-top:-2rem;"></a></p>
+</div>
+</div>
+<div class="up5">
+<h4>Diagrama Entidad Relación</h4>
+<p>El diseño de una BBDD se representa sobre el papel con el <b>Diagrama de Entidad-Relación</b></p>
+</div>
+<p><img src="img/Diagrama-ER.jpg" class=""></p>
+<h2>Sistema gestor de la Base de Datos</h2>
+<p>Por otro lado tenemos la aplicación que maneja esos datos, el "Sistema Gestor de Bases de Datos" (SGBD), o
+DBMS (Data Base Management System).</p>
+<p><img src="img/DB_DBMS_SQL.png" class=""></p>
+<p>Algunos de los SGBD relacionales más utilizados son:</p>
+<div class="up">
+<p>
+<span class="tab"><span class="icon"></span>- Microsoft Access</span><br>
+<span class="tab"><span class="icon"></span>- Microsoft SQL Server</span><br>
+<span class="tab"><span class="icon"></span>- <span class="k">MySQL</span> / <span class="k">MariaDB</span></span><br>
+<span class="tab"><span class="icon"></span>- Oracle Database</span><br>
+<span class="tab"><span class="icon"></span>- Db2 de IBM</span><br>
+<span class="tab"><span class="icon"></span>- PostgreSQL</span><br>
+<span class="tab"><span class="icon"></span>- SQLite</span>
+</p>
+<h3>Lenguaje SQL</h3>
+<p>Todos los SGBD relacionales tienen algo en común, que es el lenguaje utilizado
+para crear las tablas y realizar las consultas a las mismas. Ese lenguaje es el
+<b>SQL</b> (<i>Structured Queryt Language</i>).</p>
+<p>SQL es un estándar publicado por el ANSI en 1986 y es independiente del SGBD utilizado
+(aunque cada SGBD tiene sus peculiaridades).</p>
+<p>Según el tipo de operaciones que se realicen sobre la BBDD suele hablarse de tres "sublenguajes":</p>
+<div class="up">
+<ol>
+  <li><b>DDL</b> (<i>Data Description Language</i>): Nos permite definir las estructuras que almacenarán los datos (<code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>), definir las claves (<code>PRIMARY KEY</code>, <code>FOREIGN KEY</code>) e imponer restricciones a los valores de los datos (<code>CONSTRAINT</code>).<br>
+- Con el DDL manejamos la parte estática de la BBDD: la estructura, el diseño de la base de datos.</li>
+  <li><b>DML</b> (<i>Data Manipulation Language</i>): Nos permite operar con los datos, manipularlos y realizar consultas (<code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>SELECT</code>).<br>
+- Maneja la parte dinámica de la BBDD: los datos contenidos de las tablas.</li>
+  <li><b>DCL</b> (<i>Data Control Language</i>): Nos permite controlar los accesos a los objetos de la BBDD concediendo o revocando privilegios (<code>GRANT</code>, <code>REVOKE</code>). También
+nos permite controlar el procesamiento de transacciones confirmándolas (<code>COMMIT</code>) o deshaciéndolas (<code>ROLLBACK</code>).<br>
+- Maneja los permisos de la BBDD. Es la parte del lenguaje utilizado por el administrador de la BBDD.</li>
+</ol>
+</div>
+</article>
+</body>
+</html>

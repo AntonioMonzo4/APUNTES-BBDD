@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Ficheros de registros - Almacenamiento</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 28 sept 2023 11:42:23 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Ficheros de registros - Almacenamiento</h1>
+<h2>Formatos de almacenamiento</h2>
+<p>Para facilitar el intercambio de este tipo de ficheros entre distintas aplicaciones,
+se utilizan unos formatos estándar, que son el <span class="k">CSV</span>, <span class="k">JSON</span> y <span class="k">XML</span>.</p>
+<p>
+<span class="tab"><span class="icon"></span>- El formato CSV es muy utilizado para almacenar tablas de hojas de cálculo,
+como el Excel o el Calc.</span><br>
+<span class="tab"><span class="icon"></span>- Los formatos JSON y XML son muy utilizados para intercambiar datos entre aplicaciones web,
+y en la creación de ficheros de configuración de aplicaciones.</span>
+</p>
+<h4>CSV: Comma-Separated Values</h4>
+<p>En estos archivos las columnas quedan definidas por coma (,) o punto y coma (;), mientras
+que cada fila se define mediante una línea adicional en el texto.</p>
+<div class="nota w6">
+<p>Si se utiliza como delimitador el tabulador, se suelen denominar TSV</p>
+</div>
+<pre class="cuadro w5 t0">Continente;País;Capital
+África;Angola;Luanda
+América del Norte;Estados Unidos;Washington DC
+América Central;México;Ciudad de México
+América del Sur;Brasil;Brasilia
+Europa;España;Madrid
+Europa;Alemaña;Berlín</pre>
+<h4>JSON: JavaScript Object Notation</h4>
+<p>Los ficheros JSON originalmente se utilizaban para definir objetos en JavaScript, 
+pues siguen la misma notación:<br>
+<span class="wsp"><code>      {</code> <span class="b">atributo1</span>: <span class="g">valor1</span>, <span class="b">atributo2</span>: <span class="g">valor2</span>, ...<code>}</code>
+</span>
+donde <i><span class="k">valor</span></i> puede ser a su vez, otro objeto JSON.</p>
+<pre class="prettyprint w5 t0">{
+  "localidad 1": {
+      "Continente": "África",
+      "País": "Angola",
+      "Capital": "Luanda"
+  },
+  "localidad 2": {
+      "Continente": "América del Norte",
+      "País": "Estados Unidos",
+      "Capital": "Washington DC"
+  },
+  "localidad 3": {
+      "Continente": "América Central",
+      "País": "México",
+      "Capital": "Ciudad de México"
+  },
+  "localidad 4": {
+      "Continente": "América del Sur",
+      "País": "Brasil",
+      "Capital": "Brasilia"
+  },
+  "localidad 5": {
+      "Continente": "Europa",
+      "País": "España",
+      "Capital": "Madrid"
+  },
+  "localidad 6": {
+      "Continente": "Europa",
+      "País": "Alemania",
+      "Capital": "Berlín"
+  }
+}</pre>
+<h4>XML (eXtensible Markup Language)</h4>
+<p>El XML es un lenguaje de marcas</p>
+<pre class="prettyprint w5 t0">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;Capitales&gt;
+  &lt;Localidad número="1"&gt;
+      &lt;Continente&gt;África&lt;/Continente&gt;
+      &lt;País&gt;Angola&lt;/País&gt;
+      &lt;Capital&gt;Luanda&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+  &lt;Localidad número="2"&gt;
+      &lt;Continente&gt;América del Norte&lt;/Continente&gt;
+      &lt;País&gt;Estados Unidos&lt;/País&gt;
+      &lt;Capital&gt;Washington DC&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+  &lt;Localidad número="3"&gt;
+      &lt;Continente&gt;América Central&lt;/Continente&gt;
+      &lt;País&gt;México&lt;/País&gt;
+      &lt;Capital&gt;Ciudad de México&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+  &lt;Localidad número="4"&gt;
+      &lt;Continente&gt;América del Sur&lt;/Continente&gt;
+      &lt;País&gt;Brasil&lt;/País&gt;
+      &lt;Capital&gt;Brasilia&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+  &lt;Localidad número="5"&gt;
+      &lt;Continente&gt;Europa&lt;/Continente&gt;
+      &lt;País&gt;España&lt;/País&gt;
+      &lt;Capital&gt;Madrid&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+  &lt;Localidad número="6"&gt;
+      &lt;Continente&gt;Europa&lt;/Continente&gt;
+      &lt;País&gt;Alemaña&lt;/País&gt;
+      &lt;Capital&gt;Berlín&lt;/Capital&gt;
+  &lt;/Localidad&gt;
+&lt;/Capitales&gt;</pre>
+<div class="def ej0">
+<ol>
+  <li>Convierte la tabla del inicio de página en un ficherp TSV.</li>
+  <li>La misma tabla, conviértela en un CSV, donde las comas separaren campos y el salto de línea registros.</li>
+  <li>Conviértelo en un XML.</li>
+  <li>Conviértelo en un JSON.</li>
+</ol>
+</div>
+<p>&nbsp;</p>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+</article>
+</body>
+</html>

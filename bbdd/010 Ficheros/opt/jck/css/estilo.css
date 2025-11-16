@@ -1,0 +1,1404 @@
+.fr, .frc { float:right; }
+.fl, .flc { float:left; }
+
+.flr + *{ clear:right; }
+.flc + *{ clear:left; }
+
+.b0 { border:none !important; border-color:transparent; }
+
+/* ==== css v2001.07 ===== */
+.dino {display:none; visibility:hidden;}
+.vihi {visibility:hidden;}
+.flri {float:right;}
+.right {text-align:right;}
+
+.flex {display: flex; margin-top:-0.8rem;}
+.flexw {display: flex; flex-wrap: wrap;}
+
+/* PÁGINA IMPRESA (ancho: 67.49rem;):
+    80+4 caracteres x 50 líneas
+ (en Chromium son 99+4 caracteres) */ 
+body { margin:0 0; font:1.26rem/1.7rem sans-serif; color:#585969;}
+
+article {
+	/* font-family:monospace; */
+	font-family: 'Lucida Grande', Arial, sans-serif;
+	margin-left: 1.6rem;
+	width:67.0rem; /*background:#f0f6ff;*/
+	padding: 15px 0px;
+	border: none;
+	border-right: 1px solid #e0f0ff;
+	border-left: 1px solid #e5f0ff;
+}
+/* Pa tfno móvil */
+@media (max-width: 29cm) {
+ article {
+	margin-left: 0.8rem;
+	border: none;
+	width: 64.5rem;
+  }
+  body { font:1.33rem/1.7rem sans-serif; color:#585969;}
+}
+
+/* ----- fin documento ---- */
+
+/* ========= CABECERAS ========== */
+/* h1, h2, h3, h4, h5, h6 {clear:both;} */
+h1 b, h2 b, h3 b, h4 b, h5 b, h6 b {font-weight: normal;}
+
+h1 { font-family: Verdana; }
+h2, h3, h4, h5, h6 {font-family: sans-serif;}
+
+h1, h2, h3 { color:#349; }
+
+/*  En h2 y h3 utilizo padding en lugar de margin, por si están dentro de un bloque <pre> */
+/* h5, h6 {font-family:Courier, Verdana;} */
+
+
+
+
+h1 {			/* subrayado con #### */
+	font-size: 1.65rem;
+	margin-top: 0.5rem;
+	padding-bottom: 1.5rem;
+	border-bottom: 1px solid #d0a0a0;
+	background: url("./logo-jdh.png") no-repeat;
+	background-position: right -10px;
+}
+h1:before, h2:before {content:" "; white-space:pre;}
+
+
+h2 {			/* subrayado ======= */
+	font-size: 1.4rem;
+	padding-top: 0.6rem;
+}
+h3 {			/* subrayado ^^^^^^ */
+	font-size: 1.33rem;
+	margin: 1.4rem 0 -0.3rem 0;
+}
+h4 {			/* subrayado ~~~~~~~ */
+	font-size: 1.2rem;
+	color: #447;
+	margin: 1.0rem 0 -0.4rem 0;
+}
+h5 {			/* subrayado ------- */
+	font-size: 1.1rem;
+	font-family: inherit;
+	margin: 1.3rem 0 -0.5rem  0;
+	text-decoration: underline;
+}
+h6 {			/* subrayado ....... */
+	font-size: 1.2rem;
+	font-family: inherit;
+	margin: 1.3rem 0 -1.1rem 0;
+}
+
+/* h2 {color: #050;}
+h3, h4 { color: #006;}
+h5, h6 {color:#333;} */
+/* ----- fin cabeceras ----- */
+
+/* ======= PÁRRAFOS y LISTAS de color alterno ======== */
+/* el guión que convierto en una flecha
+p:nth-child(3n) {color:black; }
+p:nth-child(3n+1) {color:#007;}
+p:nth-child(3n+2) {color:#040; }
+
+li:nth-child(3n) {color:black; }
+li:nth-child(3n+1) {color:#007;}
+li:nth-child(3n+2) {color:#040; }
+*/
+/* ---- fin párrafos y listas --- */
+
+
+/* ======== ESTILOS, COLORES, FONDOS ========== */
+/*TODO wsp es un code con otro color- code debería ser pretiffy */
+code { /* ºº codigo, se respetan espacios, tabuladores, ...ºº ==>  <code>...</code> */
+	padding-left:4px;	padding-right:4px;	font-size:95%;
+	white-space:pre;
+	color: #060;
+}
+
+u { /*color:#445;*/ }	/*	__subrayado__	*/
+i { color:#232; }	/* cursiva: ´´acento agudo (español)´´ */
+
+/* -------- COLORES */
+/* colores básicos de texto */
+.r {color:#809;}	/* ¨       diéresis  */
+.rr {color:#B00000;}	/* ¨¨  2 x diéresis */
+.g {color:#070;}	/* “       AltGr V */
+.gg {color:#6A0;}	/* ““  2 x AltGr v  */
+.b {color:#22E;}	/* ”       AltGr B */
+.bb {color:#088;}	/* ””  2 x AltGr b */
+.k {color:black;}	/* ‘       Shift AlGr V */
+.kk{color:red;}	/* ‘‘  2 x Shift AltGr V */
+b {}				/* ’       Shift AltGr B */
+b.k {}				/* ’’  2 x Shift AltGr B */
+/* ------- FONDOS */
+mark {background-color:#FFFF55; color:inherit;}                              /* ™   Shift AltGr 8 */
+mark.k {background-color:#E0E0E2;color:inherit;}   /* ™™  2 x Shift AltGr 8 */
+/*
+.BB {background-color:#FFFFB0;} /* ™ 
+.Bk {background-color:black;}	/* ¬’  AltGraph B - fondo gris 
+.Br {background-color:#FFDCD6;}	/* ¬¨  diéresis  - fondo rojo 
+.Bg {background-color:#DCFFD6;}	/* ¬‘  Shift AltGraph V - fondo verde 
+.Bb {background-color:#DCF0FF;}	/* ¬’  Shift AltGraph B - fondo azul 
+*/
+/*	^^acento circunflejo^^: rojo puro y duro */
+/* span.jcCF { color:#F00; } */
+/*	ººdos puntosºº	*/
+/* span.jcDP { color:#55F; } */
+/*	~~tildes~~	*/
+
+
+/* ---- fin estilos, colores, fondos ---- */
+
+/* =========== LISTAS =========== */
+
+ul {margin-left:1.5rem;
+	/*line-height:1.5rem;
+	/*margin-top: -0.5rem; */
+}
+li {
+	line-height: 2.1rem;
+}
+.bullet {			/* iniciado con:	* bla, bla, bla. */
+	list-style-type:disc;
+}
+.alfa {			/* iniciado con:	@ bla, bla, bla. */
+	list-style-type:lower-alpha;
+}
+
+.guion {			/* ^ - TEXTO */
+	list-style-image:url(MM/imgs/ok.png);
+}
+.number {			/* ^ + TEXTO */
+	list-style-type:decimal;
+}
+
+.subl {
+	display:inline-block; margin-left:3.5rem;width:90%;	line-height: 2rem;
+	margin-top:-2.5rem !important; 
+}
+div.subl + ul {margin-top:-0.9rem !important; }
+
+/* tabulador al principio + carácter + espacio          */
+.tab { display:inline-block; margin-left:3.5rem;width:90%; line-height: 2rem;}
+
+
+.tab .icon {margin-left:-1.3rem;}
+
+/* ------- fin listas ------ */
+
+
+/* =========== TABLAS =========== */
+table {
+	border-collapse:collapse;
+	box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.85); /* right left difuminado color*/
+}
+tr.vacia {
+	font-size:1px;
+	background:white;
+	border-top:1px solid #8888ee;
+	border-bottom:1px solid #8888ee
+}
+td, th {
+	padding:2px 9px;
+}
+th {background:#ddf}
+
+
+table.none td {border:none;}
+table.none {border:none 1px;}
+table.none {box-shadow: none;}
+
+table.jc {		/* ^_  o bien ^__  o bien   ^___  o bien  ^__________ */
+	background:#f0f0f9;
+	border-style:ridge;
+}
+table.jc th {
+	background:#d5d5d9;
+	padding:5px 15px;
+	text-align:center;
+}
+table.jc td {
+	padding:4px 12px;
+	/* text-align:right; */
+}
+table.jc[border="0"] {
+	border:1px solid #d5d5d9;
+	border-collapse:collapse;
+}
+table.jc[border="1"] {
+	border:1px solid black;
+	border-collapse:collapse;
+}
+table.jc[border="2"] {
+	border:2px solid #333;
+	border-collapse:collapse;
+}
+
+table.jc tr:nth-child(2n) {background:white; } /* el guión, que convierto en una flecha */
+
+table.list {box-shadow: 0px 0px 2px rgba(60, 60, 60, 0.85);margin-left:1.5rem; margin-top:1.2rem;font-size:1.22rem;}
+table.list td:first-child {background:#eeefff;font-size:1.25rem;}
+
+
+table.list th {font-weight:normal; text-align:left;}
+table.list th:last-child {background:#ffffcc;}
+
+/* ----- fin tablas ---- */
+
+
+
+/* ====== DIVISIONES o estilos globales ==== */
+div[class^=nota], pre[class^=nota] {
+	font:1.1rem/1.4rem Arial,sans-serif;
+	background-color: #ffffbb;
+	border: 1px solid #ffeb3b;
+	border-left: 9px solid #ffeb3b;
+	/* outline-offset: 0px; */
+	/*outline:13px solid white; */
+	padding:1px 13px;
+	margin:1rem 5rem;
+	max-width:61rem;
+	min-width:30%;
+/*float:right;*/
+}
+div[class^="nota"] li, pre[class^="nota"] li {
+	line-height:1.4rem;
+	margin-left:-1rem;
+}
+[class^="nota"] span.tab {
+	line-height:1.4rem;
+}
+
+pre[class^="nota"] { padding: 3px 13px; }
+.notaO { /* Orange */
+	background-color: #ffddaa !important;
+	border: 1px solid #ffd33b !important;
+	border-left: 9px solid #ffd33b !important;
+}
+.notaR {
+	background-color: #ffeeee !important;
+	border: 1px solid #ffaaaa !important;
+	border-left: 9px solid #ffaaaa !important;
+}
+.notaB {
+	background-color: #eef6ff !important;
+	border: 1px solid #d8eff9 !important;
+	border-left: 9px solid #d8eff9 !important;
+}
+.notaG {
+	background-color: #bbffbb !important;
+	border: 1px solid #a0efd0 !important;
+	border-left: 9px solid #a0f7d7 !important;
+}
+.notaT {
+	background-color: #fff7 !important;
+	border: 1px solid #ddd7 !important;
+	border-left: 9px solid #ddd7 !important;
+}
+
+.def  { /* definición */
+	border:1px solid #9f9fdf;
+	margin:0.5rem 1.5rem 0 1.5rem;
+	background:#f8f9fa;
+	padding:0 1rem 0 1rem;
+}
+
+.ej0 { /* ejercicio */
+	font-size:1.2rem;
+	border: 1px dashed #080;
+	border-radius: 7px;
+	margin:0.5rem 4rem 0 1.5rem;
+	background:#f2f2ff;
+	padding:0 1rem 0 1rem;
+}
+.ej0 li {margin:1.3rem;}
+
+.ej0 li:nth-child(2n) {color: rgba(140, 60, 60, 0.8)}
+.ej0 li:nth-child(2n+1) {color: rgba(30, 60, 200, 0.8)}
+
+.ej0 {
+  counter-reset: ej-counter;
+}
+.ej0 ol li { list-style: none; }
+.ej0 ol li::before {
+  counter-increment: ej-counter;
+  content: counter(ej-counter) ". ";
+  font-size: 1.3rem;
+  margin-left: -1.5rem;
+  font-weight: bold;
+}
+
+
+
+/*.ej0 > *{ /* ejercicio /*
+	font-size:1.1rem;
+}*/
+.cuadro {
+	background-color: #fdfdfd;
+	border: 1px solid black;
+	padding:1px 20px;
+	margin:1.5rem 5rem;
+/*float:right;*/
+}
+
+.cc {text-align:center;}  /* centrado */
+
+.wsp { /* ~~ texto   que  se escribe   respetando espacios, tabuladores, \n, ... ~~ */ 
+	white-space:pre;
+}
+pre {font-size:1.15rem;}
+
+.sc {font-variant:small-caps;} /* MATYUSCULITAS */
+
+
+/* ---- fin divisiones ---- */
+
+/* ======= MULTIMEDIA ======= */
+
+/* hipervínculos */
+
+a {text-decoration:none; color:#556AE3; border-bottom: 1px dashed #657AF3}
+a:visited {text-decoration:none; color:#802080;}
+a:hover {background:rgba(255,255,50,0.6);}
+
+/* imágenes  [foto.jpg:l] [foto.jpg], [foto.jpg:r] */
+img   {display:block; margin:auto; padding:0 15px}
+img.l {float:left;}
+img.r {float:right;}
+img.i {display:inline; margin:0; padding:0;}
+
+.title { font-size:80%;color:#089;text-align:center;margin-top:-1rem; }
+/* ---- fin multimedia ---- */
+
+/* ======== IMPRESIÓN ========== */
+@media print {
+	html, body, article, section{margin:0; padding:0; /*border:none;*/}
+	header {background-color:#ffff00 !important}
+}
+/* ---- fin impresión ---- */
+
+
+
+
+/* ==================================== */
+/*                                      */
+/*           CODEMIRROR                 */
+/*                                      */
+/* ==================================== */
+
+
+/* #############################
+IFRAME DE PREVISUALIZACIÓN HTML/CSS/JAVASCRIPT
+############################ **/
+/*
+<div class="iframeControl" style="width:20em;height:5em;">
+  <div class="control" style="float:left">
+      <input type="button" value="R" class="refresh" id="rcode34"></div>
+  <div class="iframe">
+      <iframe id="ifPrev34" class="preview"></iframe>
+  </div>
+</div>
+*/
+
+
+/* El div que rodea al iframe "preview" es dimensionable (resize + overflow) */
+div.iframeControl{
+	resize:both; overflow:hidden;
+	min-width:300px; min-height:158px; /* un poco mayor que div.iframe */
+	width: 80%;      height:400px;
+}
+
+div.control {}
+.refresh { border:1px solid black; }
+
+div.iframe {
+	resize:both; overflow:hidden;
+	min-width:248px; min-height:154px;
+	height:99%;
+	text-align:right; /* para situar la flechita de redimensionamiento */
+	/* bordes finos a derecha y abajo, así oculto los bordes gruesos del <iframe> */
+	border-right:1px solid black;
+	border-bottom:1px solid black;
+}
+div.iframe:after{
+	content:"➘";position:relative; bottom:1.3em; left:0em; color:#766
+}
+iframe.preview {
+/*border:1px solid black;*/
+	width:100%; height:100%;
+	/*background:white; /* white para que tape la parte inferior de las pestañas */
+}
+
+
+/*ººCosas con códigoºº */
+code { /* ºº codigo, se respetan espacios, tabuladores, ...ºº ==>  <code>...</code> */
+	font-family:monospace;
+	white-space:pre;
+	font-weight: normal;
+	font-size: 94%;
+	/* font-size:1.2rem; */
+	/* font-size:3.1rem; */
+	/* color: #363; */
+	/* white-space: pre;
+	margin-left:20px;
+	display:block; */
+}
+.code { /* esto es para que todo el código se vea similar al .CodeMirror (se aplica también al textarea del codemirror, aunque el estilo de .CodeMirror lo machaca, pues 
+el texto del textarea se copia -con formato- fuera del textarea (al .CodeMirror) */
+	border: 1px solid #99F;
+	background: #f5f4f9;
+	color: #424344;
+	font-family: monospace;
+	font-size: 93%;
+	padding: 8px 15px;
+}
+/* "textarea.code" no afecta en absoluto al .CodeMirror, pues el textarea lo oculta, (display: none;) -VER ABAJO el código que genera CodeMirror) */
+textarea.code { min-width: 30em; min-height:6em; }
+
+div.code p {
+	white-space: pre;
+	margin:0 1% 0 1%;
+	padding-bottom:12px;
+}
+div.con {
+	background:black;
+	color:#BFA;
+	padding:5px 5px 5px 12px;
+}
+
+.small{
+	font-size:85%;
+}
+.join {margin-top:-1em;}
+/** ########################
+	Code Mirror
+######################## **/
+
+/* :::: Codemirror BASICS - El codemirror es un div con el contenido del textarea con su
+código formateado. El textarea se oculta (display: none;) -VER ABAJO el código que genera
+CodeMirror) */
+
+.CodeMirror {
+/* Hacerlo igual igual en el formulario 'tab control', para que el control de pestañas se separe adecuadamente del texto de abajo */
+	font-family: monospace;
+	font-size: 95%;
+	line-height: 1.3; /* por defecto es 1.2, las separo un poquitín más */
+	/*height: auto;*/
+	/*max-height:30em;overflow: hidden; */
+	border: 1px solid #dde; /* borde para el textarea del codemirror */
+	/*box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);*/
+	color: black;	/* el texto de la página es gris oscuro, aquí lo quiero negro */
+/* Las siguientes líneas están sobreescritas abajo (las he comentado), en otra clase .Codemirror */
+	position: relative; /* Si no lo pongo relative, se pueden var las scrollbar en medio del código */
+	overflow: hidden; /* Si no lo oculto, veo el texto fuera y unas barras de desplazamiento H y V que no son las del textarea */
+	background: #f5f4f9;	/* Color de fondo del editor */
+}
+
+
+/*
+.CodeMirror > * {
+	width:100%; 
+	height:100%;resize:both;overflow:hidden;
+}
+*/
+
+/* :::: Codemirror PADDING */
+
+.CodeMirror-lines {
+  padding: 4px 0; /* Separación de la primera línea con la parte superior e inferior (padding-top, padding-bottom) */
+}
+.CodeMirror pre {
+  padding: 0 4px; /* Separación de las líneas con los márgenes derecho e izquierdo (padding-right, padding-left) */
+}
+
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* :::: Codemirror GUTTER - margen donde están los números de línea */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #efe6e6;
+  white-space: nowrap;
+}
+.CodeMirror-linenumbers {}
+.CodeMirror-linenumber {
+  padding: 0 2px 0 4px;
+  min-width: 20px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.CodeMirror-guttermarker { color: black; }
+.CodeMirror-guttermarker-subtle { color: #999; }
+
+/* :::: Codemirror CURSOR */
+
+.CodeMirror-cursor {
+  border-left: 1px solid black;
+  border-right: none;
+  width: 0;
+}
+/* Shown when moving in bi-directional text */
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+.cm-fat-cursor .CodeMirror-cursor {
+  width: auto;
+  border: 0;
+  background: #7e7;
+}
+.cm-fat-cursor div.CodeMirror-cursors {
+  z-index: 1;
+}
+
+.cm-animate-fat-cursor {
+  width: auto;
+  border: 0;
+  -webkit-animation: blink 1.06s steps(1) infinite;
+  -moz-animation: blink 1.06s steps(1) infinite;
+  animation: blink 1.06s steps(1) infinite;
+  background-color: #7e7;
+}
+@-moz-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@-webkit-keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+@keyframes blink {
+  0% {}
+  50% { background-color: transparent; }
+  100% {}
+}
+
+/* Can style cursor different in overwrite (non-insert) mode */
+.CodeMirror-overwrite .CodeMirror-cursor {}
+
+.cm-tab { display: inline-block; text-decoration: inherit; }
+
+.CodeMirror-ruler {
+  border-left: 1px solid #ccc;
+  position: absolute;
+}
+
+/* *********************************************************************
+/* :::: Codemirror DEFAULT THEME: colores para el formateo del código
+   ********************************************************************* */
+
+.cm-s-default .cm-header {color: blue;}		/* [TIKI] GPXText */
+.cm-s-default .cm-number2 {color: #070;}	/* [TIKI] GPXText: números de coordenadas */
+
+.cm-negative {color: #d44;								background:yellow; font-size:3em;}
+.cm-positive {color: #292;								background:green; font-size:3em;}
+.cm-header, .cm-strong {font-weight: bold;				background:magenta; font-size:3em;}
+.cm-em {font-style: italic; 							background:orange; font-size:3em;}
+.cm-link {text-decoration: underline;					background:orange; font-size:3em;}
+.cm-strikethrough {text-decoration: line-through;		background:orange; font-size:3em;}
+.cm-s-default .cm-punctuation {							background:black; font-size:3em;}
+.cm-s-default .cm-hr {color: #999;						background:red; font-size:3em;}
+.cm-s-default .cm-link {color: #00c;					background:blue; font-size:3em;}
+.cm-invalidchar {color: magenta;}
+
+.cm-s-default .cm-meta {color: #555;}			/* Directivas del procesador del lenguaje: [HTML] <!doctype> - [PYTHON] @staticmethod - [BASH] #!/bin/bash */
+
+.cm-s-default .cm-keyword {color: #224; font-weight:bold;}		/* Palabras reservadas. [PYTHON] and or not break class continue def if else finally for import lambda pass return try while with yield [JAVASCRIPT JAVA]: function, var, return, this, import, class, extends, new */
+
+.cm-s-default .cm-atom {color: #B60; font-weight:bold; /*#219;background:yellow;*/}		/* [CSS] colores hexadecimales: #F50, #FABADA y algunas palabras reservadas: monospace, sans-serif url bold none - [JAVA JAVASCRIPT SQL] true, TRUE, false, FALSE null undefined [HTML] entidades */
+
+.cm-s-default .cm-number {color: #164;}		/* Literales numéricos */
+
+code span.red, .code span.red { color: #A11; } /* definida por mí para los bloques <code> */
+.cm-s-default .cm-string {color: #A11;}		/* literales de cadena: "Hola mundo" */
+
+.cm-s-default .cm-string-2 {color: #f50;}	/* [JAVASCRIPT] cadenas que definen un patrón:	/expresión regular/i, while (/\s/.test(this.string.charAt(this.pos))) this.pos++; */
+.cm-s-default .cm-quote {color: #090;}		/* [BASH] Código ejecutable entre acento grave (`) for pid in `ps aux | grep 'node ../server.js' | awk '{print $2}'` ; do */
+
+.cm-s-default .cm-def {color: #00f;}	/* [JAVASCRIPT] Nombres utilizados en el momento de la definición, y argumentos de las funciones: var VariableDefinida; x = sumar(a, b, c); - [JAVA] nombre de las clases cuando se definen: public class Rotonda { - [BASH]: $var - [CSS] @import  */
+.cm-s-default .cm-variable {color: #008;}		/* [JAVASCRIPT] Nombres de los objetos y clases declarados: cadena.length, algunas funciones: alert [JAVA] demasiadas cosas: nombres de las clases cuando se utilizan para declarar, nombre de la función, ... [CSS]: fuentes no genéricas: tahoma, arial, courier [PYTHON]: importaciones: from PACK import FUNC, algunos identificadores: file, long, unicode, xrange,... */
+.cm-s-default .cm-variable-2 {color: #05a;}		/* [JAVASCRIPT] Variables que yo he definido; [PYTHON] _self; a veces argumentos en la llamada a funciones u operadores en expresiones lógicas (if) */
+.cm-s-default .cm-variable-3 {color: #085;}		/* [CSS] pseudoclases - a:hover {..., h1:before {... */
+.cm-s-default .cm-property {color: #056;}	/* miembros de objetos (tras un punto) [JAVA JAVASCRIPT] funciones miembro cuando se definen como objetos: /peek: function() {...}/, y propiedades en POO: str.toLowerCase(),this.string.charAt(n), var obj1 = {a: 1, b: 2, c: 77}; - [CSS] propiedades:	font-family:, font-size:, color:, background:, max-width:, ... */
+.cm-s-default .cm-operator {color:blue}			/* Operadores: +, -, =,  >=, ==, &&,  || - [PYTHON] el prompt.*/
+
+.cm-s-default .cm-comment {color: #876;}		/* comentarios */
+
+.cm-s-default .cm-qualifier {color: #555;}		/* [CSS] clases: .rojo, .grande, .first, ... */
+.cm-s-default .cm-builtin {color: #30a;}		/* [CSS] id: #rojo, #grande, #first, ... - BASH: comandos: mkdir, cd, sudo, openssl, git, cp, ... - PYTHON: tipos de objeto; bool complex enumerate float list object property range ...*/
+
+code {color: #060;} /* definida por mí para los bloques <code> */
+.cm-s-default .cm-tag {color: #060;}			/* [HTML], etiquetas (incluídos ángulos <>): <body>  </a> ... - CSS: selectores de etiqueta: body, div, code, pre, ... */
+.cm-s-default .cm-bracket {color: #170;}		/* [HTML]: ángulos de etiqueta: <  </  > */
+
+code span.blue, .code span.blue { color: #00C; } /* definida por mí para los bloques <code> */
+.cm-s-default .cm-attribute {color: #00C;}		/* [HTML] atributos de etiqueta: <body class="grande"> <table border="1">, <style type="text/css">, ... - [BASH] opciones de comando (comienzan por guión -): ls -l, kill -9 $pid, ...*/
+
+
+.cm-s-default .cm-error {color: #f00;}			/* elemento no reconocido por el lenguaje */
+
+/* *****************************************************************
+   *****************************************************************
+   ***************************************************************** */
+
+.CodeMirror-composing { border-bottom: 2px solid; }
+
+/* :::: Codemirror Default styles for common addons */
+/* Coincidencia cerrado etiquetas */
+.CodeMirror-matchingtag { background: rgba(0, 150, 255, .12); }
+/* Coincidencia cerrado de PARÉNTESIS */
+
+div.CodeMirror span.CodeMirror-matchingbracket {color: #080; background-color:rgba(155, 250, 0, .5);}
+div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22; background:yellow;}
+.CodeMirror-activeline-background {background: #E9E9ff;} /* Color de la línea activa */
+
+
+/*******
+	a partir de aquí no he modifficado nada, salvo el color de fondo del editor
+********/
+
+/* :::: Codemirror STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+ /* Comento estas líneas de .Codemirror, para tenerlo todo junto arriba //
+.CodeMirror {
+  position: relative;
+  overflow: hidden;
+  background: #f8f8f8;	/* Color de fondo del editor
+}
+*/
+
+.CodeMirror-scroll {
+  overflow: scroll !important; /* Things will break if this is overridden */
+  /* 30px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror */
+  margin-bottom: -30px; margin-right: -30px;
+  padding-bottom: 30px;
+  height: 100%;
+  outline: none; /* Prevent dragging from highlighting the element */
+  position: relative;
+}
+.CodeMirror-sizer {
+  position: relative;
+  border-right: 30px solid transparent;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actual scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+.CodeMirror-vscrollbar {
+  right: 0; top: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.CodeMirror-hscrollbar {
+  bottom: 0; left: 0;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+.CodeMirror-scrollbar-filler {
+  right: 0; bottom: 0;
+}
+.CodeMirror-gutter-filler {
+  left: 0; bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute; left: 0; top: 0;
+  z-index: 3;
+}
+.CodeMirror-gutter {
+  white-space: normal;
+  height: 100%;
+  display: inline-block;
+  margin-bottom: -30px;
+  /* Hack to make IE7 behave */
+  *zoom:1;
+  *display:inline;
+}
+.CodeMirror-gutter-wrapper {
+  position: absolute;
+  z-index: 4;
+  background: none !important;
+  border: none !important;
+}
+.CodeMirror-gutter-background {
+  position: absolute;
+  top: 0; bottom: 0;
+  z-index: 4;
+}
+.CodeMirror-gutter-elt {
+  position: absolute;
+  cursor: default;	font-size:95%;
+  z-index: 4;
+}
+.CodeMirror-gutter-wrapper {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+.CodeMirror-lines {
+  cursor: text;
+  min-height: 1px; /* prevents collapsing before first draw */
+}
+.CodeMirror pre {
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0;
+  border-width: 0;
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: inherit;
+  color: inherit;
+  z-index: 2;
+  position: relative;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+}
+.CodeMirror-wrap pre {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  z-index: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  overflow: auto;
+}
+
+.CodeMirror-widget {}
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll, .CodeMirror-sizer, .CodeMirror-gutter, .CodeMirror-gutters, .CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.CodeMirror-cursor { position: absolute; }
+.CodeMirror-measure pre { position: static; }
+
+div.CodeMirror-cursors {
+  visibility: hidden;
+  position: relative;
+  z-index: 3;
+}
+div.CodeMirror-dragcursors {
+  visibility: visible;
+}
+
+.CodeMirror-focused div.CodeMirror-cursors {
+  visibility: visible;
+}
+
+.CodeMirror-selected { background: #d9d9d9; }
+.CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
+.CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror-line::selection, .CodeMirror-line > span::selection, .CodeMirror-line > span > span::selection { background: #d7d4f0; }
+.CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection { background: #d7d4f0; }
+
+.cm-searching {
+  background: #ffa;
+  background: rgba(255, 255, 0, .4);
+}
+
+/* IE7 hack to prevent it from returning funny offsetTops on the spans */
+.CodeMirror span { *vertical-align: text-bottom; }
+
+/* Used to force a border model for a node */
+.cm-force-border { padding-right: .1px; }
+
+@media print {
+  /* Hide the cursor when printing */
+  .CodeMirror div.CodeMirror-cursors {
+    visibility: hidden;
+  }
+}
+
+/* See issue #2901 */
+.cm-tab-wrap-hack:after { content: ''; }
+
+/* Help users use markselection to safely style text background */
+span.CodeMirror-selectedtext { background: none; }
+
+/* **************************
+   **************************
+		ADDS ON
+ ***************************
+ ************************* */
+
+
+/** ########################
+	addon FULLSCREEN
+######################## **/
+/*
+.CodeMirror-fullscreen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  height: auto;
+  width:100%;
+  z-index: 9;
+}*/
+
+/** ########################
+	addon SHOW-HINT
+######################## **/
+
+.CodeMirror-hints {
+  position: absolute;
+  z-index: 10;
+  overflow: hidden;
+  list-style: none;
+
+  margin: 0;
+  padding: 2px;
+
+  -webkit-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  -moz-box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
+  border-radius: 3px;
+  border: 1px solid silver;
+
+  background: white;
+  font-size: 90%;
+  font-family: monospace;
+
+  max-height: 20em;
+  overflow-y: auto;
+}
+
+.CodeMirror-hint {
+  margin: 0;
+  padding: 0 4px;
+  border-radius: 2px;
+  max-width: 19em;
+  overflow: hidden;
+  white-space: pre;
+  color: black;
+  cursor: pointer;
+}
+
+li.CodeMirror-hint-active {
+  background: #08f;
+  color: white;
+}
+
+/** ########################
+	addon DIALOG
+######################## **/
+
+.CodeMirror-dialog {
+  position: absolute;
+  left: 0; right: 0;
+  background: inherit;
+  z-index: 15;
+  padding: .1em .8em;
+  overflow: hidden;
+  color: inherit;
+}
+
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid #eee;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid #eee;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: white;
+  width: 20em;
+  color: inherit;
+  font-family: monospace;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}
+
+/** ########################
+	FOLDGUTTER
+######################## **/
+
+.CodeMirror-foldmarker {
+	color: blue;
+	background-color:#cff; /* doy un color de fondo a la flechita, para que se vea mejor */
+	text-shadow: #b9f 1px 1px 2px, #b9f -1px -1px 2px, #b9f 1px -1px 2px, #b9f -1px 1px 2px;
+	font-family: arial;
+	/*line-height:1.4; /* hago la línea un poco más alta, por defecto puse 1.3 */
+	cursor: pointer;
+}
+.CodeMirror-foldgutter {
+	width: .7em;
+}
+.CodeMirror-foldgutter-open, .CodeMirror-foldgutter-folded {
+	color: #555;
+	cursor: pointer;
+}
+.CodeMirror-foldgutter-open:after {
+	content: "\25BE";
+}
+.CodeMirror-foldgutter-folded:after {
+	content: "\25B8";
+	color:#f30;	/* doy color rojo a la flechita de la barra de números */
+}
+
+/** ########################
+   las marcas de BREAKPOINT
+/** ######################## */
+/* .breakpoints {width: .8em; margin-left:-0.7em}
+/*.breakpoint { color: #822;} el color se da en javascript */
+
+/* #############################
+TAB CONTROL
+############################ **/
+
+/* Con pestañas:
+
+<form class="tabControl" style="margin-bottom:11.0rem">
+   <div class="pestana">
+      <input checked="checked" id="rad172" name="pestana-group" type="radio">
+      <label for="rad172">Ventana.java</label>
+      <div class="modulo">
+           <textarea id="vVentana72" class="code">
+	...	...	...
+           </textarea>
+      </div>
+   </div>
+... [otras pestañas] ...
+</form>
+
+*/
+/* Sin pestañas:
+
+<form class="tabControl">
+   <div class="modulo">
+        <textarea id="vVentana72" class="code">
+	...	...	...
+        </textarea>
+   </div>
+</form>
+
+*/
+
+
+form.tabControl {
+	min-height: 100px;
+	position: relative; /* me sitúa el contenido bajo las pestañas */
+	/* clear: both; */
+	/* width: 60em; */
+	/* top: 30px; */
+/* para que sea igual que .codemirror (textarea con código) */
+	font-family: monospace;
+	font-size:95%;
+	line-height: 1.3; /* por defecto es 1.2, las separo un poquitín más */
+	margin:20px 20px 4rem 20px;
+	border-bottom:2px dashed #CCD;
+}
+
+.pestana {
+	float: left;	/* alinea cada pestaña a la izquierda de la anterior (son bloques, lo normal sería debajo) */
+	/*position: static;	/* No sé XQ */
+}
+.pestana label {
+	background: #eee;
+	border: 1px solid #ccc;
+	border-bottom:none;
+	/*position: relative;	/* No sé XQ */
+	padding: 6px 12px 10px 12px; /* bottom=8 para que "choque" con el codemirror (ajustarlo con el padding-top de .modulo)*/
+	cursor:pointer;
+}
+.pestana [type=radio] {
+	display: none; /* esto es para que no se vean los botones de radio */
+	/*position: absolute; /* da igual absolute (lo mete dentro de la pestaña), relative (lo deja al lado de la pestaña) o nada, pues no se ven */
+}
+.pestana [type=radio]:checked {
+	/* opacity:1; */
+}
+
+/* Módulo (del control de pestañas), son los distintos editores "Codemirror", contienen un textarea o el iframe-preview, o un div con código jc (una imagen, un vídeo, ...)
+la posición debe ser absolute, para que se monten unos encima de otros */
+.modulo {
+	position: absolute;
+	top: 28px; /* si lo quito, no puedo pulsar las pestañas en el primer form con pestañas de la página */
+	/*left: 0;*/
+	/*background: white;*/
+	right: 0; /* Esto hace que se ajuste el tamaño de los módulos a la página, independientemente de que tengan líneas muy cortas */
+	bottom: 0;
+	padding: 0px;
+	/*padding-top:1px; /* separo un poco el módulo de texto de las pestañas */
+	overflow: visible; /* en lugar de visible, lo necesito a hidden para que se puedan pulsar los botones de abajo, (ver estilo de abajo) */
+	opacity: 0;
+/*min-height:20em;
+
+border:4px solid yellow;*/
+}
+
+/* Módulo vacío del control de pestañas. No es un editor "Codemirror" */
+.vacio {
+	height:6.5em;
+	padding:10px 5px 5px 8px;
+	border:1px solid #ccc;
+	box-shadow: 0 0 2px rgba(0,0,0,0.3);
+	background:#F5F4F9;
+}
+/*.vacio:before {
+	content: "Cambie de pestaña para ver el código";
+	color:#778;
+}*/
+
+
+/* Todo lo que pueda quedar tapado por el código del CodeMirror debe ser relative, para que pueda interactuar */
+/* Si el overflow anterior lo dejo a visible, para que se puedan pulsar lo que quede tapado por código, necesito cosas relativas */
+footer, input[type=file], iframe {position:relative}
+
+/* Creo que este código no hace falta, ya que Codemirror lo formatea //
+/* Si lo desmarco, no me funciona F11 //
+ .modulo > * { /* contenido del módulo por defecto (cuando no está seleccionado) //
+	position: relative;
+	top: 400px;
+	left: 0;
+}
+*/
+
+[type=radio] ~ label { /* formato de la pestaña cuando no está seleccionada */
+	color:#866;
+	font-size:1.1rem;
+ 	font-family: arial, sans-serif;
+	background:white;
+}
+
+[type=radio]:checked ~ label { /* formato de la pestaña que está seleccionada (checked) */
+	color:#337;
+	/*font-size:1.35rem;*/
+	/*border-bottom: 3px solid #F5F4F9;*/
+	/*border-bottom:none;*/
+	border-radius: 10px 10px 0 0;
+	box-shadow: 0px -1px 1px 0px rgba(0, 0, 0, 0.3);
+	/*z-index: 6; /* para que quede por encima del editor */
+	background: #F5F4F9;
+	/* font-weight:bold; */
+}
+
+[type=radio]:checked ~ label ~ .modulo {
+	top: 34px; /* separación entre pestañas y textarea del editor */
+	left: 0;
+	z-index: 5; /* 3 es el mínimo z-index para que el módulo seleccionado tape las pestañas de otros formularios y los formularios sin pestañas. El código de los formuoarios con pestañas no lo puede tapar, ya que tienen el mismo z-index la pestaña seleccionada, pero como se añadió
+después a la página web... 
+Para los gutters de los sin-pestañas hace falta 5 */
+	opacity: 1;
+}
+
+/* Hay un problema cuando pulso F11 y en la página aparece código con pestañas
+y sin pestañas: el sin pestañas siempre tiene el mismo z-index=1 (el del form).
+
+- Si el z-index del .modulo es superior y maximizo uno sin pestañas, las pestañas quedan
+por encima. Y viceversa.
+- Si son iguales los z-index, queda por encima el que se añadió después a la página (está
+más abajo en la página)
+
+Solución: Quitar F11
+
+Pero el problema sigue cuando extiendo una pestaña añadiendo pulsando \n:
+a igual z-index, queda visible el de pestañas de más abajo porque se añadio después.
+*/
+
+[type=radio]:checked ~ label ~ .modulo > * { /* elementos contenidos en el módulo cuando está seleccionado */
+	top: 0;
+	left: 0;
+	opacity: 1;
+	z-index: 5; /* 3 es el mínimo z-index para que el módulo seleccionado tape las pestañas de otros formularios y los formularios sin pestañas. El código de los formularios con pestañas no lo puede tapar, ya que tienen el mismo z-index la pestaña seleccionada, pero como se añadió después a la página web... 
+Para los gutters de los sin-pestañas hace falta 5 */
+}
+
+/* pestañas con código no formateado por codemirror
+.codejc {
+	border:1px solid #ccc;
+	padding:20px;
+	min-height:3em;
+}
+ */
+
+/* 
+~CÓDIGO GENERADO POR CODEMIRROR DE UN TEXTAREA CON DOS LÍNEAS
+	- LA PRIMERA: <xs:element name="color" type="xs:string" default="red"/>
+	- LA SEGUNDA VACÍA
+
+---------------------------
+<textarea style="display: none;" id="x54" class="code">
+&lt;xs:element name="color" type="xs:string" default="red"/&gt;
+
+</textarea>
+
+<div class="CodeMirror cm-s-default">
+ <div style="" class="CodeMirror-code">
+    <div style="left: 0px; width: 29px;" class="CodeMirror-linenumber CodeMirror-gutter-elt">1</div>
+    <pre class=" CodeMirror-line ">
+    	<span>
+    	  <span class="cm-tag cm-bracket">&lt;</span>
+    	  <span class="cm-tag">xs:element</span>
+    	  <span class="cm-attribute">name</span> = 
+    	  <span class="cm-string">"color"</span>
+    	  <span class="cm-attribute">type</span> = 
+    	  <span class="cm-string">"xs:string"</span>
+    	  <span class="cm-attribute">default</span> = 
+    	  <span class="cm-string">"red"</span>
+    	  <span class="cm-tag cm-bracket">/&gt;</span>
+    	</span>
+    </pre>
+
+    <div style="left: 0px; width: 29px;" class="CodeMirror-linenumber CodeMirror-gutter-elt">2</div>
+    <pre class=" CodeMirror-line ">
+	    <span>
+	      <span cm-text="">​</span>
+	    </span>
+    </pre>
+
+ </div>
+</div>
+-------------------------------
+
+Se han omitido algunas cosas, esta es la estructura básica del código.
+
+*/
+
+/* ==================================== */
+/*                                      */
+/*        fin codemirror                */
+/*                                      */
+/* ==================================== */
+
+
+/* ========== ESTILOS DE MATEMÁTICAS ========= */
+
+/* === TABULACIÓN horizontal === */
+
+.t09 {margin-left:-17rem !important;}
+.t08 {margin-left:-15rem !important;}
+.t07 {margin-left:-13rem !important;}
+.t06 {margin-left:-11rem !important;}
+.t05 {margin-left:-9rem !important;}
+.t04 {margin-left:-7rem !important;}
+.t03 {margin-left:-5rem !important;}
+.t02 {margin-left:-3rem !important;}
+.t000, .t01 {margin-left:-1.2rem !important;}
+.t00 {margin-left:0.5rem !important;}
+.t0 {margin-left:1.5rem !important;}
+.t {margin-left:3rem !important;}
+.t1 {margin-left:6rem !important;}
+.t2 {margin-left:9rem !important;}
+.t3 {margin-left:12rem !important;}
+.t4 {margin-left:15rem !important;}
+.t5 {margin-left:18rem !important;}
+.t6 {margin-left:21rem !important;}
+.t7 {margin-left:24rem !important;}
+.t8 {margin-left:27rem !important;}
+.t9 {margin-left:30rem !important;}
+.t10 {margin-left:35rem !important;}
+.t11 {margin-left:40rem !important;}
+.t12 {margin-left:45rem !important;}
+.t13 {margin-left:50rem !important;}
+
+/* === UP : tabulación vertical hacia arriba === */
+/* El position-relative sube la "caja", pero no sube las "cajas" que quedan por debajo aumentando la separación */
+
+.up00,.dw00 {margin-top:0 !important;}       .up00r,.dw00r {position:relative; top:0 !important;}
+/* sube el bloque */
+.up0 {margin-top:-0.5rem !important;} .up0r {position:relative; top:-0.5rem !important;}
+.up  {margin-top:-1rem !important;font-size:inherit;}   .upr  {position:relative; top:-1rem !important;}
+.up1 {margin-top:-1.5rem !important;} .up1r {position:relative; top:-1.5rem !important;}
+.up2 {margin-top:-2rem !important;}   .up2r {position:relative; top:-2rem !important;}
+.up3 {margin-top:-2.5rem !important;} .up3r {position:relative; top:-2.5rem !important;}
+.up4 {margin-top:-3rem !important;}   .up4r {position:relative; top:-3rem !important;}
+.up5 {margin-top:-3.5rem !important;} .up5r {position:relative; top:-3.5rem !important;}
+.up6 {margin-top:-4rem !important;}   .up6r {position:relative; top:-4rem !important;}
+.up7 {margin-top:-4.5rem !important;} .up7r {position:relative; top:-4.5rem !important;}
+.up8 {margin-top:-5rem !important;}   .up8r {position:relative; top:-5rem !important;}
+.up9 {margin-top:-5.5rem !important;} .up9r {position:relative; top:-5.5rem !important;}
+.up10{margin-top:-6rem !important;}   .up10r{position:relative; top:-6rem !important;}
+
+.up11{margin-top:-7rem !important;}   .up11r{position:relative; top:-7rem !important;}
+.up12{margin-top:-8rem !important;}   .up12r{position:relative; top:-8rem !important;}
+.up13{margin-top:-9rem !important;}   .up13r{position:relative; top:-9rem !important;}
+.up14{margin-top:-10rem !important;}   .up14r{position:relative; top:-10rem !important;}
+.up15{margin-top:-11rem !important;}   .up15r{position:relative; top:-11rem !important;}
+.up16{margin-top:-12rem !important;}   .up16r{position:relative; top:-12rem !important;}
+/* === DOWN : tabulación vertical hacia abajo === */
+/* El position-relative baja la "caja", pero no baja las "cajas" que quedan por debajo y pueden llegar a fundirse */
+/* baja el bloque */
+.dw0 {margin-top:0.5rem !important;}  .dw0r {position:relative; top:0.5rem !important;}
+.dw  {margin-top:1rem !important;}    .dwr  {position:relative; top:1rem !important;}
+.dw1 {margin-top:1.5rem !important;}  .dw1r {position:relative; top:1.5rem !important;}
+.dw2 {margin-top:2rem !important;}    .dw2r {position:relative; top:2rem !important;}
+.dw3 {margin-top:2.5rem !important;}  .dw3r {position:relative; top:2.5rem !important;}
+.dw4 {margin-top:3rem !important;}    .dw4r {position:relative; top:3rem !important;}
+.dw5 {margin-top:3.5rem !important;}  .dw5r {position:relative; top:3.5rem !important;}
+.dw6 {margin-top:4rem !important;}    .dw6r {position:relative; top:4rem !important;}
+.dw7 {margin-top:4.5rem !important;}  .dw7r {position:relative; top:4.5rem !important;}
+.dw8 {margin-top:5rem !important;}    .dw8r {position:relative; top:5rem !important;}
+.dw9 {margin-top:5.5rem !important;}  .dw9r {position:relative; top:5.5rem !important;}
+.dw10{margin-top:6rem !important;}    .dw10r{position:relative; top:6rem !important;}
+/**/
+
+img.u3 {margin-top:-3rem;}  img.uu3 {position:relative; top:-3rem;}
+img.u4 {margin-top:-4rem;}  img.uu4 {position:relative; top:-4rem;}
+img.u5 {margin-top:-5rem;}  img.uu5 {position:relative; top:-5rem;}
+img.u6 {margin-top:-6rem;}  img.uu6 {position:relative; top:-6rem;}
+img.u7 {margin-top:-7rem;}  img.uu7 {position:relative; top:-7rem;}
+img.u8 {margin-top:-8rem;}  img.uu8 {position:relative; top:-8rem;}
+img.u9 {margin-top:-9rem;}  img.uu9 {position:relative; top:-9rem;}
+img.u10 {margin-top:-10rem;} img.uu10 {position:relative; top:-10rem;}
+/* --- fin tabulaciones verticales --- */
+/* ----- width ------ */
+.w1 {width:7rem !important;}
+.w2 {width:14rem !important;}
+.w3 {width:20rem !important;}
+.w4 {width:27rem !important;}
+.w5 {width:34rem !important;}
+.w6 {width:40rem !important;}
+.w7 {width:47rem !important;}
+.w8 {width:53rem !important;}
+.w9 {width:60rem !important;}
+.w95 {width:63rem !important;}
+.w10 {width:66rem !important;}
+
+
+/*tamaños de fuente*/
+.fs09{font-size:55%;/*line-height:1.3rem;*/}
+.fs08{font-size:60%;/*line-height:1.3rem;*/}
+.fs07{font-size:65%;/*line-height:1.3rem;*/}
+.fs06{font-size:70%;/*line-height:1.3rem;*/}
+.fs05{font-size:75%;/*line-height:1.3rem;*/}
+.fs04{font-size:78%;/*line-height:1.3rem;*/}
+.fs03{font-size:80%;/*line-height:1.3rem;*/}
+.fs02{font-size:82%;/*line-height:1.3rem;*/}
+.fs01{font-size:85%;/*line-height:1.3rem;*/}
+.fs00{font-size:90%;/*line-height:1.6rem;*/}
+.fs0{font-size:95%;/*line-height:1.3rem;*/}
+.fs1{font-size:105%;/*line-height:1.3rem;*/}
+.fs2{font-size:110%;/*line-height:1.3rem;*/}
+.fs3{font-size:115%;/*line-height:1.3rem;*/}
+.fs4{font-size:120%;/*line-height:1.3rem;*/}
+.fs5{font-size:125%;/*line-height:1.3rem;*/}
+.fs6{font-size:130%;/*line-height:1.3rem;*/}
+.fs7{font-size:135%;/*line-height:1.3rem;*/}
+.fs8{font-size:140%;/*line-height:1.3rem;*/}
+.fs9{font-size:145%;/*line-height:1.3rem;*/}
+
+/* Separación entre líneas */
+.lh010 { line-height:-5rem; }
+.lh09 { line-height:0rem; }
+.lh08 { line-height:0.1rem; }
+.lh07 { line-height:0.2rem; }
+.lh06 { line-height:0.3rem; }
+.lh05 { line-height:0.4rem; }
+.lh04 { line-height:0.5rem; }
+.lh03 { line-height:0.6rem; }
+.lh02 { line-height:0.7rem; }
+.lh01 { line-height:0.8rem; }
+.lh00 { line-height:0.9rem; }
+.lh0 { line-height:1rem; }
+.lh1 { line-height:1.1rem; }
+.lh2 { line-height:1.2rem; }
+.lh3 { line-height:1.3rem; }
+.lh4 { line-height:1.4rem; }
+.lh5 { line-height:1.5rem; }
+.lh6 { line-height:1.6rem; }
+.lh7 { line-height:1.7rem; } /* body: 1.75rem; => esto es un poco más junto TODO: que la base sea lh==1.75 */
+.lh8 { line-height:1.8rem; }
+.lh9 { line-height:1.9rem; }
+.lh10 { line-height:2rem; }
+.lh11 { line-height:2.2rem; }
+.lh12 { line-height:2.5rem; }
+.lh13 { line-height:2.7rem; }
+.lh14 { line-height:3rem; }
+.lh15 { line-height:3.5rem; }
+
+/* ========== ESTILOS DE CONSOLA (MSDOS, BASH) =========== */
+
+pre.ms00, pre.ms0, pre.ms1, pre.ms2, pre.ms3, pre.ms4, pre.ms5 {
+	font-size: 80%;
+	line-height: 1.35rem;
+	padding: 6px;
+	padding-top: 2px;
+	margin-left: 2.5rem;
+	color:#bbb; background-color:black; 
+	border:4px inset #c0c0c0;
+	width:56rem;
+	overflow: auto;
+}
+.nota pre.ms00, .nota pre.ms0, .nota pre.ms1, .nota pre.ms2, .nota pre.ms3, .nota pre.ms4, .nota pre.ms5 {
+	line-height: 0.9rem;
+}
+pre.ms00 {max-height:8rem;}
+pre.ms0 {max-height:12rem;}
+pre.ms1 {max-height:18rem;}
+pre.ms2 {max-height:24rem;}
+pre.ms3 {max-height:26rem;}
+pre.ms4 {max-height:30rem;}
+pre.ms5 {max-height:40rem;}
+
+pre[class^=ms] span.k  {color:white;} /* prompt */
+pre[class^=ms] span.kk  {color:#FF6;} /* sub-prompt */
+pre[class^=ms] span.g  {color:#4F6; font-size:108%; display:inline-block; margin:0.3rem 0;} /* comando */
+pre[class^=ms] span.gg  {color:#2a8;}
+pre[class^=ms] span.b  {color:#BEF;} /* comentarios */
+pre[class^=ms] span.bb  {color:#ABF;}
+pre[class^=ms] span.r {color:#F8F;} /* resalte */
+pre[class^=ms] span.rr {color:#F66;}
+
+.XXX  {border:1px solid red; background:yellow;width:80%;margin-left:5%;padding-left:1rem;}
+.TODO {border:1px dashed orange; background:#FFA; color:red; font-weight:bold;width:80%;margin-left:5%;;padding-left:1rem;}
+
+.orange {color:#F60}
+
+.out {border:1px solid #a3b; padding:0 6px; background:#F9e6ff;}
+.out:before  {content:"<out>"; font-size:3rem; padding-top:20px; color:#809;}
+.out:after  {content:"</out>"; font-size:3rem; padding-top:20px; color:#809;}
+
+
+
+.web {border:1px solid #99f; background:#ddf; width:92%; margin:auto; padding:0 1rem; }
+.web {font-size:90%}

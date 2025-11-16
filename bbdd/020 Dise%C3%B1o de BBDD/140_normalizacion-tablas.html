@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Normalización de tablas</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="sáb., 09 mar. 2024 17:54:01 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Normalización de tablas</h1>
+<h5>Normalización</h5>
+<p>Durante el diseño de una base de datos relacional debemos realizar un proceso al que
+se conoce como normalización, que consiste en definir las reglas que determinan las
+dependencias entre datos de la BDD.</p>
+<p>Una vez conocida las dependencias y aplicando lo que se conoce como "formas normales" conseguiremos que:
+<br><span class="tab"><span class="icon"></span>- la cantidad de espacio necesario para guardar los datos sea el menor posible, y</span><br>
+<span class="tab"><span class="icon"></span>- la facilidad para actualizar las tablas sea la mayor posible.</span>
+</p>
+<p>Es decir, optimizar su funcionamiento.</p>
+<div class="def w9">
+<p><span class="k">Normalización</span>:
+<br><span class="tab"><span class="icon"></span>técnica para eliminar redundancias y optimizar los accesos en una base de datos relacional.</span>
+</p>
+</div>
+<p>Antes de que Codd desarrollara la teoría relacional (1970) era frecuente que los
+datos se almacenaran en uno o varios ficheros con multitud de información redundante. Digamos,
+cosas como...</p>
+<p><span class="bb"><b>Proveedores de chips</b></span></p>
+<table border="1" class="fs01 t0 up">
+  <tr>
+    <th>TIN</th><th>teléfono</th><th>código-pais</th><th>País</th><th>Ciudad</th><th>Dirección</th><th>chip</th><th>precio</th>
+  </tr>
+  <tr>
+    <td>EE0000003</td><td>446351230, 446500001, 446707070</td><td>GB</td><td>Gran Bretaña</td><td>Londres</td><td>Main St, 5</td><td>UART </td><td>40</td>
+  </tr>
+  <tr>
+    <td>EE0000003</td><td>446351230, 446500001, 446707070</td><td>GB</td><td>Gran Bretaña</td><td>Londres</td><td>Main St, 5</td><td>Z-80 </td><td>25</td>
+  </tr>
+  <tr>
+    <td>12387654</td><td>863334344</td><td>CN</td><td>China</td><td>Hong Kong</td><td>Li Chi 4</td><td>Z-80</td><td>18</td>
+  </tr>
+  <tr>
+    <td>EE01233210</td><td>449960001</td><td>GB</td><td>Gran Bretaña</td><td>Londres</td><td>Silver St, 7</td><td>Z-80</td><td>20</td>
+  </tr>
+  <tr>
+    <td>EE445265</td><td>447777744</td><td>GB</td><td>Gran Bretaña</td><td>Londres</td><td>Gold St, 8</td><td>Celeron</td><td>60</td>
+  </tr>
+  <tr>
+    <td>A65413695</td><td>342984321, 342944322</td><td>ES</td><td>España</td><td>Madrid</td><td>C/ Limón 1</td><td>Z-80 </td><td> 22</td>
+  </tr>
+  <tr>
+    <td>EE9552200</td><td>338703210, 338885555</td><td>FR</td><td>Francia</td><td>Limoges</td><td>Neige R, 25</td><td>Z-80 </td><td> 20</td>
+  </tr>
+  <tr>
+    <td>A65413695</td><td>342984321, 342944322</td><td>ES</td><td>España</td><td>Madrid</td><td>C/ Limón 1</td><td>Celeron</td><td>61</td>
+  </tr>
+  <tr>
+    <td>H2952012</td><td>346129999</td><td>ES</td><td>España</td><td>Barcelona</td><td>C Cobre 22</td><td>Celeron</td><td>63</td>
+  </tr>
+  <tr>
+    <td>EE0000003</td><td>446351230, 446500001, 446707070</td><td>GB</td><td>Gran Bretaña</td><td>Londres</td><td>Main St, 5</td><td>i5 </td><td>125</td>
+  </tr>
+  <tr>
+    <td>···</td><td>···</td><td>···</td><td>···</td><td>···</td><td>···</td><td>···</td>
+  </tr>
+</table>
+<pre class="nota w7">El TIN (<i>Tax Identification Number</i>) equivale al NIF pero a nivel mundial, identifica a empresas
+o particulares que realizan comercio internacional. Es el código de proveedor.</pre>
+<p>La gran cantidad de información redundate en la tabla anterior puede generarnos anomalías de actualización:</p>
+<div class="up t00">
+<ul>
+  <li><i>inserción</i>: Si insertamos un nuevo proveedor, tenemos que dar de alta más de un registro (uno por chip).</li>
+  <li><i>modificación</i>: si un proveedor cambia de ciudad, debemos actualizar el valor en más de un registro.</li>
+  <li><i>borrado</i>: Si un proveedor quiebra, debemos borrar muchos registros.</li>
+</ul>
+</div>
+<p>Por lo que llegamos a la conclusión de que está mal diseñada: se debe subdivir esta tabla en varias tablas. </p>
+<h2>Formas normales</h2>
+<p>Para minimizar las información redundante, y evitar inconsistencias, se definieron unas
+reglas que deben cumplir las bases de datos. Se conocen como formas normales.</p>
+<p>Hay 5 formas normales (FN) más una de añadidura (FN de Boyle-Codd)</p>
+<div class="up">
+<p>
+<span class="tab"><span class="icon"></span>- Si la BDD cumple la primera regla, se dice que la BDD está en <b>1ª forma normal</b> (1FN),</span><br>
+<span class="tab"><span class="icon"></span>- si cumple las dos primeras reglas, se dice que la BDD está en <b>2ª forma normal</b> (2FN),</span><br>
+<span class="tab"><span class="icon"></span>- si cumple las tres primeras reglas se dice que está en <b>3FN</b>.</span>
+</p>
+</div>
+<p>La 3ªFN se considera el nivel más alto necesario para la mayoría de las aplicaciones,
+pues para que no se cumplan las demás deben ser situaciones "rebuscadas".</p>
+<p><span class="k">La idea global es que, al final, todos los atributos de una tabla dependan de la
+clave y sólo de la clave.</span></p>
+<h2>Primera forma normal (1FN)</h2>
+<div class="cuadro">
+<p>Una relación está en primera forma normal (1FN) si todos sus valores son atómicos, es decir,
+cada atributo tiene un valor único de su dominio.</p>
+</div>
+<p>En el siguiente ejemplo el atributo, "Teléfono" no tiene un valor atómico, sino repetitivo:</p>
+<table border="1" class="fs01 t0">
+  <tr>
+    <th><u>NIF</u></th><th>Nombre</th><th>Apellidos</th><th>Teléfono</th>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td><td>636595522<br>912554556<br>913233333</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>Benito</td><td>Bastante Cansino</td><td>67890123<br>9133300011</td>
+  </tr>
+  <tr>
+    <td>51254854C</td><td>Carlos</td><td>Cárdenas Camarasa</td><td>62153665</td>
+  </tr>
+</table>
+<p>Soluciones a esto podrían ser:</p>
+<p>
+<span class="tab"><span class="icon"></span>1. <span class="rr"><b>Aplicar la 1ª FN</b></span>: Crear campos univaluados, para lo que deberemos duplicar
+los registros de clientes con varios teléfonos, creando un registro para
+cada teléfono con lo que la clave sería <u>NIF</u> + <u>Teléfono</u></span>
+</p>
+<table border="1" class="fs01 t1">
+  <tr>
+    <th><u>NIF</u></th><th>Nombre</th><th>Apellidos</th><th><u>Teléfono</u></th>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td><td>636595522</td>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td><td>912554556</td>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td><td>913233333</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>Benito</td><td>Bastante Cansino</td><td>67890123</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>Benito</td><td>Bastante Cansino</td><td>9133300011</td>
+  </tr>
+  <tr>
+    <td>51254854C</td><td>Carlos</td><td>Cárdenas Camarasa</td><td>62153665</td>
+  </tr>
+</table>
+<p><img src="img/emoticono_pensativo.webp" style="display:inline!important;margin-top:-11px; padding-left:1rem" width="25"><span style="position:relative; left:-13px;top:-15px; font-size:75%;font-family:Arial;color:#806">mmmh...</span> demasiada redundancia.
+<span class="rr"><b>SI</b></span>, pero <span class="rr">esa redundancia se resolverá conforme avancemos en la normalización</span>.</p>
+<p>De hecho, <span class="r">la aplicación de la <b>2ª FN</span></b> nos va a dar como resultado la aparición de dos tablas:</p>
+<table border="1" class="fs01 t1">
+  <tr>
+    <th><u>NIF</u></th><th>Nombre</th><th>Apellidos</th>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>Benito</td><td>Bastante Cansino</td>
+  </tr>
+  <tr>
+    <td>51254854C</td><td>Carlos</td><td>Cárdenas Camarasa</td>
+  </tr>
+</table>
+<p><div style="position:relative; left:35rem; top:-10rem;margin-bottom:-10rem"></p>
+<table border="1" class="fs01">
+  <tr>
+    <th>NIF</th><th><u>Teléfono</u></th>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>636595522</td>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>912554556</td>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>913233333</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>67890123</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>9133300011</td>
+  </tr>
+  <tr>
+    <td>51254854C</td><td>62153665</td>
+  </tr>
+</table>
+<p></div></p>
+<p>Con diagrama Entidad-Relación:</p>
+<p><img src="img/E-R_Persona-Telefono.png" class=""></p>
+<div class="nota">
+<ul>
+  <li>Otra solución podría ser crear varios campos con el mismo dominio:</li>
+</ul>
+<table border="1" class="fs01 t0">
+  <tr>
+    <th><u>NIF</u></th><th>Nombre</th><th>Apellidos</th><th>Teléfono-1</th><th>Teléfono-2</th><th>Teléfono-3</th>
+  </tr>
+  <tr>
+    <td>01115985A</td><td>Alfonsina</td><td>Aguado López</td><td>636595522</td><td>912554556</td><td>913233333</td>
+  </tr>
+  <tr>
+    <td>95682544B</td><td>Benito</td><td>Bastamte Cansino</td><td>67890123</td><td>9147700011</td><td>NULL</td>
+  </tr>
+  <tr>
+    <td>51254854C</td><td>Carlos</td><td>Cárdenas Camarasa</td><td>62153665</td><td>NULL</td><td>NULL</td>
+  </tr>
+</table>
+<p>Esto no estaría mal si la inmensa mayoría de nuestros clientes tuviera tres teléfonos, pero
+la aparición de demasiados campos a <code>NULL</code> puede guiarnos a otra solución.</p>
+</div>
+<h2>Segunda forma normal (2FN)</h2>
+<div class="cuadro">
+<p>Una tabla está en segunda forma normal (2FN) si cumple las siguientes reglas:</p>
+<div class="up">
+<ul>
+  <li>Está en 1FN.</li>
+  <li>Todos los atributos que no forman parte de la clave primaria <span class="k">dependen por completo de ella</span>, no
+de un subconjunto de la clave.</li>
+</ul>
+</div>
+</div>
+<p>Es decir: <i>si tenemos atributos que dependen sólo de parte de la clave, entonces esa
+parte de la clave y esos atributos formarán otra tabla</i>.</p>
+<p>En el ejemplo de abajo hemos identificado como clave de la tabla los atributos: { "ISBN", "Cód-tienda" }.</p>
+<p>Se observa que los atributos "título"/"autor" no dependen de toda la clave, sino del ISBN, y
+los atributos "Dirección"/"Teléfono" solo de "Cód-tienda".</p>
+<table border="1" class="fs01 t0">
+  <tr>
+    <th>Título</th><th>Autor</th><th><u>ISBN</u></th><th><u>Cód-tienda</u></th><th>Stock</th><th>Dirección</th><th>Teléfono</th>
+  </tr>
+  <tr>
+    <td>La niebla</td><td>Julio Domínguez</td><td>9788402073</td><td>3</td><td>3</td><td>C/ Luchana, 34</td><td>623425200</td>
+  </tr>
+  <tr>
+    <td>La niebla</td><td>Julio Domínguez</td><td>9788402073</td><td>6</td><td>1</td><td>C/ Desengaño, 5</td><td>699221133</td>
+  </tr>
+  <tr>
+    <td>Nadie</td><td>Josefina Lis</td><td>0031122952</td><td>11</td><td>1</td><td>Pº Castellana, 132</td><td>600161616</td>
+  </tr>
+  <tr>
+    <td>Don Mingote</td><td>Cacerolo</td><td>1325652955</td><td>2</td><td>5</td><td>C/ Dulcinea, 145</td><td>611123010</td>
+  </tr>
+  <tr>
+    <td>Vendrán días</td><td>Isidro Martín</td><td>2222556656</td><td>11</td><td>7</td><td>Pº Castellana, 132</td><td>600161616</td>
+  </tr>
+</table>
+<p>Por ese motivo se repiten valores, con la consiguiente redundancia de información.</p>
+<p>Mirando las dependencias resolvemos en dos tablas y una relación:</p>
+<p><img src="img/Dependencias-2aFN.png" class=""></p>
+<p>El atributo stock se encuentra en la relación, pues depende de cada libro y librería, es decir,
+depende de ambas claves:
+<img src="img/Tienda-Libros-2FNr.png" class=""></p>
+<p>La 2FN viene a decir que los registros no deben depender de nada que no sea una
+clave principal de una tabla (clave compuesta si es necesario).</p>
+<div class="notaB w7">
+<p>Sólo puede darse incumplimiento de la 2FN cuando la clave primaria es compuesta,
+en cuyo caso deberíamos normalizar a 2FN. Entonces podemos concluir que:
+<span class="wsp">   → toda tabla 1FN cuya clave primaria conste de un único atributo ya es 2FN.</span></p>
+</div>
+<h2>Tercera forma normal (3FN)</h2>
+<div class="cuadro">
+<p>Una relación está en tercera forma normal (3FN) si:</p>
+<div class="up">
+<ul>
+  <li>Está en 2FN.</li>
+  <li>Todos los atributos que no forman parte de la clave primaria son independientes entre
+sí, es decir, no dan información sobre otros atributos de la relación.</li>
+</ul>
+</div>
+</div>
+<p>En el siguiente ejemplo de empleados de cierta empresa, todos los atributos dependen
+directamente de la clave primaria ("Código de empleado") excepto "Nombre de departamento",
+que depende de "Código de departamento":</p>
+<table border="1" class="fs01 t0">
+  <tr>
+    <th><u>Cód-emp</u></th><th>Nombre</th><th>Apellidos</th><th>Dirección</th><th>Cód-dpto</th><th>Nombre-dpto</th><th>Fecha nac.</th>
+  </tr>
+  <tr>
+    <td>12</td><td>Paula</td><td>Sanz González</td><td>C/Mtnez. Izqdo., 40</td><td>3</td><td>Financiero</td><td>13/09/1983</td>
+  </tr>
+  <tr>
+    <td>268</td><td>José Luis</td><td>García Viñals</td><td>Pº Melancólicos, 1</td><td>2</td><td>Informática</td><td>05/02/1963</td>
+  </tr>
+  <tr>
+    <td>250</td><td>Javier</td><td>Peinado Martín</td><td>C/Guitarra, 7</td><td>5</td><td>RRHH</td><td>24/10/1978</td>
+  </tr>
+  <tr>
+    <td>181</td><td>Ruth</td><td>Lázaro Cardenal</td><td>C/Torrelaguna, 64</td><td>3</td><td>Financiero</td><td>15/05/1981</td>
+  </tr>
+</table>
+<p>La 3FN lo que hace es evitar la existencia de dependencias transitivas como la que se observa
+abajo, que también nos dan lugar a redundancias, en este caso en el nombre de departamento.</p>
+<p><img src="img/Dependencia-Transitiva-3FN.png" class=""></p>
+<p>Otra forma de enunciar esta 3FN es:</p>
+<div class="cuadro up">
+<p>Una tabla se encuentra en 3FN si es 2FN y <span class="k">no existe</span> ninguna <span class="k">dependencia funcional
+transitiva</span> entre atributos que no son clave.</p>
+</div>
+<p>Atendiendo a las dependencias tenemos dos claves, cada una dará lugar a una tabla:</p>
+<p><img src="img/Empleado-Departamento-3aFN.png" class=""></p>
+<div class="nota">
+<p>Existen otras formas normales: la forma normal de Boyle-Codd (FNBC), y las 4ª y 5ª FN, pero rara vez
+se consideran en un diseño real.</p>
+</div>
+</article>
+</body>
+</html>

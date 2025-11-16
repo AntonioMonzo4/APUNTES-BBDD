@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Claves</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="mié, 18 oct 2023 00:25:05 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Claves</h1>
+<p> En el modelo relacional trabajamos con los siguientes tipos de claves:</p>
+<div class="up">
+<ul>
+  <li>Claves candidatas</li>
+  <li>Claves primarias</li>
+  <li>Claves alternativas</li>
+  <li>Claves ajenas (o foráneas)</li>
+</ul>
+</div>
+<p>Vamos a suponer que la UCI guarda los datos de los ciclistas federados en una
+tabla con los siguientes campos:</p>
+<pre>    <span class="bb"><b>Ciclista</b> { num-Federado,  DNI,  fecha-Nacimiento, fecha-Alta-Federación,  nombre,
+               apellidos,  sexo,  dirección,  email,  provincia,  club,  categoría  }</span></pre>
+<p>La forma de diferenciar a dos ciclistas de manera inequívoca es mediante algún <b>atributo clave</b>.</p>
+<p>Para ello, buscaremos <i>un atributo</i> <b>o</b> un <i>conjunto de atributos</i> que
+identifiquen de modo único las filas de la tabla.
+A ese atributo o conjunto de atributos lo llamaremos <b>claves candidatas</b>.</p>
+<h3>Claves candidatas</h3>
+<p>👉 Las <b>claves candidatas</b> serán aquel conjunto de atributos que identifiquen
+de manera única cada fila de la tabla. Es decir, cualquier columna cuyos valores
+no van a repitir en ninguna otra fila de la tabla, son claves candidatas.</p>
+<pre>    <span class="bb"><b>Ciclista</b> { num-Federado,  DNI,  fecha-Nacimiento, fecha-Alta-Federación,  nombre,
+               apellidos,  sexo,  dirección,  teléfono,  email,  provincia,  club,  categoría  }</span></pre>
+<p>En la tabla de ciclistas, claves candidatas serían el "<i>número de federado</i>, el <i>DNI</i> y quizás también el <i>email</i> 
+y el <i>teléfono</i> podrían ser claves candidatas, aunque podrían no serlo si tenemos ciclistas en categoría infantil,
+incluso el DNI podría no serlo.</p>
+<h3>Clave primaria</h3>
+<p>Al crear la BD tendremos que elegir alguna de las claves candidatas para diferenciar los
+registros.</p>
+<p>👉 La <b>clave primaria</b> de un tabla es aquella clave candidata que se escoge
+para identificar sus filas de manera única.</p>
+<div class="nota w5">
+<p>En una tabla <b>no pueden existir filas duplicadas</b>, por tanto, SIEMPRE EXISTIRÁ una
+clave primaria.</p>
+</div>
+<p>En el peor caso, la clave primaria estará formada por todos los atributos
+de la relación, pero normalmente habrá un pequeño subconjunto de los
+atributos que haga esta función.</p>
+<p>En otros casos, podemos crear un campo único que identifique las filas,
+por ejemplo un código de usuario, que podrían estar constituidos por
+valores autonuméricos.</p>
+<h3>Claves alternativas</h3>
+<p>👉 Las claves candidatas que no son escogidas como clave primaria son
+denominadas <span class="k">claves alternativas</span>.</p>
+<h3>Clave compuesta</h3>
+<p>👉 Una clave puede estar formada por más de un atributo. En este se dice que es una <b>clave compuesta</b>.</p>
+<p>Ejemplo:</p>
+<pre class="up4">           <span class="bb"><b>Localidades</b> { <u>Cód_Provincial</u>,  <u>Cód_local</u>, Localidad }</span></pre>
+<table border="1" class="t0">
+  <tr>
+    <th>Cód_Provincial</th><th>Cód_local</th><th>Localidad</th>
+  </tr>
+  <tr>
+    <td>28</td><td>001</td><td>Madrid</td>
+  </tr>
+  <tr>
+    <td>28</td><td>007</td><td>Madrid</td>
+  </tr>
+  <tr>
+    <td>28</td><td>033</td><td>Madrid</td>
+  </tr>
+  <tr>
+    <td>28</td><td>200</td><td>San Lorenzo de El Escorial</td>
+  </tr>
+  <tr>
+    <td>28</td><td>280</td><td>El Escorial</td>
+  </tr>
+  <tr>
+    <td>28</td><td>440</td><td>Guadarrama</td>
+  </tr>
+  <tr>
+    <td>40</td><td>001</td><td>Segovia</td>
+  </tr>
+  <tr>
+    <td>40</td><td>006</td><td>Segovia</td>
+  </tr>
+  <tr>
+    <td>···</td><td>···</td><td>···</td>
+  </tr>
+</table>
+<h3>Claves foráneas (ajenas o externas)</h3>
+<p>En una BD relacional, todas las tablas están relacionadas entre sí. Para
+establecer una relación deben compartir algún atributo en común que las
+relacione.</p>
+<p>Si un ciclista pertenece a un club, el ciclista debe portar entre sus
+atributos el nombre (o código) del club al que pertenece:</p>
+<p><img src="img/E-R_Ciclistas-Clubs.png" class=""></p>
+<pre>    <span class="bb"><b>Club</b>  { <span class="b"><u>códigoClub</u></span>, nombre, sede, presidente, teléfono }
+    <b>Ciclista</b> { <u>numFeder</u>, DNI, fecNac, fechaFeder, nombre, apellidos, sexo, dirección, teléfono,
+           email, provincia, <span class="b">club</span>(Club), categoría }</span></pre>
+<div class="nota">
+<p>La relación <span class="b">Club --▸ Ciclista</span> es <i>UNO-a-MUCHOS</i>, porque:
+<br><span class="tab"><span class="icon"></span>- en un club puede haber <span class="rr">muchos</span> ciclistas</span><br>
+<span class="tab"><span class="icon"></span>- un ciclista pertenece a <span class="r">un</span> único club</span>
+</p>
+<p>La flecha apuntará a la entidad que participa con <span class="rr">"muchos"</span> en la relación.<br>
+La clave foránea viajará en dirección de la flecha.</p>
+</div>
+<p>👉 Una <b>clave ajena</b> es un atributo o conjunto de atributos de una tabla
+cuyos valores coinciden con los valores de la clave primaria de alguna
+otra tabla (o de la misma).<br>&nbsp;</p>
+<div class="def">
+<p>Vamos a convertir el fichero anterior en una BBDD.</p>
+<p><b>Ejercicio 1</b>: Crea una BDD llamada UCI con las dos tablas anteriores:</p>
+<pre><span class="bb">  <b>Club</b>  { <u>códigoClub</u>, nombre, sede, presidente, teléfono }
+  <b>Ciclista</b> { <u>numFeder</u>, DNI, fecNac, fechaFeder, nombre, sexo, dirección, teléfono,
+           email, provincia, club(Club), categoría }</span></pre>
+<p>Las categorías serán tres: "Amateur", "Profesional", y "Máster" (profesional retirado).<br>
+Un ciclista sólo podrá pertenecer a una de las categorías.<br>&nbsp;</p>
+<p><b>Ejercicio 2</b>: Invéntate 2 equipos y 7 nombres de ciclista.
+Insértalos en las tablas correspondientes.</p>
+</div>
+</article>
+</body>
+</html>

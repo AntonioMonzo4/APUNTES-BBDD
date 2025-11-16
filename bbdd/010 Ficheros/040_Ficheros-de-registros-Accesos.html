@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Ficheros de registros - Accesos</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="jue, 28 sept 2023 11:41:23 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="../../opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Ficheros de registros - Accesos</h1>
+<h2>Registros y campos</h2>
+<p>Cuando en un fichero se desea almacenar muchos datos de elementos de una misma categoría
+(personas, empresas, futbolistas, libros, productos de ferretería, ...) lo habitual es
+utilizar registros.</p>
+<p>Un <b>registro</b> es una estructura de datos que se divide en <b>campos</b>. En cada campo
+se almacena un dato del mismo tipo.</p>
+<p>Los ficheros de registros suelen mostrarse en forma de tabla, donde cada fila es un
+registro, y las columnas son los campos:</p>
+<table border="1" class="t0">
+  <tr>
+    <th>DNI</th><th>nombre</th><th>apellidos</th><th>fecha-nacimiento</th><th>lugar-nacimiento</th><th>profesión</th>
+  </tr>
+  <tr>
+    <td>95655536P</td><td>María</td><td>Roca Sánchez</td><td>9/9/1999</td><td>Teruel</td><td>diseñadora web</td>
+  </tr>
+  <tr>
+    <td>8584758R</td><td>Luis</td><td>Gómez Gómez</td><td>24/6/2008</td><td>Madrid</td><td>estudiante</td>
+  </tr>
+  <tr>
+    <td>8584759F</td><td>María</td><td>Gómez Gómez</td><td>24/6/2008</td><td>Madrid</td><td>estudiante</td>
+  </tr>
+  <tr>
+    <td>33359854T</td><td>Alberto</td><td>Pi Maragall</td><td>13/3/1950</td><td>Toledo</td><td>jubilado</td>
+  </tr>
+</table>
+<p>En estos ficheros:
+<br><span class="tab"><span class="icon"></span>- las <b>filas</b> son <span class="k">registros</span></span><br>
+<span class="tab"><span class="icon"></span>- las <b>columnas</b> son <span class="k">campos</span></span>
+</p>
+<div class="nota w7">
+<p><span class="k">Este tipo de estructuras son las utilizados en las <b>Bases de Datos</b>, donde se denominan <b>tablas</b>.</span></p>
+</div>
+<h4>campo clave</h4>
+<p>Si entre los campos hay uno que nos permite determinar sin ambigüedad la fila a la que pertenece,
+a ese campo se lo denomina campo clave (<i>key</i>).</p>
+<p><span class="k">campo clave</span>: Una clave es un campo que no se repite en ninguno de los registros,
+y suele utilizarse para realizar las búsquedas. Si el fichero se encuentra ordenado
+por el campo clave, se agilizarán las búsquedas.</p>
+<div class="nota">
+<p>En los ficheros de registros siempre debería existir una clave, que puede estar
+formada por más de un campo.</p>
+</div>
+<h2>Clasificación de los ficheros de registros según el tipo de acceso</h2>
+<p>Para que una aplicación pueda utilizar un fichero debe realizar un proceso de
+apertura del mismo.</p>
+<p><b>Abrir un fichero</b> básicamente es, cargarlo en memoria y crear las estructuras
+que necesite la aplicación para manipularlo.</p>
+<p>En función de cómo son accedidos los registros del fichero, se habla de ...</p>
+<h3>1. Acceso Secuencial</h3>
+<p>Los datos se almacenan uno a continuación de otro, debiendo recorrer toda
+la información anterior al dato que queremos leer.</p>
+<div class="t0">
+<p>95655536P<span class="b">#</span>María<span class="b">#</span>Roca Sánchez<span class="b">#</span>9/9/1999<span class="b">#</span>Teruel<span class="b">#</span>diseñadora web<span class="r">$</span>8584758R<span class="b">#</span>Luis<span class="b">#</span>Gómez Gómez<span class="b">#</span>24/6/2010<span class="b">#</span>Madrid<span class="b">#</span>estudiante<span class="r">$</span>8584759F<span class="b">#</span>María<span class="b">#</span>Gómez Gómez<span class="b">#</span>24/6/2008<span class="b">#</span>Madrid<span class="b">#</span>estudiante<span class="r">$</span>33359854T<span class="b">#</span>Alberto<span class="b">#</span>Pi Maragall<span class="b">#</span>13/3/1950<span class="b">#</span>Madrid<span class="b">#</span>jubilado<span class="rr">%</span></p>
+</div>
+<p>En el ejemplo anterior <span class="b">#</span> delimita campos, y <span class="r">$</span> delimita registros.</p>
+<p>En los ficheros secuenciales suele haber una marca indicativa del fin del fichero,
+que suele denominarse EOF (<i>End of File</i>), en este ejemplo es <span class="rr">%</span>.</p>
+<div class="notaR w6">
+<p><span class="k"><i>Inconvieniente de los ficheros secuenciales</i></span>: Para acceder a determinado registro, 
+debo pasar por encima de todos los registros anteriores.</p>
+</div>
+<p>En un fichero secuencial, para conocer la profesión del individuo con DNI 8584758R
+debo buscarlo entre todos los datos anteriores.</p>
+<p>Este tipo de ficheros era propio de los sistemas de almacenamiento secuenciales (cintas).</p>
+<div class="def ej0">
+<p><b>Ejercicio</b><br>
+Convierte el fichero de provincias en un fichero con formato de acceso secuencial,
+utilizando los mismos separadores del ejemplo anterior.</p>
+</div>
+<h3>2. Acceso Directo</h3>
+<p>Los registros se almacenan en la posición determinada por el camplo clave, de manera que la
+clave debe ser numérica y comprendida dentro del rango de valores de las direcciones.</p>
+<p><img src="img/Acceso-directo.png" width="400"></p>
+<p>El acceso a los registros en los ficheros de acceso directo es rapidísmo, pues al
+emplearse claves numéricas, éstas almacenan la posición física que ocupa el registro
+dentro del fichero.</p>
+<h4>Directo por hash</h4>
+<p>En este caso la posición de los registros se calcula mediante algún tipo de <b>fórmula</b>
+generada con el campo de búsqueda.</p>
+<div class="nota w5">
+<p>El campo de búsqueda suele ser el campo clave.</p>
+</div>
+<p>Por ejemplo, si el campo de búsqueda es el DNI, podrían tomarse los 3 primeros
+números para situar ese registro concreto en esa posición del fichero. Tiene el
+inconveniente de que pueden quedar muchos huecos vacíos dentro del fichero.</p>
+<h6>- Colisión de registros</h6>
+<p>Si intentamos insertar un DNI cuyos 3 primeros dígitos coinciden con otro ya introducido,
+al estar esa posición ocupada, se produce una <span class="k">"colisión" de registros</span>, y el nuevo registro
+se guardará al final del fichero, en una zona llamada "<i>de desbordamiento</i>". En el área de
+desbordamiento, la búsqueda es secuencial.</p>
+<h3>3. Acceso Indexado</h3>
+<p>En este caso se tienen <b>dos ficheros</b>: el de los <span class="k">registros</span> y el fichero <span class="k">índice</span>.<br>
+El fichero índice almacena dos campos:</p>
+<div class="up lh4">
+<ol>
+  <li>el campo que vamos a utilizar en las búsquedas, y</li>
+  <li>la posición de ese registro.</li>
+</ol>
+</div>
+<p><span class="bb">fichero índice:<span class="wsp">          </span>fichero de registros:</span></p>
+<div class="flex t0">
+<table border="1" class="fs00">
+  <tr>
+    <th>nombre</th><th>índex</th>
+  </tr>
+  <tr>
+    <td>Alberto</td><td>4</td>
+  </tr>
+  <tr>
+    <td>Luis</td><td>2</td>
+  </tr>
+  <tr>
+    <td>María</td><td>1</td>
+  </tr>
+  <tr>
+    <td>María</td><td>3</td>
+  </tr>
+</table>
+<table border="1" class="t0 fs00">
+  <tr>
+    <th>DNI</th><th>nombre</th><th>apellidos</th><th>fecha-nacimiento</th><th>lugar-nacimiento</th><th>profesión</th>
+  </tr>
+  <tr>
+    <td>95655536P</td><td>María</td><td>Roca Sánchez</td><td>9/9/1999</td><td>Teruel</td><td>diseñadora web</td>
+  </tr>
+  <tr>
+    <td>8584758R</td><td>Luis</td><td>Gómez Gómez</td><td>24/6/2008</td><td>Madrid</td><td>estudiante</td>
+  </tr>
+  <tr>
+    <td>8584759F</td><td>María</td><td>Gómez Gómez</td><td>24/6/2008</td><td>Madrid</td><td>estudiante</td>
+  </tr>
+  <tr>
+    <td>33359854T</td><td>Alberto</td><td>Pi Maragall</td><td>13/3/1950</td><td>Toledo</td><td>jubilado</td>
+  </tr>
+</table>
+</div>
+<p>Dos cosas:</p>
+<div class="up w9">
+<p>
+<span class="tab"><span class="icon"></span>- El campo "index" se implementa con <b>punteros</b> o <b>referencias</b>, que no es otra cosa que direcciones de memoria.</span><br>
+<span class="tab"><span class="icon"></span>- El fichero de índice debe estar <b>siempre ordenado</b> por el campo de búsqueda para poder aprovecharnos de la
+eficacia de los algoritmos de búsqueda como el de búsqueda binaria.</span>
+</p>
+</div>
+<div class="notaB">
+<p><span class="k">Está es la forma de almacenamiento de las tablas en las BBDD</span>:</p>
+<div class="up">
+<p>
+<span class="tab"><span class="icon"></span>- las <i>claves</i> generan índices automáticamente,</span><br>
+<span class="tab"><span class="icon"></span>- además podremos declarar otros <i>campos</i> como <i>índice</i> para realizar búsquedas más rápidas.</span>
+</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+</article>
+</body>
+</html>

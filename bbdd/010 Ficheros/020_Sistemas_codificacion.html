@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Sistemas de codificación de la información</title>
+<meta charset="utf-8">
+<meta http-equiv="last-modified" content="lun, 18 sept 2023 20:27:40 GMT">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="http://dww.es/opt/jck/js/DEBUG.js"></script>
+<link rel="stylesheet" href="opt/jck/css/estilo.css">
+</head>
+<body>
+<article>
+<h1>Sistemas de codificación de la información</h1>
+<p>El ordenador sólo entiende 0's y 1's, por lo que toda la información que
+deseemos trasladarle deberá ser antes <b>codificada a binario</b>.</p>
+<div class="fr cc up2">
+<p><img src="img/010_codigo-binario.jpg" class="">
+<span class="bb"><small>Cuando pulsamos la tecla <b>a</b> minúscula<br>se genera la secuencia <span class="g">0110 0001</span></small></span></p>
+</div>
+<div class="def w5">
+<h5>Código binario</h5>
+<p>Al <span class="r">sistema de codificación</span> que utiliza sólo dos
+símbolos para representar la información se
+denomina binario.</p>
+<p><img src="img/010_perrobin.png" class="">
+<span class="wsp">                            A    <big>➔</big>   <code> 0100 0001</code></span></p>
+</div>
+<p>Cualquier carácter del teclado tiene un <b>código numérico</b> asociado, ese número se
+convierte al <b>sistema de numeración binaria</b> para ser almacenado en la memoria.</p>
+<p>Por ejemplo, si pulsamos la tecla <b>A mayúscula</b>, en alguna celda de memoria se almacena
+el número <span class="g">65</span>, que en binario es: <span class="g">0100 0001</span>.</p>
+<div class="def w5">
+<h5>¿qué es un sistemas de numeración?</h5>
+<p>Un <span class="r">sistema de numeración</span> es un "método para contar".<br>
+Se utiliza para <i>codifcar cantidades</i>, asignando
+ciertos símbolos a esas cantidades.</p>
+<table border="1" class="t0">
+  <tr>
+    <th>Sistema de numeración</th><th><span class="g">codificación</span></th>
+  </tr>
+  <tr>
+    <td>decimal</td><td><span class="wsp"> <span class="g">65</span>               (6*10+5)</span></td>
+  </tr>
+  <tr>
+    <td>romana</td><td><span class="wsp"><span class="g">LXV</span>          (50+10+5)</span></td>
+  </tr>
+  <tr>
+    <td>china</td><td><span class="wsp"><span class="g">六十五</span>        (6*10+5)</span></td>
+  </tr>
+  <tr>
+    <td>binaria</td><td><span class="wsp"><span class="g">0100 0001</span>    (2<sup>6</sup>+2<sup>0</sup>)</span></td>
+  </tr>
+  <tr>
+    <td>hexadecimal</td><td><span class="wsp"><span class="g">41</span>               (4*16+1)</span></td>
+  </tr>
+</table>
+</div>
+<h2>Sistemas de codificación empleados en informática</h2>
+<div class="cuadro w6">
+<p>Por imposición del hardware, <b>todo</b> debe ser convertido a <b>binario</b>.</p>
+</div>
+<h4>1. Sistemas de codificación numérica</h4>
+<p>El <b><a href="https://es.wikipedia.org/wiki/Sistema_binario">binario</a></b> es el único
+sistema de numeración que maneja el ordenador. A nosotros nos resulta muy
+difícil interpretar largas cadenas de 0's y 1's, así que a menudo se
+manejan otros sistemas de numeración que tienen una <i>transcripción
+inmediata a binario</i>: el <b><a href="https://es.wikipedia.org/wiki/Sistema_octal">octal</a></b>
+y el <b><a href="https://es.wikipedia.org/wiki/Sistema_hexadecimal">hexadecimal</a></b>.</p>
+<div class="cuadro t0 w7">
+<p>usado en ...
+<br><span class="tab"><span class="icon"></span>- El <span class="k">binario</span> es utilizado en subnetting (máscaras de subred: <span class="b">255.255.224.0</span>)</span><br>
+<span class="tab"><span class="icon"></span>- El <span class="k">octal</span> en permisos Unix/Linux (comando <code>chmod</code>)</span><br>
+<span class="tab"><span class="icon"></span>- El <span class="k">hexadecimal</span> en colores (formatos: <span class="k">#</span><span class="rr">RR</span><span class="g">GG</span><span class="b">BB</span> y <span class="k">#</span><span class="rr">R</span><span class="g">G</span><span class="b">B</span>)</span>
+</p>
+</div>
+<div class="dino">
+<p><img src="http://dww.es/bbdd/010 Ficheros/img/010_baseN2dec.png" class=""></p>
+<p><img src="http://dww.es/bbdd/010 Ficheros/img/010_dec2baseN.png" class=""></p>
+<p><img src="http://dww.es/bbdd/010 Ficheros/img/010_base2-8-16_aDecimal.png" class=""></p>
+</div>
+<h4>2. Sistemas de codificación alfabética</h4>
+<p>Las letras no son números, así que para guardarlas en el ordenador necesitamos
+idear algún sistema que asigne a cada letra un número binario, p.ej. <b>A</b> </span>→</span> <span class="g">01000001</span>.</p>
+<p>Hay muchísimos sistemas para codificar los caracteres, casi todos ellos son extensiones
+del <b><a href="https://es.wikipedia.org/wiki/ASCII">código ASCII</a></b>, uno de los primeros empleados en
+informática (1963), y que sólo puede representar el alfabeto inglés.<br>
+Los más empleados son las tablas <b><a href="http://www.atc.uniovi.es/tablas.php">ISO-8859</a></b> para diferentes
+idiomas, y los sistemas <b><a href="https://es.wikipedia.org/wiki/UTF-8">UTF</a></b>, que respresentan los caracteres de la
+<a href="https://es.wikipedia.org/wiki/Unicode">tabla Unicode</a>.</p>
+<div class="dino">
+<p><img src="http://dww.es/bbdd/010 Ficheros/img/010_Caracteres-Unicode.png" class=""></p>
+</div>
+<div class="ej0">
+<h5>ejercicio</h5>
+<p>Los ficheros que creaste en el ejercicio anterior, ¿están codificados en UTF-8?.</p>
+<p>Si no es así, cambia la codificación a UTF-8.</p>
+<p>Codifica alguno de ellos en UTF-16 ¿Cuánto disco ocupa?</p>
+<p>Codifícalo en UTF-32 y mira ahora qué tamaño tiene.</p>
+<p>Cofifíca alguno de ellos en ISO-8859-5, ó bien en ISO-8859-6, en ISO-8859-7  o en ISO-8859-8.
+Ábrelo y mira su contenido. ¿Qué ha pasado?</p>
+<p>Codifícalo en ISO-8859-15. ¿Notas algún cambio?</p>
+</div>
+</article>
+</body>
+</html>
